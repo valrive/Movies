@@ -22,7 +22,7 @@
 
     <!-- actions, ej, button texts, use "action_" prefix -->
     <string name="action_next">NEXT</string>
-    <string name="action_login">Ingresar</string>
+    <string name="action_login">Login</string>
     <string name="action_logout">Logout</string>
 
 
