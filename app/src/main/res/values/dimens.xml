@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Margin -->
+    <dimen name="app_container_margin">16dp</dimen>
+    <dimen name="element_margin_vertical">8dp</dimen>
+    <dimen name="element_margin_top">16dp</dimen>
+    <dimen name="element_margin_horizontal">16dp</dimen>
+
+    <!-- Size -->
+    <dimen name="button_width">64dp</dimen>
+
+</resources>
