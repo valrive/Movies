@@ -61,6 +61,7 @@ android {
             resValue "string", "app_name", "Hi-Lex Seq-Dev"
             //resValue "string", "config_api_url", "http://187.188.94.172:8080/dhl-hilex-seq-api/"
             resValue "string", "config_api_url", "https://www.saalma.mx/dhl-hilex-seq-api/"
+            resValue "string", "api_key", "6e85a9d3ce3f6a60280166679f8ccc6a"
             resValue "string", "config_info_version", "Versión " + android.defaultConfig.versionName + ", Desarrollo"
             resValue "bool", "use_clear_traffic", "true"
             //applicationIdSuffix ".dev"
@@ -79,17 +80,17 @@ android {
 dependencies {
 
     //implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation "androidx.recyclerview:recyclerview:1.2.1"
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
-    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.core:core-ktx:1.8.0'
     //implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.room:room-runtime:2.3.0'
-    implementation 'androidx.preference:preference-ktx:1.1.1'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.room:room-runtime:2.4.2'
+    implementation 'androidx.preference:preference-ktx:1.2.0'
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-    kapt 'androidx.room:room-compiler:2.3.0'
+    kapt 'androidx.room:room-compiler:2.4.2'
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 //    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1'
@@ -102,7 +103,7 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.12.0'
     implementation 'jp.wasabeef:glide-transformations:4.3.0'
 
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.0"
 
     //Hilt
     implementation 'com.google.dagger:hilt-android:2.38.1'
