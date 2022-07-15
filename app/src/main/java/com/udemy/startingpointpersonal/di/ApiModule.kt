@@ -87,7 +87,11 @@ object ApiModule  {
 
     @Singleton
     @Provides
-    fun provideApiService(@Named("apiUrl") apiUrl: String, converterFactory: GsonConverterFactory, httpClient: OkHttpClient): ApiService = Retrofit.Builder()
+    fun provideApiService(
+        @Named("apiUrl") apiUrl: String,
+        converterFactory: GsonConverterFactory,
+        httpClient: OkHttpClient
+    ): ApiService = Retrofit.Builder()
         .baseUrl(apiUrl)
         .addConverterFactory(converterFactory)
         .client(httpClient)

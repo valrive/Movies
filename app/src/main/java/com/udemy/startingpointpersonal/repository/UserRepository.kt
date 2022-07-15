@@ -31,8 +31,8 @@ class UserRepository @Inject constructor(
         var user : User
 
         withContext(Dispatchers.IO) {
-            responseToken = ApiResults.createForApiBody(api.requestToken(header))
-            user = ApiResults.createForRequiredBody(api.login("Bearer ${responseToken!!.token}"))
+            responseToken = ApiResults.createForNonApiBody(api.requestToken(header))
+            user = ApiResults.createForNonApiBody(api.login("Bearer ${responseToken!!.token}"))
         }
 
         responseToken?.let { saveToken(it) }

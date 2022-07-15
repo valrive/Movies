@@ -23,21 +23,14 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>(R.layout.fragment_popular_movies),
-    //MoviesAdapter.OnMovieClickListener
-    SingleMovieAdapter.OnSingleMovieClickListener
-{
-
-    private lateinit var concatAdapter: ConcatAdapter
-
+    SingleMovieAdapter.OnSingleMovieClickListener {
+    
     private val movieViewModel by viewModels<PopularMoviesViewModel>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(binding){
-            viewModel = movieViewModel
-        }
-        concatAdapter = ConcatAdapter()
+        binding.viewModel = movieViewModel
         observers()
     }
 
@@ -55,28 +48,10 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>(R.layout
         }
 
         movieViewModel.getPopularMovies.observe(viewLifecycleOwner){ list->
-
             binding.rvMovies.adapter = SingleMovieAdapter(
                 list.results,
                 this@PopularMoviesFragment
             )
-
-
-
-
-
-            /*concatAdapter.apply {
-                addAdapter(
-                    0,
-                    PopularConcatAdapter(
-                        MoviesAdapter(
-                            list.results,
-                            this@PopularMoviesFragment
-                        )
-                    )
-                )
-                binding.rvMovies.adapter = concatAdapter
-            }*/
         }
 
         movieViewModel.errorPopularMovies.observe(viewLifecycleOwner){

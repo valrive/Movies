@@ -15,7 +15,7 @@ interface ApiService {
      * get jwt token
      */
     @GET("autorizacion")
-    fun requestToken(@Header("Authorization") auth: String): Call<ApiBody<Jwt>>
+    fun requestToken(@Header("Authorization") auth: String): Call<Jwt>
 
     @GET("user/me/login")
     fun login(@Header("Authorization") token: String): Call<User>
@@ -28,6 +28,9 @@ interface ApiService {
 
     @GET("movie/popular")
     suspend fun getPopulardMovies(@Query("api_key") apiKey: String): MovieList
+
+    @GET("movie/popular")
+    suspend fun getPopulardMoviesNew(@Query("api_key") apiKey: String): Call<MovieList>
 
     companion object {
 

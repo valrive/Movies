@@ -19,7 +19,6 @@ class SplashViewModel @Inject constructor (
     * Returns true if user is already logged in
     */
     fun fetchLoggedIn() = liveData {
-        emit(ApiResult.Loading)
         try{
             emit(ApiResult.Success(userDomain.isLoggedIn()))
         } catch(e: Exception){

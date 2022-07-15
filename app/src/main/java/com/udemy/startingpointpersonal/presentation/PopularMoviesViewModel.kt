@@ -7,7 +7,6 @@ import com.udemy.startingpointpersonal.repository.MovieRepository
 import com.udemy.startingpointpersonal.utils.ExceptionParser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import com.udemy.startingpointpersonal.core.ResourceNew
 import com.udemy.startingpointpersonal.core.ServiceErrorHandler
 import com.udemy.startingpointpersonal.pojos.MovieList
 import com.udemy.startingpointpersonal.ui.Status
@@ -19,6 +18,7 @@ class PopularMoviesViewModel @Inject constructor(
     private val homeDomain: HomeDomain,
     private val exceptionParser: ExceptionParser
 ) : ViewModel() {
+
 
     private val _logoutBtn = MutableLiveData<Boolean>()
     val logoutBtn: LiveData<Boolean> = _logoutBtn
@@ -34,8 +34,9 @@ class PopularMoviesViewModel @Inject constructor(
 
     init {
        _status.value = Status.LOADING
-        viewModelScope.launch {
-            when (val result = repo.getPopularMovies()) {
+        viewModelScope.launch{
+            val result = repo.getPopularMovies()
+            when (result) {
                 is ApiResult.Success -> {
                     _getPopularMovies.value = result.data
                     _status.value = Status.SUCCESS

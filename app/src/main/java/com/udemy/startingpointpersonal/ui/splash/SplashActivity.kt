@@ -20,9 +20,8 @@ class SplashActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.fetchLoggedIn().observe(this, Observer {
+        viewModel.fetchLoggedIn().observe(this) {
             when (it) {
-                is ApiResult.Loading -> {}
 
                 is ApiResult.Success -> {
                     if( it.data){
@@ -36,7 +35,7 @@ class SplashActivity: AppCompatActivity() {
                         .show()
                 }
             }
-        })
+        }
     }
 
     /**

@@ -47,7 +47,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
 
     private fun holi(it: ApiResult<Unit>){
         when (it) {
-            ApiResult.Loading -> {}
 
             is ApiResult.Success -> {
                 navigateToHome()

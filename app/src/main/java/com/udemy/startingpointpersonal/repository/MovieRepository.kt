@@ -1,5 +1,6 @@
 package com.udemy.startingpointpersonal.repository
 
+import com.udemy.startingpointpersonal.api.ApiResults
 import com.udemy.startingpointpersonal.api.ApiService
 import com.udemy.startingpointpersonal.core.ApiResult
 import com.udemy.startingpointpersonal.pojos.MovieList
@@ -21,8 +22,13 @@ class MovieRepository @Inject constructor(
         api.getTopRatedMovies(apiKey)
     }
 
-    suspend fun getPopularMovies(): ApiResult<MovieList> = withContext(Dispatchers.IO) {
-        ApiResult.Success(api.getPopulardMovies(apiKey))
-    }
+    suspend fun getPopularMovies(): ApiResult<MovieList>  =
+        withContext(Dispatchers.IO) {
+            ApiResult.Success(api.getPopulardMovies(apiKey))
+        }
 
+    suspend fun getPopularMoviesResource(): ApiResult<MovieList>  =
+        withContext(Dispatchers.IO) {
+            ApiResults.createForResultNew(api.getPopulardMoviesNew(apiKey))
+        }
 }
