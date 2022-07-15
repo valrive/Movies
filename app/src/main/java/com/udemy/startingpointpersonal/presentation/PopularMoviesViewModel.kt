@@ -1,6 +1,7 @@
 package com.udemy.startingpointpersonal.presentation
 
 import androidx.lifecycle.*
+import com.udemy.startingpointpersonal.core.ApiResult
 import com.udemy.startingpointpersonal.domain.HomeDomain
 import com.udemy.startingpointpersonal.repository.MovieRepository
 import com.udemy.startingpointpersonal.utils.ExceptionParser
@@ -32,16 +33,19 @@ class PopularMoviesViewModel @Inject constructor(
 
 
     init {
-       /* _status.value = Status.LOADING
+       _status.value = Status.LOADING
         viewModelScope.launch {
             val result = repo.getPopularMovies()
-            when (result) {
-                is ResourceNew.Success -> {
+            _getPopularMovies.value = result
+            _status.value = Status.SUCCESS
+
+            /*when (result) {
+                is ApiResult.Success -> {
                     _getPopularMovies.value = result.data
                     _status.value = Status.SUCCESS
                 }
 
-                is ResourceNew.ErrorSEH -> {
+                is ApiResult.ErrorSEH -> {
                     _errorPopularMovies.value = result.err
                     _status.value = Status.FAILURE
                 }
@@ -50,9 +54,9 @@ class PopularMoviesViewModel @Inject constructor(
                     _errorPopularMovies.value = result.err
                     _status.value = Status.ERROR
                 }*//*
-            }
+            }*/
 
-        }*/
+        }
     }
 
 
