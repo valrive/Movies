@@ -35,26 +35,24 @@ class PopularMoviesViewModel @Inject constructor(
     init {
        _status.value = Status.LOADING
         viewModelScope.launch {
-            val result = repo.getPopularMovies()
-            _getPopularMovies.value = result
-            _status.value = Status.SUCCESS
-
-            /*when (result) {
+            when (val result = repo.getPopularMovies()) {
                 is ApiResult.Success -> {
                     _getPopularMovies.value = result.data
                     _status.value = Status.SUCCESS
                 }
-
+/*
                 is ApiResult.ErrorSEH -> {
                     _errorPopularMovies.value = result.err
                     _status.value = Status.FAILURE
                 }
 
-                *//*is ResourceNew.ErrorEP ->{
+                is ResourceNew.ErrorEP ->{
                     _errorPopularMovies.value = result.err
                     _status.value = Status.ERROR
-                }*//*
-            }*/
+                }
+*/
+                else -> {}
+            }
 
         }
     }

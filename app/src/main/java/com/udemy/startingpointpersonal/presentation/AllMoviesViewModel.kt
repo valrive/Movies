@@ -39,7 +39,8 @@ class AllMoviesViewModel @Inject constructor(
             _getAllMovies.value = Triple(
                 repo.getUpcomingMovies(),
                 repo.getTopRatedMovies(),
-                repo.getPopularMovies()
+                repo.getTopRatedMovies()
+                //repo.getPopularMovies()
             )
             _status.value = Status.SUCCESS
         }

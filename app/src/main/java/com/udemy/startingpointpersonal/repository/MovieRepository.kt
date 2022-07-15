@@ -1,6 +1,7 @@
 package com.udemy.startingpointpersonal.repository
 
 import com.udemy.startingpointpersonal.api.ApiService
+import com.udemy.startingpointpersonal.core.ApiResult
 import com.udemy.startingpointpersonal.pojos.MovieList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -20,8 +21,8 @@ class MovieRepository @Inject constructor(
         api.getTopRatedMovies(apiKey)
     }
 
-    suspend fun getPopularMovies(): MovieList = withContext(Dispatchers.IO) {
-        api.getPopulardMovies(apiKey)
+    suspend fun getPopularMovies(): ApiResult<MovieList> = withContext(Dispatchers.IO) {
+        ApiResult.Success(api.getPopulardMovies(apiKey))
     }
 
 }

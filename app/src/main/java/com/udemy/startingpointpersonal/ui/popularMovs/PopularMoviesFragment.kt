@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ConcatAdapter
@@ -16,11 +17,15 @@ import com.udemy.startingpointpersonal.ui.Status
 import com.udemy.startingpointpersonal.ui.allMovs.adapters.MoviesAdapter
 import com.udemy.startingpointpersonal.ui.allMovs.adapters.concat.PopularConcatAdapter
 import com.udemy.startingpointpersonal.ui.login.LoginActivity
+import com.udemy.startingpointpersonal.ui.popularMovs.adapter.SingleMovieAdapter
 import com.udemy.startingpointpersonal.utils.Util
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>(R.layout.fragment_popular_movies), MoviesAdapter.OnMovieClickListener {
+class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>(R.layout.fragment_popular_movies),
+    //MoviesAdapter.OnMovieClickListener
+    SingleMovieAdapter.OnSingleMovieClickListener
+{
 
     private lateinit var concatAdapter: ConcatAdapter
 
@@ -45,11 +50,22 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>(R.layout
                 Status.LOADING -> {
                     Util.muestraProgressBar(requireActivity())
                 }
+                else -> {}
             }
         }
 
         movieViewModel.getPopularMovies.observe(viewLifecycleOwner){ list->
-            concatAdapter.apply {
+
+            binding.rvMovies.adapter = SingleMovieAdapter(
+                list.results,
+                this@PopularMoviesFragment
+            )
+
+
+
+
+
+            /*concatAdapter.apply {
                 addAdapter(
                     0,
                     PopularConcatAdapter(
@@ -60,7 +76,7 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>(R.layout
                     )
                 )
                 binding.rvMovies.adapter = concatAdapter
-            }
+            }*/
         }
 
         movieViewModel.errorPopularMovies.observe(viewLifecycleOwner){

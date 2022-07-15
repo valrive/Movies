@@ -32,7 +32,8 @@ class HomeViewModel @Inject constructor(
                     Triple(
                         repo.getUpcomingMovies(),
                         repo.getTopRatedMovies(),
-                        repo.getPopularMovies()
+                        repo.getTopRatedMovies()
+                        //repo.getPopularMovies()
                     )
                 )
             )
