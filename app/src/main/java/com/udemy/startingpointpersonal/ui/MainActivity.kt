@@ -25,3 +25,7 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp()//super.onSupportNavigateUp()
     }
 }
+
+enum class Status{
+    SUCCESS, FAILURE, LOADING
+}

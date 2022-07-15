@@ -6,7 +6,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.udemy.startingpointpersonal.core.Result
+import com.udemy.startingpointpersonal.core.ApiResult
 import com.udemy.startingpointpersonal.presentation.SplashViewModel
 import com.udemy.startingpointpersonal.ui.MainActivity
 import com.udemy.startingpointpersonal.ui.login.LoginActivity
@@ -22,16 +22,16 @@ class SplashActivity: AppCompatActivity() {
 
         viewModel.fetchLoggedIn().observe(this, Observer {
             when (it) {
-                is Result.Loading -> {}
+                is ApiResult.Loading -> {}
 
-                is Result.Success -> {
+                is ApiResult.Success -> {
                     if( it.data){
                         navigateToHome()
                     } else {
                         navigateToLogin()
                     }
                 }
-                is Result.Failure -> {
+                is ApiResult.Failure -> {
                     Toast.makeText(this, "Error: ${it.exception}", Toast.LENGTH_SHORT)
                         .show()
                 }

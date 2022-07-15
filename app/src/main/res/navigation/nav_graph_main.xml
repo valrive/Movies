@@ -1,22 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
     app:startDestination="@id/homeFragment">
 
     <fragment android:id="@+id/homeFragment"
         android:name="com.udemy.startingpointpersonal.ui.home.HomeFragment"
-        android:label="HomeFragment">
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_allMoviesFragment"
+            app:destination="@id/allMoviesFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_popularMoviesFragment"
+            app:destination="@id/popularMoviesFragment" />
+    </fragment>
 
-        <action android:id="@+id/action_homeFragment_to_detailFragment"
-                app:destination="@+id/detailFragment"/>
+    <fragment
+        android:id="@+id/allMoviesFragment"
+        android:name="com.udemy.startingpointpersonal.ui.allMovs.AllMoviesFragment"
+        android:label="AllMoviesFragment"
+        tools:layout="@layout/fragment_all_movies">
+        <action
+            android:id="@+id/action_allMoviesFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/popularMoviesFragment"
+        android:name="com.udemy.startingpointpersonal.ui.popularMovs.PopularMoviesFragment"
+        android:label="PopularMoviesFragment"
+        tools:layout="@layout/fragment_popular_movies">
+        <action
+            android:id="@+id/action_popularMoviesFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
     </fragment>
 
     <fragment android:id="@+id/detailFragment"
             android:name="com.udemy.startingpointpersonal.ui.detail.DetailFragment"
-            android:label="DetailFragment">
-
+            android:label="DetailFragment"
+        tools:layout="@layout/fragment_detail">
         <argument
             android:name="movie"
             app:argType="com.udemy.startingpointpersonal.pojos.Movie" />

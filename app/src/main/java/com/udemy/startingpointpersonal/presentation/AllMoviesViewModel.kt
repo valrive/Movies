@@ -1,16 +1,16 @@
 package com.udemy.startingpointpersonal.presentation
 
 import androidx.lifecycle.*
-import com.udemy.startingpointpersonal.core.ApiResult
 import com.udemy.startingpointpersonal.domain.HomeDomain
 import com.udemy.startingpointpersonal.repository.MovieRepository
 import com.udemy.startingpointpersonal.utils.ExceptionParser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
+import com.udemy.startingpointpersonal.core.ApiResult
 
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+class AllMoviesViewModel @Inject constructor(
     private val repo: MovieRepository,
     private val homeDomain: HomeDomain,
     private val exceptionParser: ExceptionParser
@@ -18,7 +18,6 @@ class HomeViewModel @Inject constructor(
 
     private val _logoutBtn = MutableLiveData<ApiResult<Unit>>()
     val logoutBtn: LiveData<ApiResult<Unit>> = _logoutBtn
-
 
     /**
      * ViewModelScope.coroutineContext + Dispatchers.Main indica que la corutina se ejecutará en el hilo main mientras el view model viva
@@ -30,9 +29,10 @@ class HomeViewModel @Inject constructor(
             emit(
                 ApiResult.Success(
                     Triple(
-                        repo.getUpcomingMovies(),
-                        repo.getTopRatedMovies(),
-                        repo.getPopularMovies()
+                        repo.getUpcomingMovies()
+                        , repo.getTopRatedMovies()
+                        , repo.getTopRatedMovies()
+                        //, repo.getPopularMovies()
                     )
                 )
             )

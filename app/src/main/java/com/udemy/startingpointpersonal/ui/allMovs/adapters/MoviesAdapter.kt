@@ -1,4 +1,4 @@
-package com.udemy.startingpointpersonal.ui.home.adapters
+package com.udemy.startingpointpersonal.ui.allMovs.adapters
 
 import android.content.Context
 import android.view.LayoutInflater

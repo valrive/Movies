@@ -7,7 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.udemy.startingpointpersonal.R
-import com.udemy.startingpointpersonal.core.Result
+import com.udemy.startingpointpersonal.core.ApiResult
 import com.udemy.startingpointpersonal.databinding.FragmentLoginBinding
 import com.udemy.startingpointpersonal.pojos.User
 import com.udemy.startingpointpersonal.presentation.LoginViewModel
@@ -45,15 +45,15 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(R.layout.fragment_login
         loginViewModel.userLogged.observe(viewLifecycleOwner, Observer(::holi))
     }
 
-    private fun holi(it: Result<Unit>){
+    private fun holi(it: ApiResult<Unit>){
         when (it) {
-            Result.Loading -> {}
+            ApiResult.Loading -> {}
 
-            is Result.Success -> {
+            is ApiResult.Success -> {
                 navigateToHome()
             }
 
-            is Result.Failure -> {
+            is ApiResult.Failure -> {
                 if(it.exception is RequiredFieldException){
                     showRequiredErrors(it.exception.fieldsRequired)
                     binding.root.showSnack("Holi")

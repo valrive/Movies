@@ -28,6 +28,8 @@
 
     <!-- ui labels, use "label_" prefix -->
     <string name="label_detail">Detail</string>
+    <string name="label_all_movies">All movies</string>
+    <string name="label_popular_movies">Popular movies</string>
 
     <!-- information messages, use "info_" prefix -->
     <string name="info_version_test">Versión %1$s, test</string>

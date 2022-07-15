@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.udemy.startingpointpersonal.core.Result
+import com.udemy.startingpointpersonal.core.ApiResult
 import com.udemy.startingpointpersonal.domain.UserDomain
 import com.udemy.startingpointpersonal.pojos.User
 import com.udemy.startingpointpersonal.utils.ExceptionParser
@@ -27,8 +27,8 @@ class LoginViewModel @Inject constructor(
     private val _progressVisibility = MutableLiveData<Boolean>()
     val progressVisibility: LiveData<Boolean> get() = _progressVisibility
 
-    private val _userLogged = MutableLiveData<Result<Unit>>()
-    val userLogged: LiveData<Result<Unit>> = _userLogged
+    private val _userLogged = MutableLiveData<ApiResult<Unit>>()
+    val userLogged: LiveData<ApiResult<Unit>> = _userLogged
 
     fun onClick() = viewModelScope.launch{//(viewModelScope.coroutineContext + Dispatchers.Main) {
         _progressVisibility.value = true
@@ -46,13 +46,13 @@ class LoginViewModel @Inject constructor(
         }.onFailure {
             _progressVisibility.value = false
             if (it is RequiredFieldException) {
-                _userLogged.value = Result.Failure(exceptionParser.toPresentableMessage(it))
+                _userLogged.value = ApiResult.Failure(exceptionParser.toPresentableMessage(it))
                 return@launch
             }
-            _userLogged.value = Result.Success(Unit)
+            _userLogged.value = ApiResult.Success(Unit)
         }.onSuccess {
             _progressVisibility.value = false
-            _userLogged.value = Result.Success(Unit)
+            _userLogged.value = ApiResult.Success(Unit)
         }
     }
 

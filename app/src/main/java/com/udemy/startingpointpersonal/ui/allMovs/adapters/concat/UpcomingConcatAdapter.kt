@@ -1,11 +1,11 @@
-package com.udemy.startingpointpersonal.ui.home.adapters.concat
+package com.udemy.startingpointpersonal.ui.allMovs.adapters.concat
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.udemy.startingpointpersonal.core.BaseConcatHolder
 import com.udemy.startingpointpersonal.databinding.UpcomingMovieRowBinding
-import com.udemy.startingpointpersonal.ui.home.adapters.MoviesAdapter
+import com.udemy.startingpointpersonal.ui.allMovs.adapters.MoviesAdapter
 
 class UpcomingConcatAdapter(private val moviesAdapter: MoviesAdapter): RecyclerView.Adapter<BaseConcatHolder<*>>() {
 
