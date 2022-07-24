@@ -12,7 +12,7 @@ import javax.inject.Named
 class MovieRepository @Inject constructor(
     @Named("apiKey") private val apiKey: String,
     val api: ApiService
-){
+) {
 
     suspend fun getUpcomingMovies(): MovieList = withContext(Dispatchers.IO) {
         api.getUpcomingMovies(apiKey)
@@ -22,12 +22,13 @@ class MovieRepository @Inject constructor(
         api.getTopRatedMovies(apiKey)
     }
 
-    suspend fun getPopularMovies(): ApiResult<MovieList>  =
-        withContext(Dispatchers.IO) {
-            ApiResult.Success(api.getPopulardMovies(apiKey))
-        }
+    suspend fun getPopularMovies(): ApiResult<MovieList> = withContext(Dispatchers.IO) {
+        ApiResult.Success(
+            api.getPopulardMovies(apiKey)
+        )
+    }
 
-    suspend fun getPopularMoviesResource(): ApiResult<MovieList>  =
+    suspend fun getPopularMoviesResource(): ApiResult<MovieList> =
         withContext(Dispatchers.IO) {
             ApiResults.createForResultNew(api.getPopulardMoviesNew(apiKey))
         }
