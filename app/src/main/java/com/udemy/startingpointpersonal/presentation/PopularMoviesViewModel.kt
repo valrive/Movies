@@ -4,7 +4,7 @@ import androidx.lifecycle.*
 import com.udemy.startingpointpersonal.core.ApiResult
 import com.udemy.startingpointpersonal.domain.HomeDomain
 import com.udemy.startingpointpersonal.repository.MovieRepository
-import com.udemy.startingpointpersonal.utils.ExceptionParser
+import com.udemy.startingpointpersonal.api.ExceptionParser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import com.udemy.startingpointpersonal.core.ServiceErrorHandler

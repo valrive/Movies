@@ -1,16 +1,14 @@
-package com.udemy.startingpointpersonal.utils
+package com.udemy.startingpointpersonal.api.exceptions.lab
 
 import android.content.Context
 import com.udemy.startingpointpersonal.R
 import com.udemy.startingpointpersonal.api.exceptions.*
+import com.udemy.startingpointpersonal.utils.RequiredFieldException
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 import javax.inject.Inject
 
-/**
- * Created by Valentin Rivera on 2021/06/04.
- */
-class ExceptionParser @Inject constructor(
+class ExceptionParser2 @Inject constructor(
     private val context: Context
 ){
 

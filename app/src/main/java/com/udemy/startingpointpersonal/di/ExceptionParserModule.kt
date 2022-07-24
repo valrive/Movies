@@ -1,7 +1,7 @@
 package com.udemy.startingpointpersonal.di
 
 import android.app.Application
-import com.udemy.startingpointpersonal.utils.ExceptionParser
+import com.udemy.startingpointpersonal.api.ExceptionParser
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

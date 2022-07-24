@@ -1,6 +1,6 @@
 package com.udemy.startingpointpersonal.core
 
-import com.udemy.startingpointpersonal.utils.ExceptionParser
+import com.udemy.startingpointpersonal.api.ExceptionParser
 
 sealed class ResourceNew<out T : Any> {
 
