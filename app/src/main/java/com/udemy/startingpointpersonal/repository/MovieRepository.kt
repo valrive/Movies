@@ -25,11 +25,13 @@ class MovieRepository @Inject constructor(
     suspend fun getPopularMovies(): ApiResult<MovieList> = withContext(Dispatchers.IO) {
         ApiResult.Success(
             api.getPopulardMovies(apiKey)
+                    //responseToken = ApiResults.createForNonApiBody(api.requestToken(header))
+                    //user = ApiResults.createForNonApiBody(api.login("Bearer ${responseToken!!.token}"))
         )
     }
 
-    suspend fun getPopularMoviesResource(): ApiResult<MovieList> =
-        withContext(Dispatchers.IO) {
-            ApiResults.createForResultNew(api.getPopulardMoviesNew(apiKey))
-        }
+    suspend fun getPopularMoviesResource(): ApiResult<MovieList> = withContext(Dispatchers.IO) {
+        ApiResults.createForResultNew(api.getPopulardMoviesNew(apiKey))
+        //ApiResults.createForNonApiBody(api.getPopulardMoviesNew(apiKey))
+    }
 }
