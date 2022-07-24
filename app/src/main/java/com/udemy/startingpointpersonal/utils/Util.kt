@@ -9,6 +9,7 @@ import android.view.WindowManager
 import android.widget.ProgressBar
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import com.google.android.material.snackbar.Snackbar
 import com.udemy.startingpointpersonal.R
 
 object Util {
@@ -53,4 +54,5 @@ object Util {
         progressBar = null
         IS_PROGRESSBAR_VISIBLE = false
     }
+
 }

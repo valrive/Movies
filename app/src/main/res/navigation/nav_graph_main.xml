@@ -3,29 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_graph"
-    app:startDestination="@id/homeFragment">
-
-    <fragment android:id="@+id/homeFragment"
-        android:name="com.udemy.startingpointpersonal.ui.home.HomeFragment"
-        android:label="HomeFragment"
-        tools:layout="@layout/fragment_home">
-        <action
-            android:id="@+id/action_homeFragment_to_allMoviesFragment"
-            app:destination="@id/allMoviesFragment" />
-        <action
-            android:id="@+id/action_homeFragment_to_popularMoviesFragment"
-            app:destination="@id/popularMoviesFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/allMoviesFragment"
-        android:name="com.udemy.startingpointpersonal.ui.allMovs.AllMoviesFragment"
-        android:label="AllMoviesFragment"
-        tools:layout="@layout/fragment_all_movies">
-        <action
-            android:id="@+id/action_allMoviesFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
-    </fragment>
+    app:startDestination="@id/popularMoviesFragment">
 
     <fragment
         android:id="@+id/popularMoviesFragment"

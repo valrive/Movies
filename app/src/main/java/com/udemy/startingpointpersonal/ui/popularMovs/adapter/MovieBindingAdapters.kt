@@ -1,4 +1,4 @@
-package com.udemy.startingpointpersonal.ui.home.adapters
+package com.udemy.startingpointpersonal.ui.popularMovs.adapter
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
@@ -8,3 +8,4 @@ import com.bumptech.glide.Glide
 fun ImageView.loadUrl(url: String){
     Glide.with(this).load(url).centerCrop().into(this)
 }
+

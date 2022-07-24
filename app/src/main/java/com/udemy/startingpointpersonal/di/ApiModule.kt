@@ -4,7 +4,6 @@ import android.app.Application
 import com.google.gson.*
 import com.udemy.startingpointpersonal.BuildConfig
 import com.udemy.startingpointpersonal.api.ApiService
-import com.udemy.startingpointpersonal.api.RefreshTokenInterceptor
 import com.udemy.startingpointpersonal.dao.JwtDao
 import com.udemy.startingpointpersonal.utils.DeviceUtils
 import dagger.Module
@@ -65,8 +64,6 @@ object ApiModule  {
         )
     }
 
-    @Provides
-    fun provideTokenInterceptor(application: Application, jwtDao: JwtDao, @Named("apiUrl") apiUrl: String) = RefreshTokenInterceptor(jwtDao, application, apiUrl)
 
     @Provides
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
@@ -78,10 +75,9 @@ object ApiModule  {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(headersInterceptor: Interceptor, logging: HttpLoggingInterceptor, refreshTokenInterceptor: RefreshTokenInterceptor): OkHttpClient = OkHttpClient
+    fun provideOkHttpClient(headersInterceptor: Interceptor, logging: HttpLoggingInterceptor): OkHttpClient = OkHttpClient
         .Builder()
         .addInterceptor(headersInterceptor)
-        .addInterceptor(refreshTokenInterceptor)
         .addInterceptor(logging)
         .build()
 

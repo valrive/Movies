@@ -14,8 +14,6 @@ import com.udemy.startingpointpersonal.pojos.Movie
 import com.udemy.startingpointpersonal.presentation.PopularMoviesViewModel
 import com.udemy.startingpointpersonal.ui.BaseFragment
 import com.udemy.startingpointpersonal.ui.Status
-import com.udemy.startingpointpersonal.ui.allMovs.adapters.MoviesAdapter
-import com.udemy.startingpointpersonal.ui.allMovs.adapters.concat.PopularConcatAdapter
 import com.udemy.startingpointpersonal.ui.login.LoginActivity
 import com.udemy.startingpointpersonal.ui.popularMovs.adapter.SingleMovieAdapter
 import com.udemy.startingpointpersonal.utils.Util

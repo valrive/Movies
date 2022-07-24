@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.udemy.startingpointpersonal.core.BaseViewHolder
 import com.udemy.startingpointpersonal.databinding.MovieItemBinding
 import com.udemy.startingpointpersonal.pojos.Movie
 
@@ -17,12 +18,14 @@ class SingleMovieAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val itemBinding = MovieItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val itemBinding =
+            MovieItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         val holder = Item2ViewHolder(itemBinding)
 
         itemBinding.root.setOnClickListener {
-            val position = holder.bindingAdapterPosition.takeIf { it != DiffUtil.DiffResult.NO_POSITION }
-                ?: return@setOnClickListener
+            val position =
+                holder.bindingAdapterPosition.takeIf { it != DiffUtil.DiffResult.NO_POSITION }
+                    ?: return@setOnClickListener
             itemClickListener.onMovieClick(list[position])
         }
 
@@ -32,15 +35,17 @@ class SingleMovieAdapter(
     override fun getItemCount() = list.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when(holder){
+        when (holder) {
             is Item2ViewHolder -> holder.bind(list[position])
         }
     }
 
-    private inner class Item2ViewHolder(val binding: MovieItemBinding)
-        : RecyclerView.ViewHolder(binding.root) {
+    private inner class Item2ViewHolder(
+        val binding: MovieItemBinding
+    //) : RecyclerView.ViewHolder(binding.root) {
+    ) : BaseViewHolder<Movie>(binding.root) {
 
-        fun bind(item: Movie) {
+        override fun bind(item: Movie) {
             binding.url = "https://image.tmdb.org/t/p/w500/${item.poster_path}"
         }
     }
