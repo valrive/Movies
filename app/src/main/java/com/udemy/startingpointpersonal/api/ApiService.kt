@@ -1,6 +1,5 @@
 package com.udemy.startingpointpersonal.api
 
-import com.udemy.startingpointpersonal.pojos.Jwt
 import com.udemy.startingpointpersonal.pojos.MovieList
 import com.udemy.startingpointpersonal.pojos.User
 import retrofit2.Call
@@ -10,12 +9,6 @@ import retrofit2.http.Query
 
 
 interface ApiService {
-
-    /**
-     * get jwt token
-     */
-    @GET("autorizacion")
-    fun requestToken(@Header("Authorization") auth: String): Call<Jwt>
 
     @GET("user/me/login")
     fun login(@Header("Authorization") token: String): Call<User>

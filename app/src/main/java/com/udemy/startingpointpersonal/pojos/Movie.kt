@@ -1,14 +1,17 @@
 package com.udemy.startingpointpersonal.pojos
 
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
+@Entity(tableName = "movie")
 data class Movie(
+    @PrimaryKey val id: Int = -1,
     val adult: Boolean = false,
     val backdrop_path: String = "",
     val genre_ids: List<Int> = listOf(),
-    val id: Int = -1,
     val original_title: String = "",
     val original_language: String = "",
     val overview: String = "",

@@ -27,6 +27,7 @@ object DaoModule {
 
     @Singleton
     @Provides
-    fun provideJwtDao(database: LocalRoomDatabase) = database.jwtDao()
+    fun provideMovieDao(database: LocalRoomDatabase) = database.movieDao()
+
 
 }

@@ -8,7 +8,7 @@ class HomeDomain @Inject constructor(
 ){
 
     fun logout() {
-        userRepository.clearUserData()
+        //userRepository.clearUserData()
     }
 
     companion object {

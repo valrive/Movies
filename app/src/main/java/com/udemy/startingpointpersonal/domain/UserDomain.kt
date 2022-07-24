@@ -8,15 +8,11 @@ class UserDomain @Inject constructor(
     private val userRepository: UserRepository
 ){
 
-    fun isLoggedIn() = userRepository.isLoggedIn()
+    fun isLoggedIn() = true//userRepository.isLoggedIn()
 
     fun getCurrentUser() = userRepository.getCurrentUser()
 
     suspend fun login(user: User){
-        val userResponse = userRepository.login(user)
-
-        // save current user
-        userRepository.saveUser(userResponse)
     }
 
     fun logout() {
@@ -24,7 +20,7 @@ class UserDomain @Inject constructor(
     }
 
     fun clearUserData() {
-        userRepository.clearUserData()
+        //userRepository.clearUserData()
     }
 
     companion object {

@@ -4,7 +4,6 @@ import android.app.Application
 import com.google.gson.*
 import com.udemy.startingpointpersonal.BuildConfig
 import com.udemy.startingpointpersonal.api.ApiService
-import com.udemy.startingpointpersonal.dao.JwtDao
 import com.udemy.startingpointpersonal.utils.DeviceUtils
 import dagger.Module
 import dagger.Provides
@@ -45,16 +44,10 @@ object ApiModule  {
     fun provideGsonConverterFactory(gson: Gson): GsonConverterFactory = GsonConverterFactory.create(gson)
 
     @Provides
-    fun provideHeadersInterceptor(application: Application, jwtDao: JwtDao) = Interceptor {
+    fun provideHeadersInterceptor(application: Application) = Interceptor {
 
         it.proceed(
             it.request().newBuilder()
-                .apply {
-                    // if there's a current user, use its authentication token
-                    jwtDao.findToken()?.let { jwt ->
-                        addHeader("Authorization", "Bearer ${jwt.token}")
-                    }
-                }
                 .addHeader("x-version-name", BuildConfig.VERSION_NAME)
                 .addHeader("x-version-code", "${BuildConfig.VERSION_CODE}")
                 .addHeader("x-language", Locale.getDefault().language)

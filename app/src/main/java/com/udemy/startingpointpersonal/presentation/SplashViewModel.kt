@@ -20,7 +20,7 @@ class SplashViewModel @Inject constructor (
     */
     fun fetchLoggedIn() = liveData {
         try{
-            emit(ApiResult.Success(userDomain.isLoggedIn()))
+            emit(ApiResult.Success(true))
         } catch(e: Exception){
             emit(ApiResult.Failure(e))
         }

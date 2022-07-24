@@ -4,17 +4,17 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.udemy.startingpointpersonal.pojos.Jwt
+import com.udemy.startingpointpersonal.pojos.User
 
 @Dao
-interface JwtDao {
+interface MovieDao {
 
-    @Query("select * from jwt limit 1")
-    fun findToken(): Jwt?
+    @Query("select * from user limit 1")
+    fun findCurrent(): User?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun saveToken(response: Jwt)
+    fun create(user: User)
 
-    @Query("delete from jwt")
-    fun clear()
+    @Query("delete from user")
+    fun deleteAll()
 }
