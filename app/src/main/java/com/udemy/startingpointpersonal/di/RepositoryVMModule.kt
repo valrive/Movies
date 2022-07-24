@@ -1,4 +1,4 @@
-package com.udemy.startingpointpersonal.ui.home
+package com.udemy.startingpointpersonal.di
 
 import com.udemy.startingpointpersonal.api.ApiService
 import com.udemy.startingpointpersonal.repository.MovieRepository
@@ -15,7 +15,7 @@ import javax.inject.Named
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class Homemodule {
+class RepositoryVMModule {
 
     @Provides
     @ViewModelScoped

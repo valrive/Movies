@@ -19,10 +19,6 @@ class PopularMoviesViewModel @Inject constructor(
     private val exceptionParser: ExceptionParser
 ) : ViewModel() {
 
-
-    private val _logoutBtn = MutableLiveData<Boolean>()
-    val logoutBtn: LiveData<Boolean> = _logoutBtn
-
     private val _status = MutableLiveData<Status>()
     val status: LiveData<Status> = _status
 
@@ -64,12 +60,5 @@ class PopularMoviesViewModel @Inject constructor(
      * dentro del repo se estarán ejecutando las corrutinas con el dispatcher.IO
      */
 
-
-    fun onLogoutClick() {
-        _status.value = Status.LOADING
-        homeDomain.logout()
-        _status.value = Status.SUCCESS
-        _logoutBtn.value = true
-    }
 
 }
