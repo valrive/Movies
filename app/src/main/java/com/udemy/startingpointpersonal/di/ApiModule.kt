@@ -1,10 +1,8 @@
 package com.udemy.startingpointpersonal.di
 
-import android.app.Application
 import com.google.gson.*
 import com.udemy.startingpointpersonal.BuildConfig
 import com.udemy.startingpointpersonal.api.ApiService
-import com.udemy.startingpointpersonal.utils.DeviceUtils
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,15 +42,12 @@ object ApiModule  {
     fun provideGsonConverterFactory(gson: Gson): GsonConverterFactory = GsonConverterFactory.create(gson)
 
     @Provides
-    fun provideHeadersInterceptor(application: Application) = Interceptor {
+    fun provideHeadersInterceptor() = Interceptor {
 
         it.proceed(
             it.request().newBuilder()
                 .addHeader("x-version-name", BuildConfig.VERSION_NAME)
                 .addHeader("x-version-code", "${BuildConfig.VERSION_CODE}")
-                .addHeader("x-language", Locale.getDefault().language)
-                .addHeader("x-terminal", DeviceUtils.getDeviceId(application))
-                //.addHeader("x-terminal", "test")
                 .build()
         )
     }
