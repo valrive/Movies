@@ -31,7 +31,8 @@ class MovieRepository @Inject constructor(
     }
 
     suspend fun getPopularMoviesResource(): ApiResult<MovieList> = withContext(Dispatchers.IO) {
-        ApiResults.createForResultNew(api.getPopulardMoviesNew(apiKey))
-        //ApiResults.createForNonApiBody(api.getPopulardMoviesNew(apiKey))
+        ApiResults.createForResultNew(
+            api.getPopulardMoviesNew(apiKey)
+        )
     }
 }

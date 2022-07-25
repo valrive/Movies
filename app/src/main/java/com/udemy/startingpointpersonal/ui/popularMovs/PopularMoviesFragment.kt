@@ -1,6 +1,5 @@
 package com.udemy.startingpointpersonal.ui.popularMovs
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -16,9 +15,15 @@ import com.udemy.startingpointpersonal.ui.popularMovs.adapter.SingleMovieAdapter
 import com.udemy.startingpointpersonal.utils.Util
 import dagger.hilt.android.AndroidEntryPoint
 
+sealed interface Action{
+    class Click(val movie: Movie): Action
+    class Share(val movie: Movie): Action
+    class Favorite(val movie: Movie): Action
+    class Delete(val movie: Movie): Action
+}
+
 @AndroidEntryPoint
-class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>(R.layout.fragment_popular_movies),
-    SingleMovieAdapter.OnSingleMovieClickListener {
+class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>(R.layout.fragment_popular_movies) {
     
     private val movieViewModel by viewModels<PopularMoviesViewModel>()
 
@@ -43,10 +48,9 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>(R.layout
         }
 
         movieViewModel.getPopularMovies.observe(viewLifecycleOwner){ list->
-            binding.rvMovies.adapter = SingleMovieAdapter(
-                list.results,
-                this@PopularMoviesFragment
-            )
+            SingleMovieAdapter(list.results){
+                onAction(it)
+            }.also { binding.rvMovies.adapter = it }
         }
 
         movieViewModel.errorPopularMovies.observe(viewLifecycleOwner){
@@ -55,9 +59,17 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>(R.layout
 
     }
 
-    override fun onMovieClick(movie: Movie) {
-        val action =
-            PopularMoviesFragmentDirections.actionPopularMoviesFragmentToDetailFragment(movie)
-        findNavController().navigate(action)
+    private fun onAction(action: Action) {
+        when(action){
+            is Action.Click -> navigateToDetail(action.movie)
+            is Action.Delete -> TODO()
+            is Action.Favorite -> TODO()
+            is Action.Share -> TODO()
+        }
     }
+
+    private fun navigateToDetail(movie: Movie) = findNavController().navigate(
+            PopularMoviesFragmentDirections.actionPopularMoviesFragmentToDetailFragment(movie)
+    )
+
 }
