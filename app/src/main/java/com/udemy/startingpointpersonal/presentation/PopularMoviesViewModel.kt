@@ -1,7 +1,7 @@
 package com.udemy.startingpointpersonal.presentation
 
 import androidx.lifecycle.*
-import com.udemy.startingpointpersonal.core.ApiResult
+import com.udemy.startingpointpersonal.api.ApiResult
 import com.udemy.startingpointpersonal.domain.HomeDomain
 import com.udemy.startingpointpersonal.repository.MovieRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -35,15 +35,19 @@ class SingleMovieAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie) {
-            binding.root.setOnClickListener { onAction(Action.Click(movie)) }
-            binding.url = "https://image.tmdb.org/t/p/w500/${movie.poster_path}"
+            with(binding){
+                root.setOnClickListener { onAction(Action.Click(movie)) }
+                url = "https://image.tmdb.org/t/p/w500/${movie.poster_path}"
+                title = movie.title
+                tvTitle.isSelected = true
+            }
         }
     }
 
 }
 
-@BindingAdapter("url2")
-fun ImageView.loadUrl2(url: String){
+@BindingAdapter("url")
+fun ImageView.loadUrl(url: String){
     url.let {
         Glide.with(this)
             .load(it)

@@ -1,7 +1,7 @@
 package com.udemy.startingpointpersonal.repository
 
 import com.udemy.startingpointpersonal.api.ApiService
-import com.udemy.startingpointpersonal.core.ApiResult
+import com.udemy.startingpointpersonal.api.ApiResult
 import com.udemy.startingpointpersonal.pojos.MovieList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

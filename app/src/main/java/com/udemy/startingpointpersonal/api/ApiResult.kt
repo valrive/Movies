@@ -1,4 +1,4 @@
-package com.udemy.startingpointpersonal.core
+package com.udemy.startingpointpersonal.api
 
 sealed class ApiResult<out T> {
 
