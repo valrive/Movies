@@ -47,10 +47,6 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>(R.layout
             }.also { binding.rvMovies.adapter = it }
         }
 
-        movieViewModel.errorPopularMovies.observe(viewLifecycleOwner){
-            Toast.makeText(requireContext(), it?.mensaje, Toast.LENGTH_SHORT).show()
-        }
-
     }
 
     private fun onAction(action: Action) {

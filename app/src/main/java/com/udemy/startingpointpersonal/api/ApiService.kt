@@ -1,17 +1,12 @@
 package com.udemy.startingpointpersonal.api
 
 import com.udemy.startingpointpersonal.pojos.MovieList
-import com.udemy.startingpointpersonal.pojos.User
 import retrofit2.Call
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Query
 
 
 interface ApiService {
-
-    @GET("user/me/login")
-    fun login(@Header("Authorization") token: String): Call<User>
 
     @GET("movie/upcoming")
     suspend fun getUpcomingMovies(@Query("api_key") apiKey: String): MovieList

@@ -27,7 +27,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                app:url="@{url}"
+                app:url2="@{url}"
                 android:src="@mipmap/ic_launcher"/>
 
         </androidx.cardview.widget.CardView>

@@ -2,17 +2,15 @@ package com.udemy.startingpointpersonal.dao
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.udemy.startingpointpersonal.pojos.User
+import com.udemy.startingpointpersonal.pojos.Movie
 
 @Database(
     entities = [
-        User::class
+        Movie::class
     ],
     version = 1,
     exportSchema = false)
 abstract class LocalRoomDatabase : RoomDatabase() {
-
-    abstract fun userDao(): UserDao
 
     abstract fun movieDao(): MovieDao
 

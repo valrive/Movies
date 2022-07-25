@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
+import kotlinx.android.parcel.RawValue
 
 @Parcelize
 @Entity(tableName = "movie")
@@ -11,7 +12,7 @@ data class Movie(
     @PrimaryKey val id: Int = -1,
     val adult: Boolean = false,
     val backdrop_path: String = "",
-    val genre_ids: List<Int> = listOf(),
+    //val genre_ids: List<Int> = listOf(),
     val original_title: String = "",
     val original_language: String = "",
     val overview: String = "",

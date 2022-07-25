@@ -23,10 +23,6 @@ object DaoModule {
 
     @Singleton
     @Provides
-    fun provideUserDao(database: LocalRoomDatabase) = database.userDao()
-
-    @Singleton
-    @Provides
     fun provideMovieDao(database: LocalRoomDatabase) = database.movieDao()
 
 

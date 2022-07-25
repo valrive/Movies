@@ -1,8 +1,7 @@
 package com.udemy.startingpointpersonal.di
 
 import com.udemy.startingpointpersonal.api.ApiService
-import com.udemy.startingpointpersonal.dao.UserDao
-import com.udemy.startingpointpersonal.repository.UserRepository
+import com.udemy.startingpointpersonal.dao.MovieDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,8 +12,8 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class RepositorySModule {
 
-    @Singleton
+    /*@Singleton
     @Provides
-    fun userRepositoryProvider(userDao: UserDao, api: ApiService) =
-        UserRepository(userDao, api)
+    fun userRepositoryProvider(movieDao: MovieDao, api: ApiService) =
+        UserRepository(movieDao, api)*/
 }

@@ -4,10 +4,8 @@ import androidx.lifecycle.*
 import com.udemy.startingpointpersonal.core.ApiResult
 import com.udemy.startingpointpersonal.domain.HomeDomain
 import com.udemy.startingpointpersonal.repository.MovieRepository
-import com.udemy.startingpointpersonal.api.ExceptionParser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import com.udemy.startingpointpersonal.core.ServiceErrorHandler
 import com.udemy.startingpointpersonal.pojos.MovieList
 import com.udemy.startingpointpersonal.ui.Status
 import kotlinx.coroutines.launch
@@ -15,8 +13,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class PopularMoviesViewModel @Inject constructor(
     private val repo: MovieRepository,
-    private val homeDomain: HomeDomain,
-    private val exceptionParser: ExceptionParser
+    private val homeDomain: HomeDomain
 ) : ViewModel() {
 
     private val _status = MutableLiveData<Status>()
@@ -24,8 +21,6 @@ class PopularMoviesViewModel @Inject constructor(
 
     private val _getPopularMovies = MutableLiveData<MovieList>()
     val getPopularMovies: LiveData<MovieList> = _getPopularMovies
-    private val _errorPopularMovies = MutableLiveData<ServiceErrorHandler?>()
-    val errorPopularMovies: LiveData<ServiceErrorHandler?> = _errorPopularMovies
 
 
     init {

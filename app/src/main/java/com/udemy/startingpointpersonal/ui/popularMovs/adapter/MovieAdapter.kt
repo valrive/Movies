@@ -3,7 +3,10 @@ package com.udemy.startingpointpersonal.ui.popularMovs.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.udemy.startingpointpersonal.databinding.MovieItemBinding
 import com.udemy.startingpointpersonal.pojos.Movie
 
@@ -29,16 +32,24 @@ class SingleMovieAdapter(
     private inner class ItemViewHolder(
         val binding: MovieItemBinding,
         val onAction: (Action) -> Unit
-        //) : RecyclerView.ViewHolder(binding.root) {
-    ) : BaseViewHolder<Movie>(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        override fun bind(movie: Movie) {
+        fun bind(movie: Movie) {
             binding.root.setOnClickListener { onAction(Action.Click(movie)) }
-
             binding.url = "https://image.tmdb.org/t/p/w500/${movie.poster_path}"
         }
     }
 
+}
+
+@BindingAdapter("url2")
+fun ImageView.loadUrl2(url: String){
+    url.let {
+        Glide.with(this)
+            .load(it)
+            .centerCrop()
+            .into(this)
+    }
 }
 
 sealed interface Action{
@@ -48,6 +59,3 @@ sealed interface Action{
     class Delete(val movie: Movie): Action
 }
 
-abstract class BaseViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    abstract fun bind(item: T)
-}

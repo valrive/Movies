@@ -4,17 +4,17 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.udemy.startingpointpersonal.pojos.User
+import com.udemy.startingpointpersonal.pojos.Movie
 
 @Dao
 interface MovieDao {
 
-    @Query("select * from user limit 1")
-    fun findCurrent(): User?
+    @Query("select * from movie limit 1")
+    fun findCurrent(): Movie?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun create(user: User)
+    fun create(user: Movie)
 
-    @Query("delete from user")
+    @Query("delete from movie")
     fun deleteAll()
 }
