@@ -11,16 +11,10 @@ import com.udemy.startingpointpersonal.pojos.Movie
 import com.udemy.startingpointpersonal.presentation.PopularMoviesViewModel
 import com.udemy.startingpointpersonal.ui.BaseFragment
 import com.udemy.startingpointpersonal.ui.Status
+import com.udemy.startingpointpersonal.ui.popularMovs.adapter.Action
 import com.udemy.startingpointpersonal.ui.popularMovs.adapter.SingleMovieAdapter
 import com.udemy.startingpointpersonal.utils.Util
 import dagger.hilt.android.AndroidEntryPoint
-
-sealed interface Action{
-    class Click(val movie: Movie): Action
-    class Share(val movie: Movie): Action
-    class Favorite(val movie: Movie): Action
-    class Delete(val movie: Movie): Action
-}
 
 @AndroidEntryPoint
 class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>(R.layout.fragment_popular_movies) {

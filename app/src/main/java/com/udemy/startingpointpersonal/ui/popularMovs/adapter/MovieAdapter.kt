@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.udemy.startingpointpersonal.databinding.MovieItemBinding
 import com.udemy.startingpointpersonal.pojos.Movie
-import com.udemy.startingpointpersonal.ui.popularMovs.Action
 
 class SingleMovieAdapter(
     private val list: List<Movie>,
@@ -40,6 +39,13 @@ class SingleMovieAdapter(
         }
     }
 
+}
+
+sealed interface Action{
+    class Click(val movie: Movie): Action
+    class Share(val movie: Movie): Action
+    class Favorite(val movie: Movie): Action
+    class Delete(val movie: Movie): Action
 }
 
 abstract class BaseViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
