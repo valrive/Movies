@@ -2,6 +2,7 @@ package com.udemy.startingpointpersonal.di
 
 import com.udemy.startingpointpersonal.domain.HomeDomain
 import com.udemy.startingpointpersonal.domain.UserDomain
+import com.udemy.startingpointpersonal.repository.MovieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,10 +15,10 @@ class DomainModule {
 
     /*@Singleton
     @Provides
-    fun userDomainProvider(userRepository: UserRepository): UserDomain = UserDomain(userRepository)
+    fun userDomainProvider(userRepository: UserRepository): UserDomain = UserDomain(userRepository)*/
 
     @Singleton
     @Provides
-    fun homeDomainProvider(userRepository: UserRepository): HomeDomain = HomeDomain(userRepository)*/
+    fun homeDomainProvider(repo: MovieRepository) = HomeDomain(repo)
 
 }

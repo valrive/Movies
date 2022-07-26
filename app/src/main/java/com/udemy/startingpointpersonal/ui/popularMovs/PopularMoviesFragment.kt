@@ -34,11 +34,11 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>(R.layout
             when(status){
                 Status.SUCCESS, Status.FAILURE -> {
                     binding.loading = false
-                    //Util.escondeProgressBar(requireActivity())
+                    Util.escondeProgressBar(requireActivity())
                 }
                 Status.LOADING -> {
                     binding.loading = true
-                    //Util.muestraProgressBar(requireActivity())
+                    Util.muestraProgressBar(requireActivity())
                 }
                 else -> {}
             }

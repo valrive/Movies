@@ -12,7 +12,6 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class PopularMoviesViewModel @Inject constructor(
-    private val repo: MovieRepository,
     private val homeDomain: HomeDomain
 ) : ViewModel() {
 
@@ -26,9 +25,7 @@ class PopularMoviesViewModel @Inject constructor(
     init {
        _status.value = Status.LOADING
         viewModelScope.launch{
-            val result = repo.getPopularMovies()
-            //val result = repo.getPopularMoviesResource()
-            when (result) {
+            when (val result = homeDomain.getPopularMovies()) {
                 is ApiResult.Success -> {
                     _getPopularMovies.value = result.data
                     _status.value = Status.SUCCESS
