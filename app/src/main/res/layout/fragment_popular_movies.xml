@@ -15,6 +15,8 @@
         android:fitsSystemWindows="true">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:visibility="@{(loading ?? false) ? View.GONE: View.VISIBLE}"
+            tools:visibility="gone"
             android:id="@+id/rv_movies"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -25,6 +27,30 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:visibility="@{(loading ?? false) ? View.VISIBLE: View.GONE}"
+            android:id="@+id/view_loading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:shimmer_auto_start="true"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/movie_item_loading"/>
+                <include layout="@layout/movie_item_loading"/>
+                <include layout="@layout/movie_item_loading"/>
+                <include layout="@layout/movie_item_loading"/>
+                <include layout="@layout/movie_item_loading"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -39,6 +39,8 @@ class SingleMovieAdapter(
                 root.setOnClickListener { onAction(Action.Click(movie)) }
                 url = "https://image.tmdb.org/t/p/w500/${movie.poster_path}"
                 title = movie.title
+
+                //hacemos que funcione ellipsize
                 tvTitle.isSelected = true
             }
         }

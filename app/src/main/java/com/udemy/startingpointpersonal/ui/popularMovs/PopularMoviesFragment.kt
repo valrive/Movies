@@ -29,13 +29,16 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>(R.layout
     }
 
     private fun observers(){
+        //Se puede migrar este observer al activity o fragment padre y que él se encargue  (se puede hacer mediante un VM compartido)
         movieViewModel.status.observe(viewLifecycleOwner){ status->
             when(status){
                 Status.SUCCESS, Status.FAILURE -> {
-                    Util.escondeProgressBar(requireActivity())
+                    binding.loading = false
+                    //Util.escondeProgressBar(requireActivity())
                 }
                 Status.LOADING -> {
-                    Util.muestraProgressBar(requireActivity())
+                    binding.loading = true
+                    //Util.muestraProgressBar(requireActivity())
                 }
                 else -> {}
             }

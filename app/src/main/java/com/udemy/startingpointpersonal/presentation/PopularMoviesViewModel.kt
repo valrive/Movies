@@ -28,7 +28,6 @@ class PopularMoviesViewModel @Inject constructor(
         viewModelScope.launch{
             val result = repo.getPopularMovies()
             //val result = repo.getPopularMoviesResource()
-
             when (result) {
                 is ApiResult.Success -> {
                     _getPopularMovies.value = result.data
