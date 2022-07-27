@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.udemy.startingpointpersonal.databinding.MovieItemBinding
 import com.udemy.startingpointpersonal.pojos.Movie
 
+//todo(Se puede cambiar el adapter a un tipo ListAdapter porque según es más rápido, además nos quitamos de andar pasando el listado)
 class SingleMovieAdapter(
     private val list: List<Movie>,
     private val onAction: (Action) -> Unit

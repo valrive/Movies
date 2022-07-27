@@ -68,7 +68,7 @@ android {
         }
         valentin {
             dimension "general"
-            resValue "string", "app_name", "Starting-Vale"
+            resValue "string", "app_name", "AStarting-Vale"
             resValue "string", "config_api_url", "https://api.themoviedb.org/3/"
             resValue "string", "api_key", "6e85a9d3ce3f6a60280166679f8ccc6a"
             resValue "string", "config_info_version", "Versión " + android.defaultConfig.versionName + ", Valentino"

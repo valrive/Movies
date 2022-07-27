@@ -8,6 +8,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import com.udemy.startingpointpersonal.pojos.MovieList
 import com.udemy.startingpointpersonal.ui.Status
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -15,20 +19,23 @@ class PopularMoviesViewModel @Inject constructor(
     private val homeDomain: HomeDomain
 ) : ViewModel() {
 
-    private val _status = MutableLiveData<Status>()
-    val status: LiveData<Status> = _status
+    data class UiState(
+        val status: Status? = null,
+        val movies: MovieList? = null
+    )
 
-    private val _getPopularMovies = MutableLiveData<MovieList>()
-    val getPopularMovies: LiveData<MovieList> = _getPopularMovies
+    private val _state = MutableStateFlow(UiState())
+    val state: StateFlow<UiState> = _state//.asStateFlow()
 
 
     init {
-       _status.value = Status.LOADING
+        _state.update { it.copy(status = Status.LOADING) }
+
         viewModelScope.launch{
             when (val result = homeDomain.getPopularMovies()) {
                 is ApiResult.Success -> {
-                    _getPopularMovies.value = result.data
-                    _status.value = Status.SUCCESS
+                    _state.update { it.copy(status = Status.SUCCESS) }
+                    _state.update { it.copy(movies = result.data) }
                 }
 /*
                 is ApiResult.ErrorSEH -> {
