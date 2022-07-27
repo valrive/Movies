@@ -1,6 +1,7 @@
 package com.udemy.startingpointpersonal.di
 
 import com.udemy.startingpointpersonal.model.api.ApiService
+import com.udemy.startingpointpersonal.model.dao.MovieDao
 import com.udemy.startingpointpersonal.model.repository.MovieRepository
 import dagger.Module
 import dagger.Provides
@@ -19,6 +20,9 @@ class RepositoryVMModule {
 
     @Provides
     @ViewModelScoped
-    fun movieRepositoryProvider(@Named("apiKey") apiKey: String, api: ApiService) =
-        MovieRepository(apiKey, api)
+    fun movieRepositoryProvider(
+        @Named("apiKey") apiKey: String,
+        movieDao: MovieDao,
+        api: ApiService
+    ) = MovieRepository(apiKey, movieDao, api)
 }

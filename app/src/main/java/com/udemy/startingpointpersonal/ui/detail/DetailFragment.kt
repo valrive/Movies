@@ -3,7 +3,6 @@ package com.udemy.startingpointpersonal.ui.detail
 import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
 import com.udemy.startingpointpersonal.R
 import com.udemy.startingpointpersonal.databinding.FragmentDetailBinding
 import com.udemy.startingpointpersonal.ui.BaseFragment

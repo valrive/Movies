@@ -7,5 +7,11 @@ import androidx.room.PrimaryKey
 data class Movie(
     @PrimaryKey(autoGenerate = true) val id: Int,
     val title: String,
-    val posterPath: String
+    val posterPath: String,
+    val backdropPath: String,
+    val voteAverage: Double,
+    val voteCount: Int,
+    val releaseDate: String,
+    val originalLanguage: String,
+    val overview: String
 )
