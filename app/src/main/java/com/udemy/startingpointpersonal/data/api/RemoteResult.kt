@@ -1,10 +1,6 @@
 package com.udemy.startingpointpersonal.data.api
 
-import android.os.Parcelable
-import androidx.room.Entity
-import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import kotlinx.android.parcel.Parcelize
 
 data class RemoteResult(
     val page: Int,
@@ -13,13 +9,11 @@ data class RemoteResult(
     @SerializedName("total_results") val totalResults: Int
 )
 
-@Parcelize
-@Entity(tableName = "movie")
 data class Movie(
-    @PrimaryKey val id: Int,
+    val id: Int,
     val adult: Boolean,
     @SerializedName("backdrop_path") val backdropPath: String,
-    //@SerializedName("genre_ids") val genreIds: List<Int>,
+    @SerializedName("genre_ids") val genreIds: List<Int>,
     @SerializedName("original_title") val originalTitle: String,
     @SerializedName("original_language") val originalLanguage: String,
     val overview: String,
@@ -30,4 +24,4 @@ data class Movie(
     val video: Boolean,
     @SerializedName("vote_average") val voteAverage: Double,
     @SerializedName("vote_count") val voteCount: Int
-): Parcelable
+)

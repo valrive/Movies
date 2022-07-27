@@ -41,29 +41,24 @@ class PopularMoviesFragment :
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect { state ->
                     when (state.status) {
-                        Status.SUCCESS, Status.FAILURE -> {
-                            binding.loading = false
-                            requireActivity().escondeProgressBar()
-                        }
                         Status.LOADING -> {
                             binding.loading = true
                             requireActivity().muestraProgressBar()
                         }
-                        else -> {}
+                        Status.SUCCESS, Status.FAILURE -> {
+                            binding.loading = false
+                            requireActivity().escondeProgressBar()
+                        }
                     }
+                    adapter.submitList(state.movies)
 
-                    state.movies?.let { list ->
-                        adapter.submitList(list)
-
-                        /*var newResult = listOf<Movie>()
-                        for(movie in movieList.results){
-                            newResult = listOf(movie) + newResult
-                            //newResult = newResult + listOf(movie)
-                            adapter.submitList(newResult)
-                            delay(10)
-                        }*/
-
-                    }
+                    /*var newResult = listOf<Movie>()
+                    for(movie in movieList.results){
+                        newResult = listOf(movie) + newResult
+                        //newResult = newResult + listOf(movie)
+                        adapter.submitList(newResult)
+                        delay(10)
+                    }*/
 
                 }
 

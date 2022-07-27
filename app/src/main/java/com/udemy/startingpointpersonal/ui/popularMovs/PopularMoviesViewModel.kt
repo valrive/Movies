@@ -7,6 +7,7 @@ import com.udemy.startingpointpersonal.domain.GetAllMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import com.udemy.startingpointpersonal.ui.Status
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -18,8 +19,9 @@ class PopularMoviesViewModel @Inject constructor(
 ) : ViewModel() {
 
     data class UiState(
-        val status: Status? = null,
-        val movies: List<Movie>? = null
+        //Estados iniciales
+        val status: Status = Status.LOADING,
+        val movies: List<Movie> = emptyList()
     )
 
     private val _state = MutableStateFlow(UiState())
@@ -27,8 +29,7 @@ class PopularMoviesViewModel @Inject constructor(
 
 
     init {
-        _state.update { it.copy(status = Status.LOADING) }
-
+        _state.update { it }
         viewModelScope.launch{
             when (val result = getAllMoviesUseCase()) {
                 is ApiResult.Success -> {
