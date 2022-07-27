@@ -1,20 +1,24 @@
 package com.udemy.startingpointpersonal.ui.popularMovs.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.udemy.startingpointpersonal.databinding.MovieItemBinding
 import com.udemy.startingpointpersonal.pojos.Movie
+import com.udemy.startingpointpersonal.utils.basicDiffUtil
+import kotlin.properties.Delegates
 
-//todo(Se puede cambiar el adapter a un tipo ListAdapter porque según es más rápido, además nos quitamos de andar pasando el listado)
-class SingleMovieAdapter(
-    private val list: List<Movie>,
+class MovieAdapter(
     private val onAction: (Action) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    var movies: List<Movie> by basicDiffUtil(
+        areItemsTheSame = {old, new -> old.id == new.id}
+    )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val itemBinding =
@@ -22,11 +26,11 @@ class SingleMovieAdapter(
         return ItemViewHolder(itemBinding, onAction)
     }
 
-    override fun getItemCount() = list.size
+    override fun getItemCount() = movies.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is ItemViewHolder -> holder.bind(list[position])
+            is ItemViewHolder -> holder.bind(movies[position])
         }
     }
 
@@ -36,7 +40,7 @@ class SingleMovieAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(movie: Movie) {
-            with(binding){
+            with(binding) {
                 root.setOnClickListener { onAction(Action.Click(movie)) }
                 url = "https://image.tmdb.org/t/p/w500/${movie.poster_path}"
                 title = movie.title
@@ -49,20 +53,10 @@ class SingleMovieAdapter(
 
 }
 
-@BindingAdapter("url")
-fun ImageView.loadUrl(url: String){
-    url.let {
-        Glide.with(this)
-            .load(it)
-            .centerCrop()
-            .into(this)
-    }
-}
-
-sealed interface Action{
-    class Click(val movie: Movie): Action
-    class Share(val movie: Movie): Action
-    class Favorite(val movie: Movie): Action
-    class Delete(val movie: Movie): Action
+sealed interface Action {
+    class Click(val movie: Movie) : Action
+    class Share(val movie: Movie) : Action
+    class Favorite(val movie: Movie) : Action
+    class Delete(val movie: Movie) : Action
 }
 

@@ -14,27 +14,29 @@ import com.udemy.startingpointpersonal.presentation.PopularMoviesViewModel
 import com.udemy.startingpointpersonal.ui.BaseFragment
 import com.udemy.startingpointpersonal.ui.Status
 import com.udemy.startingpointpersonal.ui.popularMovs.adapter.Action
-import com.udemy.startingpointpersonal.ui.popularMovs.adapter.SingleMovieAdapter
+import com.udemy.startingpointpersonal.ui.popularMovs.adapter.MovieAdapter
 import com.udemy.startingpointpersonal.utils.Util
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>(R.layout.fragment_popular_movies) {
     
     private val viewModel by viewModels<PopularMoviesViewModel>()
+    private val adapter = MovieAdapter{onAction(it)}
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //liveDataObservers()
+        binding.rvMovies.adapter = adapter
+
         stateFlowCollectors()
     }
 
     private fun stateFlowCollectors(){
 
-        //Se puede migrar este observer al activity o fragment padre y que él se encargue  (se puede hacer mediante un VM compartido)
+
         viewLifecycleOwner.lifecycleScope.launch{
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
                 viewModel.state.collect{ state ->
@@ -51,15 +53,21 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>(R.layout
                     }
 
                     state.movies?.let {movieList ->
-                        SingleMovieAdapter(movieList.results){
-                            onAction(it)
-                        }.also { binding.rvMovies.adapter = it }
+                        var newResult = listOf<Movie>()
+                        for(movie in movieList.results){
+                            newResult = listOf(movie) + newResult
+                            adapter.movies = newResult
+                            delay(1000)
+                        }
+
                     }
 
                 }
+
             }
         }
     }
+
 
     private fun onAction(action: Action) {
         when(action){
