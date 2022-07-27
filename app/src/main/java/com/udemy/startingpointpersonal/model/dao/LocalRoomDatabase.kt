@@ -2,7 +2,7 @@ package com.udemy.startingpointpersonal.model.dao
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.udemy.startingpointpersonal.model.pojos.Movie
+import com.udemy.startingpointpersonal.model.api.Movie
 
 @Database(
     entities = [

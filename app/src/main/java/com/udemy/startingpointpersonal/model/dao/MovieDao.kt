@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.udemy.startingpointpersonal.model.pojos.Movie
+import com.udemy.startingpointpersonal.model.api.Movie
 
 @Dao
 interface MovieDao {

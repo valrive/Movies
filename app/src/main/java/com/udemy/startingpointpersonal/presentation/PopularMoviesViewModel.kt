@@ -3,7 +3,7 @@ package com.udemy.startingpointpersonal.presentation
 import androidx.lifecycle.*
 import com.udemy.startingpointpersonal.model.api.ApiResult
 import com.udemy.startingpointpersonal.domain.HomeDomain
-import com.udemy.startingpointpersonal.model.pojos.Movie
+import com.udemy.startingpointpersonal.model.api.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import com.udemy.startingpointpersonal.ui.Status

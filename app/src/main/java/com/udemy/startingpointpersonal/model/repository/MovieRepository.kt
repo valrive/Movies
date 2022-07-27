@@ -2,7 +2,7 @@ package com.udemy.startingpointpersonal.model.repository
 
 import com.udemy.startingpointpersonal.model.api.ApiService
 import com.udemy.startingpointpersonal.model.api.ApiResult
-import com.udemy.startingpointpersonal.model.pojos.Movie
+import com.udemy.startingpointpersonal.model.api.Movie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

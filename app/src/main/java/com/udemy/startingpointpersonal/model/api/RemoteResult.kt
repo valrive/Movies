@@ -1,4 +1,4 @@
-package com.udemy.startingpointpersonal.model.pojos
+package com.udemy.startingpointpersonal.model.api
 
 import android.os.Parcelable
 import androidx.room.Entity

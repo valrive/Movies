@@ -1,6 +1,5 @@
 package com.udemy.startingpointpersonal.model.api
 
-import com.udemy.startingpointpersonal.model.pojos.RemoteResult
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
