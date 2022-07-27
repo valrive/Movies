@@ -15,6 +15,7 @@ import com.udemy.startingpointpersonal.ui.*
 import com.udemy.startingpointpersonal.ui.popularMovs.adapter.Action
 import com.udemy.startingpointpersonal.ui.popularMovs.adapter.MovieAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -53,11 +54,10 @@ class PopularMoviesFragment :
                     adapter.submitList(state.movies)
 
                     /*var newResult = listOf<Movie>()
-                    for(movie in movieList.results){
+                    for(movie in state.movies){
                         newResult = listOf(movie) + newResult
-                        //newResult = newResult + listOf(movie)
                         adapter.submitList(newResult)
-                        delay(10)
+                        delay(20)
                     }*/
 
                 }
