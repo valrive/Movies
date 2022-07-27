@@ -25,7 +25,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:gravity="center"
-                android:text="This is the movie details"
+                app:url="@{movie.backdropPath}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
@@ -53,6 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
+                app:url="@{movie.posterPath}"
                 android:src="@mipmap/ic_launcher" />
 
         </androidx.cardview.widget.CardView>
