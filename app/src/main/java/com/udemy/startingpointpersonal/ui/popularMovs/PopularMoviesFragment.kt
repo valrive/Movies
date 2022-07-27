@@ -43,8 +43,6 @@ class PopularMoviesFragment :
     }
 
     private fun stateFlowCollectors() {
-
-
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.state.collect { state ->
@@ -66,8 +64,9 @@ class PopularMoviesFragment :
                         /*var newResult = listOf<Movie>()
                         for(movie in movieList.results){
                             newResult = listOf(movie) + newResult
+                            //newResult = newResult + listOf(movie)
                             adapter.submitList(newResult)
-                            delay(1000)
+                            delay(10)
                         }*/
 
                     }

@@ -34,8 +34,7 @@ class PopularMoviesViewModel @Inject constructor(
         viewModelScope.launch{
             when (val result = homeDomain.getPopularMovies()) {
                 is ApiResult.Success -> {
-                    _state.update { it.copy(status = Status.SUCCESS) }
-                    _state.update { it.copy(movies = result.data) }
+                    _state.update { it.copy(status = Status.SUCCESS, movies = result.data) }
                 }
 /*
                 is ApiResult.ErrorSEH -> {
