@@ -7,11 +7,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.udemy.startingpointpersonal.R
 import com.udemy.startingpointpersonal.databinding.FragmentPopularMoviesBinding
 import com.udemy.startingpointpersonal.pojos.Movie
 import com.udemy.startingpointpersonal.presentation.PopularMoviesViewModel
 import com.udemy.startingpointpersonal.ui.BaseFragment
+import com.udemy.startingpointpersonal.ui.MainActivity
 import com.udemy.startingpointpersonal.ui.Status
 import com.udemy.startingpointpersonal.ui.popularMovs.adapter.Action
 import com.udemy.startingpointpersonal.ui.popularMovs.adapter.MovieAdapter
@@ -21,25 +24,30 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>(R.layout.fragment_popular_movies) {
-    
+class PopularMoviesFragment :
+    BaseFragment<FragmentPopularMoviesBinding>(R.layout.fragment_popular_movies) {
+
     private val viewModel by viewModels<PopularMoviesViewModel>()
-    private val adapter = MovieAdapter{onAction(it)}
+    private val adapter = MovieAdapter { onAction(it) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (requireActivity() as MainActivity).supportActionBar?.hide()
+
         binding.rvMovies.adapter = adapter
+        binding.rvMovies.layoutManager =
+            GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
 
         stateFlowCollectors()
     }
 
-    private fun stateFlowCollectors(){
+    private fun stateFlowCollectors() {
 
 
-        viewLifecycleOwner.lifecycleScope.launch{
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED){
-                viewModel.state.collect{ state ->
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.state.collect { state ->
                     when (state.status) {
                         Status.SUCCESS, Status.FAILURE -> {
                             binding.loading = false
@@ -52,13 +60,15 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>(R.layout
                         else -> {}
                     }
 
-                    state.movies?.let {movieList ->
-                        var newResult = listOf<Movie>()
+                    state.movies?.let { movieList ->
+                        adapter.submitList(movieList.results)
+
+                        /*var newResult = listOf<Movie>()
                         for(movie in movieList.results){
                             newResult = listOf(movie) + newResult
-                            adapter.movies = newResult
+                            adapter.submitList(newResult)
                             delay(1000)
-                        }
+                        }*/
 
                     }
 
@@ -70,7 +80,7 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>(R.layout
 
 
     private fun onAction(action: Action) {
-        when(action){
+        when (action) {
             is Action.Click -> navigateToDetail(action.movie)
             is Action.Delete -> TODO()
             is Action.Favorite -> TODO()
@@ -79,7 +89,7 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>(R.layout
     }
 
     private fun navigateToDetail(movie: Movie) = findNavController().navigate(
-            PopularMoviesFragmentDirections.actionPopularMoviesFragmentToDetailFragment(movie)
+        PopularMoviesFragmentDirections.actionPopularMoviesFragmentToDetailFragment(movie)
     )
 
 }
