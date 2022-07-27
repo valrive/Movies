@@ -25,6 +25,19 @@ import java.util.*
 import kotlin.properties.Delegates
 
 
+fun String.toDate(): Date? {
+    val formatDate = "yyyy/MM/dd'T'HH:mm:ssZZZ"
+
+    var formatter = SimpleDateFormat(formatDate, Locale.getDefault())
+    formatter.timeZone = TimeZone.getTimeZone("UTC")
+    var date = formatter.parse(this)
+    if(date == null){
+        formatter = SimpleDateFormat(formatDate, Locale.getDefault())//Constants.DEFAULT_LOCALE
+        formatter.timeZone = TimeZone.getTimeZone("UTC")
+        date = formatter.parse(this)
+    }
+    return date
+}
 fun Context.toast(message: String) {
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 }
