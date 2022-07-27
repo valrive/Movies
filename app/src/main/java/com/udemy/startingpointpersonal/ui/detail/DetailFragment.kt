@@ -6,7 +6,7 @@ import androidx.navigation.fragment.navArgs
 import com.udemy.startingpointpersonal.R
 import com.udemy.startingpointpersonal.databinding.FragmentDetailBinding
 import com.udemy.startingpointpersonal.ui.BaseFragment
-import com.udemy.startingpointpersonal.utils.loadUrl
+import com.udemy.startingpointpersonal.ui.loadUrl
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

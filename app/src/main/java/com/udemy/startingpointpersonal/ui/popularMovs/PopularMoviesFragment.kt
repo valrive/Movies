@@ -11,13 +11,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.udemy.startingpointpersonal.R
 import com.udemy.startingpointpersonal.databinding.FragmentPopularMoviesBinding
 import com.udemy.startingpointpersonal.model.pojos.Movie
-import com.udemy.startingpointpersonal.presentation.PopularMoviesViewModel
-import com.udemy.startingpointpersonal.ui.BaseFragment
-import com.udemy.startingpointpersonal.ui.MainActivity
-import com.udemy.startingpointpersonal.ui.Status
+import com.udemy.startingpointpersonal.ui.*
 import com.udemy.startingpointpersonal.ui.popularMovs.adapter.Action
 import com.udemy.startingpointpersonal.ui.popularMovs.adapter.MovieAdapter
-import com.udemy.startingpointpersonal.utils.Util
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -47,11 +43,11 @@ class PopularMoviesFragment :
                     when (state.status) {
                         Status.SUCCESS, Status.FAILURE -> {
                             binding.loading = false
-                            Util.escondeProgressBar(requireActivity())
+                            requireActivity().escondeProgressBar()
                         }
                         Status.LOADING -> {
                             binding.loading = true
-                            Util.muestraProgressBar(requireActivity())
+                            requireActivity().muestraProgressBar()
                         }
                         else -> {}
                     }

@@ -1,4 +1,4 @@
-package com.udemy.startingpointpersonal.presentation
+package com.udemy.startingpointpersonal.ui.popularMovs
 
 import androidx.lifecycle.*
 import com.udemy.startingpointpersonal.model.api.ApiResult

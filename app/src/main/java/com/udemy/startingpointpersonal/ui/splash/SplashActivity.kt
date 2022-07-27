@@ -5,7 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
 import com.udemy.startingpointpersonal.ui.MainActivity
-import com.udemy.startingpointpersonal.utils.startActivity
+import com.udemy.startingpointpersonal.ui.startActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
