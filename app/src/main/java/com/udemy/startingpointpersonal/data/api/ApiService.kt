@@ -1,4 +1,4 @@
-package com.udemy.startingpointpersonal.model.api
+package com.udemy.startingpointpersonal.data.api
 
 import retrofit2.Call
 import retrofit2.http.GET

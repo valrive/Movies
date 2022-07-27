@@ -1,4 +1,4 @@
-package com.udemy.startingpointpersonal.model.dao
+package com.udemy.startingpointpersonal.data.dao
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

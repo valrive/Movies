@@ -2,7 +2,7 @@ package com.udemy.startingpointpersonal.di
 
 import com.google.gson.*
 import com.udemy.startingpointpersonal.BuildConfig
-import com.udemy.startingpointpersonal.model.api.ApiService
+import com.udemy.startingpointpersonal.data.api.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

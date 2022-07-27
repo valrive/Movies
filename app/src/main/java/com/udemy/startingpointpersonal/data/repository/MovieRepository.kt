@@ -1,9 +1,9 @@
-package com.udemy.startingpointpersonal.model.repository
+package com.udemy.startingpointpersonal.data.repository
 
 
-import com.udemy.startingpointpersonal.model.api.ApiResult
-import com.udemy.startingpointpersonal.model.pojos.Movie
-import com.udemy.startingpointpersonal.model.toDbMovie
+import com.udemy.startingpointpersonal.data.api.ApiResult
+import com.udemy.startingpointpersonal.data.pojos.Movie
+import com.udemy.startingpointpersonal.data.toDbMovie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

@@ -1,9 +1,9 @@
 package com.udemy.startingpointpersonal.ui.popularMovs
 
 import androidx.lifecycle.*
-import com.udemy.startingpointpersonal.model.api.ApiResult
-import com.udemy.startingpointpersonal.domain.HomeDomain
-import com.udemy.startingpointpersonal.model.pojos.Movie
+import com.udemy.startingpointpersonal.data.api.ApiResult
+import com.udemy.startingpointpersonal.data.pojos.Movie
+import com.udemy.startingpointpersonal.domain.GetAllMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import com.udemy.startingpointpersonal.ui.Status
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class PopularMoviesViewModel @Inject constructor(
-    private val homeDomain: HomeDomain
+    private val getAllMoviesUseCase: GetAllMoviesUseCase
 ) : ViewModel() {
 
     data class UiState(
@@ -30,7 +30,7 @@ class PopularMoviesViewModel @Inject constructor(
         _state.update { it.copy(status = Status.LOADING) }
 
         viewModelScope.launch{
-            when (val result = homeDomain.getPopularMovies()) {
+            when (val result = getAllMoviesUseCase()) {
                 is ApiResult.Success -> {
                     _state.update { it.copy(status = Status.SUCCESS, movies = result.data) }
                 }

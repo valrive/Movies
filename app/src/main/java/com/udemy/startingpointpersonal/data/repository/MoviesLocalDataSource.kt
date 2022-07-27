@@ -1,8 +1,8 @@
-package com.udemy.startingpointpersonal.model.repository
+package com.udemy.startingpointpersonal.data.repository
 
-import com.udemy.startingpointpersonal.model.dao.Movie
-import com.udemy.startingpointpersonal.model.dao.MovieDao
-import com.udemy.startingpointpersonal.model.toDomainMovie
+import com.udemy.startingpointpersonal.data.dao.Movie
+import com.udemy.startingpointpersonal.data.dao.MovieDao
+import com.udemy.startingpointpersonal.data.toDomainMovie
 import javax.inject.Inject
 
 class MoviesLocalDataSource @Inject constructor( private val movieDao: MovieDao ) {

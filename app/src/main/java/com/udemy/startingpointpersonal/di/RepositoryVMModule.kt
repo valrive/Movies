@@ -1,8 +1,8 @@
 package com.udemy.startingpointpersonal.di
 
-import com.udemy.startingpointpersonal.model.repository.MovieRepository
-import com.udemy.startingpointpersonal.model.repository.MoviesLocalDataSource
-import com.udemy.startingpointpersonal.model.repository.MoviesRemoteDataSource
+import com.udemy.startingpointpersonal.data.repository.MovieRepository
+import com.udemy.startingpointpersonal.data.repository.MoviesLocalDataSource
+import com.udemy.startingpointpersonal.data.repository.MoviesRemoteDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

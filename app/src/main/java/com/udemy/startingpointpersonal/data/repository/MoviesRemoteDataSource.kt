@@ -1,7 +1,7 @@
-package com.udemy.startingpointpersonal.model.repository
+package com.udemy.startingpointpersonal.data.repository
 
-import com.udemy.startingpointpersonal.model.api.ApiService
-import com.udemy.startingpointpersonal.model.api.Movie
+import com.udemy.startingpointpersonal.data.api.ApiService
+import com.udemy.startingpointpersonal.data.api.Movie
 import javax.inject.Inject
 import javax.inject.Named
 

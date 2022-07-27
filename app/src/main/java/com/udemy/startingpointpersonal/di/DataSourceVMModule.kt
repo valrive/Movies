@@ -1,9 +1,9 @@
 package com.udemy.startingpointpersonal.di
 
-import com.udemy.startingpointpersonal.model.api.ApiService
-import com.udemy.startingpointpersonal.model.dao.MovieDao
-import com.udemy.startingpointpersonal.model.repository.MoviesLocalDataSource
-import com.udemy.startingpointpersonal.model.repository.MoviesRemoteDataSource
+import com.udemy.startingpointpersonal.data.api.ApiService
+import com.udemy.startingpointpersonal.data.dao.MovieDao
+import com.udemy.startingpointpersonal.data.repository.MoviesLocalDataSource
+import com.udemy.startingpointpersonal.data.repository.MoviesRemoteDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

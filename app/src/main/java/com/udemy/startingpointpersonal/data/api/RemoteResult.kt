@@ -1,4 +1,4 @@
-package com.udemy.startingpointpersonal.model.api
+package com.udemy.startingpointpersonal.data.api
 
 import android.os.Parcelable
 import androidx.room.Entity

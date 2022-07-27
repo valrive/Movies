@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.udemy.startingpointpersonal.databinding.MovieItemBinding
-import com.udemy.startingpointpersonal.model.pojos.Movie
+import com.udemy.startingpointpersonal.data.pojos.Movie
 
 class MovieAdapter(
     private val onAction: (Action) -> Unit

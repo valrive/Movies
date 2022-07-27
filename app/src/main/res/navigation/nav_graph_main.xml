@@ -21,7 +21,7 @@
         tools:layout="@layout/fragment_detail">
         <argument
             android:name="movie"
-            app:argType="com.udemy.startingpointpersonal.model.pojos.Movie" />
+            app:argType="com.udemy.startingpointpersonal.data.pojos.Movie" />
 
     </fragment>
 

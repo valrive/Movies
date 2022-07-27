@@ -19,5 +19,7 @@ class DetailFragment: BaseFragment<FragmentDetailBinding>(R.layout.fragment_deta
         super.onViewCreated(view, savedInstanceState)
         (requireActivity() as MainActivity).supportActionBar?.show()
         binding.movie = args.movie
+
+        //todo(FindMovieByIdUseCase)
     }
 }

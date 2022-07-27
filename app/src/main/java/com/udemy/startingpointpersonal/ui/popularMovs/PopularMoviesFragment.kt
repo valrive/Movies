@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.udemy.startingpointpersonal.R
 import com.udemy.startingpointpersonal.databinding.FragmentPopularMoviesBinding
-import com.udemy.startingpointpersonal.model.pojos.Movie
+import com.udemy.startingpointpersonal.data.pojos.Movie
 import com.udemy.startingpointpersonal.ui.*
 import com.udemy.startingpointpersonal.ui.popularMovs.adapter.Action
 import com.udemy.startingpointpersonal.ui.popularMovs.adapter.MovieAdapter
