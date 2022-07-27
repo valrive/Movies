@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.udemy.startingpointpersonal.R
 import com.udemy.startingpointpersonal.databinding.FragmentDetailBinding
 import com.udemy.startingpointpersonal.ui.BaseFragment
+import com.udemy.startingpointpersonal.utils.loadUrl
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -21,13 +22,8 @@ class DetailFragment: BaseFragment<FragmentDetailBinding>(R.layout.fragment_deta
         with(binding){
             movie = args.movie
 
-            Glide.with(requireContext())
-                .load("https://image.tmdb.org/t/p/w500/${args.movie.poster_path}")
-                .centerCrop().into(imgMovie)
-
-            Glide.with(requireContext())
-                .load("https://image.tmdb.org/t/p/w500/${args.movie.backdrop_path}")
-                .centerCrop().into(imgBackground)
+            imgMovie.loadUrl("https://image.tmdb.org/t/p/w500/${args.movie.posterPath}")
+            imgBackground.loadUrl("https://image.tmdb.org/t/p/w500/${args.movie.backdropPath}")
         }
     }
 }

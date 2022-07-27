@@ -8,10 +8,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.udemy.startingpointpersonal.R
 import com.udemy.startingpointpersonal.databinding.FragmentPopularMoviesBinding
-import com.udemy.startingpointpersonal.pojos.Movie
+import com.udemy.startingpointpersonal.model.pojos.Movie
 import com.udemy.startingpointpersonal.presentation.PopularMoviesViewModel
 import com.udemy.startingpointpersonal.ui.BaseFragment
 import com.udemy.startingpointpersonal.ui.MainActivity
@@ -20,7 +19,6 @@ import com.udemy.startingpointpersonal.ui.popularMovs.adapter.Action
 import com.udemy.startingpointpersonal.ui.popularMovs.adapter.MovieAdapter
 import com.udemy.startingpointpersonal.utils.Util
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -58,8 +56,8 @@ class PopularMoviesFragment :
                         else -> {}
                     }
 
-                    state.movies?.let { movieList ->
-                        adapter.submitList(movieList.results)
+                    state.movies?.let { list ->
+                        adapter.submitList(list)
 
                         /*var newResult = listOf<Movie>()
                         for(movie in movieList.results){

@@ -5,7 +5,7 @@
     tools:context=".ui.detail.MovieDetailFragment">
 
     <data>
-        <variable name="movie" type="com.udemy.startingpointpersonal.pojos.Movie" />
+        <variable name="movie" type="com.udemy.startingpointpersonal.model.pojos.Movie" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -88,7 +88,7 @@
             app:drawableTint="@color/white"
             android:gravity="center"
             android:textColor="@color/white"
-            android:text="@{movie.vote_average + ` (` + movie.vote_count + ` Reviews)`}"
+            android:text="@{movie.voteAverage + ` (` + movie.voteCount + ` Reviews)`}"
             app:drawableStartCompat="@drawable/ic_baseline_star_border_24"
             app:layout_constraintStart_toStartOf="@+id/txt_released"
             app:layout_constraintTop_toTopOf="@+id/cardView"
@@ -104,7 +104,7 @@
             android:gravity="center"
             app:drawableTint="@color/white"
             android:textColor="@color/white"
-            android:text="@{`Released ` + movie.release_date}"
+            android:text="@{`Released ` + movie.releaseDate}"
             app:drawableStartCompat="@drawable/ic_baseline_calendar_today_24"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cardView"
@@ -120,7 +120,7 @@
             android:gravity="center"
             app:drawableTint="@color/white"
             android:textColor="@color/white"
-            android:text="@{`Languaje ` + movie.original_language}"
+            android:text="@{`Languaje ` + movie.originalLanguage}"
             app:drawableStartCompat="@drawable/ic_baseline_language_24"
             app:layout_constraintStart_toStartOf="@+id/txt_released"
             app:layout_constraintTop_toBottomOf="@+id/txt_released"

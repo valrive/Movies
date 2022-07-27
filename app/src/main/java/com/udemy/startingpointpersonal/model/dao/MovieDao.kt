@@ -1,10 +1,10 @@
-package com.udemy.startingpointpersonal.dao
+package com.udemy.startingpointpersonal.model.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.udemy.startingpointpersonal.pojos.Movie
+import com.udemy.startingpointpersonal.model.pojos.Movie
 
 @Dao
 interface MovieDao {

@@ -6,8 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.udemy.startingpointpersonal.databinding.MovieItemBinding
-import com.udemy.startingpointpersonal.pojos.Movie
-import com.udemy.startingpointpersonal.utils.basicDiffUtil
+import com.udemy.startingpointpersonal.model.pojos.Movie
 
 class MovieAdapter(
     private val onAction: (Action) -> Unit
@@ -43,7 +42,7 @@ class MovieAdapter(
         fun bind(movie: Movie) {
             with(binding) {
                 root.setOnClickListener { onAction(Action.Click(movie)) }
-                url = "https://image.tmdb.org/t/p/w500/${movie.poster_path}"
+                url = "https://image.tmdb.org/t/p/w500/${movie.posterPath}"
                 title = movie.title
 
                 //hacemos que funcione ellipsize

@@ -2,7 +2,7 @@ package com.udemy.startingpointpersonal.di
 
 import android.app.Application
 import androidx.room.Room
-import com.udemy.startingpointpersonal.dao.LocalRoomDatabase
+import com.udemy.startingpointpersonal.model.dao.LocalRoomDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

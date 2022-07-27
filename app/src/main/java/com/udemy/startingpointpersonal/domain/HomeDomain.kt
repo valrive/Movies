@@ -1,6 +1,6 @@
 package com.udemy.startingpointpersonal.domain
 
-import com.udemy.startingpointpersonal.repository.MovieRepository
+import com.udemy.startingpointpersonal.model.repository.MovieRepository
 import javax.inject.Inject
 
 class HomeDomain @Inject constructor(

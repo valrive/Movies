@@ -1,7 +1,7 @@
 package com.udemy.startingpointpersonal.di
 
-import com.udemy.startingpointpersonal.api.ApiService
-import com.udemy.startingpointpersonal.repository.MovieRepository
+import com.udemy.startingpointpersonal.model.api.ApiService
+import com.udemy.startingpointpersonal.model.repository.MovieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

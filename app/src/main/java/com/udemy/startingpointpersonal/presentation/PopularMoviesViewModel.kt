@@ -1,16 +1,14 @@
 package com.udemy.startingpointpersonal.presentation
 
 import androidx.lifecycle.*
-import com.udemy.startingpointpersonal.api.ApiResult
+import com.udemy.startingpointpersonal.model.api.ApiResult
 import com.udemy.startingpointpersonal.domain.HomeDomain
-import com.udemy.startingpointpersonal.repository.MovieRepository
+import com.udemy.startingpointpersonal.model.pojos.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import com.udemy.startingpointpersonal.pojos.MovieList
 import com.udemy.startingpointpersonal.ui.Status
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -21,7 +19,7 @@ class PopularMoviesViewModel @Inject constructor(
 
     data class UiState(
         val status: Status? = null,
-        val movies: MovieList? = null
+        val movies: List<Movie>? = null
     )
 
     private val _state = MutableStateFlow(UiState())

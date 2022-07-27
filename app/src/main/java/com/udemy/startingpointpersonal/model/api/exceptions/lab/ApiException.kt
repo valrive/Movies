@@ -1,4 +1,4 @@
-package com.udemy.startingpointpersonal.api.exceptions.lab
+package com.udemy.startingpointpersonal.model.api.exceptions.lab
 
 sealed class ApiException<out T> {
 

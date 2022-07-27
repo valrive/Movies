@@ -1,8 +1,8 @@
-package com.udemy.startingpointpersonal.dao
+package com.udemy.startingpointpersonal.model.dao
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.udemy.startingpointpersonal.pojos.Movie
+import com.udemy.startingpointpersonal.model.pojos.Movie
 
 @Database(
     entities = [
