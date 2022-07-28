@@ -2,6 +2,7 @@ package com.udemy.startingpointpersonal.ui.popularMovs
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -9,6 +10,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.udemy.startingpointpersonal.R
+import com.udemy.startingpointpersonal.data.api.ApiResult
 import com.udemy.startingpointpersonal.databinding.FragmentPopularMoviesBinding
 import com.udemy.startingpointpersonal.data.pojos.Movie
 import com.udemy.startingpointpersonal.ui.*
@@ -16,6 +18,7 @@ import com.udemy.startingpointpersonal.ui.popularMovs.adapter.Action
 import com.udemy.startingpointpersonal.ui.popularMovs.adapter.MovieAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -40,30 +43,42 @@ class PopularMoviesFragment :
     private fun stateFlowCollectors() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.state.collect { state ->
-                    when (state.status) {
-                        Status.LOADING -> {
-                            binding.loading = true
-                            requireActivity().muestraProgressBar()
-                        }
-                        Status.SUCCESS, Status.FAILURE -> {
-                            binding.loading = false
-                            requireActivity().escondeProgressBar()
-                        }
-                    }
-                    adapter.submitList(state.movies)
+                viewModel.popularMovies.collect {
+                    handleResult(it)
+                }
+            }
+        }
 
-                    /*var newResult = listOf<Movie>()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.getPopularMovies.collect {
+                    handleResult(it)
+                }
+            }
+        }
+    }
+
+
+
+    private fun handleResult(state: PopularMoviesViewModel.UiState) {
+        when(state.status){
+            Status.LOADING -> {
+                binding.loading = true
+                requireActivity().muestraProgressBar()
+            }
+            Status.SUCCESS, Status.FAILURE -> {
+                binding.loading = false
+                requireActivity().escondeProgressBar()
+            }
+        }
+        adapter.submitList(state.movies)
+
+        /*var newResult = listOf<Movie>()
                     for(movie in state.movies){
                         newResult = listOf(movie) + newResult
                         adapter.submitList(newResult)
                         delay(20)
                     }*/
-
-                }
-
-            }
-        }
     }
 
 

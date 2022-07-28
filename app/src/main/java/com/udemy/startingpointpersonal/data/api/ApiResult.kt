@@ -2,7 +2,7 @@ package com.udemy.startingpointpersonal.data.api
 
 sealed class ApiResult<out T> {
 
-    //class Loading<out T> : Result<T>()
+    class Loading<out T> : ApiResult<T>()
     //object Loading: ApiResult<Nothing>()
     data class Success<out T>(val data: T) : ApiResult<T>()
     data class Failure(val exception: Throwable) : ApiResult<Nothing>()

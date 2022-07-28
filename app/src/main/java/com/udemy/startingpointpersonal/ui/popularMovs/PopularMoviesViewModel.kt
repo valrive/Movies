@@ -7,10 +7,7 @@ import com.udemy.startingpointpersonal.domain.GetAllMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import com.udemy.startingpointpersonal.ui.Status
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -20,13 +17,36 @@ class PopularMoviesViewModel @Inject constructor(
 
     data class UiState(
         //Estados iniciales
-        val status: Status = Status.LOADING,
-        val movies: List<Movie> = emptyList()
+        val status: Status = Status.LOADING, //todo: Cambiarlo a ApiResults?
+        val movies: List<Movie> = emptyList(),
+        val error: Throwable? = null
     )
 
-    private val _state = MutableStateFlow(UiState())
-    val state: StateFlow<UiState> = _state//.asStateFlow()
+    /**
+     * Hay 2 modos de implementar StateFlow al igual que liveData:
+     *
+     * Primer modo, implementando el builder flow dentro de la misma variable
+     */
+    val popularMovies : StateFlow<UiState> = flow{
+        kotlin.runCatching {
+            getAllMoviesUseCase()
+        }.onSuccess {
+            emit(UiState(status = Status.SUCCESS, movies = (it as ApiResult.Success).data))
+        }.onFailure {
+            emit(UiState(status = Status.FAILURE, error = it))
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = UiState(status = Status.LOADING)
+    )
 
+
+    /**
+     * Segundo modo, usando las variables separadas y creando un método que detone la actualización del mutableStateFlow
+     */
+    private val _state = MutableStateFlow(UiState())
+    val getPopularMovies: StateFlow<UiState> = _state//.asStateFlow()
 
     init {
         _state.update { it }
@@ -51,6 +71,10 @@ class PopularMoviesViewModel @Inject constructor(
 
         }
     }
+
+
+
+
 
 
     /**
