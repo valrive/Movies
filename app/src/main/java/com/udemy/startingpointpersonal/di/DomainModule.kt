@@ -1,6 +1,6 @@
 package com.udemy.startingpointpersonal.di
 
-import com.udemy.startingpointpersonal.data.repository.MovieRepository
+import com.udemy.startingpointpersonal.data.repository.MovieRepositoryImpl
 import com.udemy.startingpointpersonal.domain.GetAllMoviesUseCase
 import dagger.Module
 import dagger.Provides
@@ -14,6 +14,6 @@ class DomainModule {
 
     @Singleton
     @Provides
-    fun GetAllMoviesUseCaseProvider(repo: MovieRepository) = GetAllMoviesUseCase(repo)
+    fun getAllMoviesUseCaseProvider(repo: MovieRepositoryImpl) = GetAllMoviesUseCase(repo)
 
 }

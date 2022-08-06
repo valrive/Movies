@@ -1,10 +1,9 @@
 package com.udemy.startingpointpersonal.di
 
-import com.udemy.startingpointpersonal.data.repository.MovieRepository
-import com.udemy.startingpointpersonal.data.repository.MoviesLocalDataSource
-import com.udemy.startingpointpersonal.data.repository.MoviesRemoteDataSource
+import com.udemy.startingpointpersonal.data.repository.MovieRepositoryImpl
+import com.udemy.startingpointpersonal.data.repository.interfaces.MovieRepository
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
@@ -15,12 +14,16 @@ import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
 @InstallIn(ViewModelComponent::class)
-class RepositoryVMModule {
+abstract class RepositoryVMModule {
 
-    @Provides
+    /*@Provides
     @ViewModelScoped
     fun movieRepositoryProvider(
         moviesLocalDS: MoviesLocalDataSource,
         moviesRemoteDS: MoviesRemoteDataSource
-    ) = MovieRepository(moviesLocalDS, moviesRemoteDS)
+    ) = MovieRepository(moviesLocalDS, moviesRemoteDS)*/
+
+    @Binds
+    @ViewModelScoped
+    abstract fun movieRepositoryProvider(movieRepository: MovieRepositoryImpl): MovieRepository
 }
