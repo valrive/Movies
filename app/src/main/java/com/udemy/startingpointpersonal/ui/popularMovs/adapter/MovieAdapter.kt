@@ -31,7 +31,10 @@ class MovieAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val movie = getItem(position)//movies[position]
         when (holder) {
-            is ItemViewHolder -> holder.bind(movie)
+            is ItemViewHolder -> {
+                holder.bind(movie)
+                holder.itemView.setOnClickListener { onAction(Action.Click(movie)) }
+            }
         }
     }
 
@@ -41,7 +44,7 @@ class MovieAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(movie: Movie) {
             with(binding) {
-                root.setOnClickListener { onAction(Action.Click(movie)) }
+                //root.setOnClickListener { onAction(Action.Click(movie)) }
                 url = movie.posterPath
                 title = movie.title
 
