@@ -1,5 +1,6 @@
 package com.udemy.startingpointpersonal.ui.popularMovs
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.udemy.startingpointpersonal.data.api.ApiResult
 import com.udemy.startingpointpersonal.data.pojos.Movie
@@ -7,6 +8,7 @@ import com.udemy.startingpointpersonal.domain.GetAllMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import com.udemy.startingpointpersonal.ui.Status
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -48,14 +50,14 @@ class PopularMoviesViewModel @Inject constructor(
     private val _state = MutableStateFlow(UiState())
     val getPopularMovies: StateFlow<UiState> = _state//.asStateFlow()
 
-    init {
+    /*init {
         _state.update { it }
         viewModelScope.launch{
             when (val result = getAllMoviesUseCase()) {
                 is ApiResult.Success -> {
                     _state.update { it.copy(status = Status.SUCCESS, movies = result.data) }
                 }
-/*
+*//*
                 is ApiResult.ErrorSEH -> {
                     _errorPopularMovies.value = result.err
                     _status.value = Status.FAILURE
@@ -65,14 +67,42 @@ class PopularMoviesViewModel @Inject constructor(
                     _errorPopularMovies.value = result.err
                     _status.value = Status.ERROR
                 }
-*/
+*//*
                 else -> {}
             }
 
         }
+    }*/
+
+
+    /**
+     * 3ra opción: Mediante un método que pueda recibir algún parámetro
+     */
+    fun fetchPopularMoviesLive(region: String) = liveData{
+        emit(UiState(status = Status.LOADING))
+        kotlin.runCatching {
+            getAllMoviesUseCase(region)
+        }.onSuccess {
+            emit(UiState(status = Status.SUCCESS, movies = (it as ApiResult.Success).data))
+        }.onFailure {
+            emit(UiState(status = Status.FAILURE, error = it))
+        }
+
     }
 
-
+    fun fetchPopularMoviesFlow(region: String) = flow{
+        kotlin.runCatching {
+            getAllMoviesUseCase(region)
+        }.onSuccess {
+            emit(UiState(status = Status.SUCCESS, movies = (it as ApiResult.Success).data))
+        }.onFailure {
+            emit(UiState(status = Status.FAILURE, error = it))
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = UiState(status = Status.LOADING)
+    )
 
 
 

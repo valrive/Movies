@@ -4,5 +4,5 @@ import com.udemy.startingpointpersonal.data.api.Movie
 
 interface MoviesRemoteDataSource {
 
-    suspend fun getPopularMovies(): List<Movie>
+    suspend fun getPopularMovies(countryCode: String): List<Movie>
 }

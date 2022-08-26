@@ -35,7 +35,7 @@ class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             when{
-                isGranted -> stateFlowCollectors(isGranted)//showFusedLocation(isGranted)//toast("Permission granted")
+                isGranted -> stateFlowCollectors(isGranted, false)//showFusedLocation(isGranted)//toast("Permission granted")
                 shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_COARSE_LOCATION) -> activity?.toast("Should show Rationale")
                 else -> activity?.toast("Permission denied")
             }
@@ -70,12 +70,29 @@ class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
     }
 
 
-    private fun stateFlowCollectors(isGranted: Boolean) {
+    private fun stateFlowCollectors(isGranted: Boolean, liveDataMode: Boolean) {
+        if (liveDataMode){
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewModel.fetchPopularMoviesLive(getRegion(isGranted)).observe(viewLifecycleOwner){
+                    handleResult(it)
+                }
+            }
+            return
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 //todo(Agregar la parte de permisos a la corutina para que se vuelva síncrono con el video #44 de DevExperto)
+                viewModel.fetchPopularMoviesFlow(getRegion(isGranted)).collect {
+                    handleResult(it)
+                }
+            }
+        }
+
+        /*viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                //todo(Agregar la parte de permisos a la corutina para que se vuelva síncrono con el video #44 de DevExperto)
                 activity?.toast("Region = ${getRegion(isGranted)}")
-                //todo(Enviar la región al viewmodel)
                 viewModel.popularMovies.collect {
                     handleResult(it)
                 }
@@ -88,7 +105,7 @@ class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
                     handleResult(it)
                 }
             }
-        }
+        }*/
     }
 
     //Tendremos un control asíncrono de lo que queremos que ocurra
@@ -124,13 +141,6 @@ class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
             }
         }
         adapter.submitList(state.movies)
-
-        /*var newResult = listOf<Movie>()
-                    for(movie in state.movies){
-                        newResult = listOf(movie) + newResult
-                        adapter.submitList(newResult)
-                        delay(20)
-                    }*/
     }
 
 

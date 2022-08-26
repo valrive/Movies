@@ -14,7 +14,10 @@ interface ApiService {
     suspend fun getTopRatedMovies(@Query("api_key") apiKey: String): RemoteResult
 
     @GET("movie/popular")
-    suspend fun getPopulardMovies(@Query("api_key") apiKey: String): RemoteResult
+    suspend fun getPopulardMovies(
+        @Query("api_key") apiKey: String,
+        @Query("region") region: String
+    ): RemoteResult
 
     @GET("movie/popular")
     suspend fun getPopulardMoviesNew(@Query("api_key") apiKey: String): Call<RemoteResult>

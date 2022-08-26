@@ -5,7 +5,7 @@ import com.udemy.startingpointpersonal.data.pojos.Movie
 
 interface MovieRepository {
 
-    suspend fun getPopularMovies(): ApiResult<List<Movie>>
+    suspend fun getPopularMovies(region: String): ApiResult<List<Movie>>
 
     suspend fun findById(movieId: Int): Movie
 }

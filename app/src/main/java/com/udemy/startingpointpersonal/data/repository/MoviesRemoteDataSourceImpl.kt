@@ -11,8 +11,8 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
     private val api: ApiService
 ): MoviesRemoteDataSource {
 
-    override suspend fun getPopularMovies(): List<Movie> {
-        return api.getPopulardMovies(apiKey).results
+    override suspend fun getPopularMovies(region: String): List<Movie> {
+        return api.getPopulardMovies(apiKey, region).results
     }
 
 }
