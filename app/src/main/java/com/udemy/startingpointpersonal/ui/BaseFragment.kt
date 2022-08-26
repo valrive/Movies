@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import java.lang.reflect.ParameterizedType
 
 //open class BaseFragment<T: ViewBinding>(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
-open class BaseFragment<T: ViewDataBinding>(@LayoutRes contentLayoutId: Int) : Fragment(contentLayoutId) {
+open class BaseFragment<T: ViewDataBinding> : Fragment() {
 
     //declaración del binding
     private var _binding: T? = null

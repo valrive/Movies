@@ -62,6 +62,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        tools:layout_margin="1dp"
         android:gravity="center"
         android:foregroundGravity="center"
         android:orientation="horizontal"

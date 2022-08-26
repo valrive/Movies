@@ -5,44 +5,34 @@
 
     <!-- errors messages, use "error_" prefix -->
     <string name="error_http_404">Servicio no encontrado</string>
-    <string name="error_http_401">Credenciales invalidas</string>
+    <string name="error_http_401">Credenciales inválidas</string>
     <string name="error_http_403">Acceso Denegado</string>
     <string name="error_http_500">Error interno de servidor</string>
     <string name="error_http_408">Error, el tiempo de espera se ha agotado</string>
     <string name="error_http_code">Error HTTP %1$d</string>
-    <string name="error_http_empty_body">Error, se recibio una reapuesta vacía</string>
+    <string name="error_http_empty_body">Error, se recibió una respuesta vacía</string>
     <string name="error_verify_internet_connection">Verifica tu conexión a internet</string>
     <string name="error_unknown">Error desconocido: %1$s</string>
-    <string name="error_required_field">Campo requerido</string>
-
-
-    <!-- information messages, use "info_" prefix -->
-    <string name="info_dialog_expired_session">La sesión ha expirado, inicie sesión nuevamente para continuar</string>
-
-
-    <!-- actions, ej, button texts, use "action_" prefix -->
-    <string name="action_next">NEXT</string>
-    <string name="action_login">Login</string>
-    <string name="action_logout">Logout</string>
-
 
     <!-- ui labels, use "label_" prefix -->
     <string name="label_detail">Detail</string>
     <string name="label_all_movies">All movies</string>
     <string name="label_popular_movies">Popular movies</string>
 
-    <!-- information messages, use "info_" prefix -->
-    <string name="info_version_test">Versión %1$s, test</string>
-    <string name="label_user">Usuario</string>
-    <string name="label_password">Contraseña</string>
+
+    <string name="label_reviews">Reviews</string>
+    <string name="label_released">Released</string>
+    <string name="label_languaje">Language </string>
+    <string name="label_favourite">Favourite</string>
+    <string name="label_share">Share</string>
+    <string name="label_bookmark">Bookmark</string>
+
 
     <!-- Text Size -->
     <dimen name="version_text_size">14sp</dimen>
 
-    <!-- titles, use "title_" prefix -->
-    <string name="title_dialog_expired_session">Sesión expirada</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
 
 
 </resources>

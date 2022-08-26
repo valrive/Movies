@@ -36,7 +36,6 @@
                 android:background="@drawable/gradient"/>
         </FrameLayout>
 
-
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
             android:layout_width="120dp"
@@ -75,6 +74,7 @@
             android:textStyle="bold"
             android:textColor="@color/white"
             android:text="@{movie.title}"
+            android:visibility="invisible"
             app:layout_constraintBottom_toTopOf="@+id/cardView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +95,6 @@
             app:layout_constraintTop_toTopOf="@+id/cardView"
             tools:text="7.1 (4123 Reviews)" />
 
-
         <TextView
             android:id="@+id/txt_released"
             android:layout_width="wrap_content"
@@ -115,42 +114,16 @@
         <TextView
             android:id="@+id/txt_language"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:layout_marginTop="8dp"
             android:drawablePadding="8dp"
             android:gravity="center"
             app:drawableTint="@color/white"
             android:textColor="@color/white"
-            android:text="@{`Languaje ` + movie.originalLanguage}"
             app:drawableStartCompat="@drawable/ic_baseline_language_24"
             app:layout_constraintStart_toStartOf="@+id/txt_released"
             app:layout_constraintTop_toBottomOf="@+id/txt_released"
             tools:text="Language en " />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="Overview"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/guideline" />
-
-        <TextView
-            android:id="@+id/txt_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="@{movie.overview}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
-            tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquid ex ea commodi consequat. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-
 
         <LinearLayout
             android:id="@+id/linearLayout2"
@@ -171,7 +144,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Favourite" />
+                android:text="@string/label_favourite" />
 
         </LinearLayout>
 
@@ -194,7 +167,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Share" />
+                android:text="@string/label_share" />
 
         </LinearLayout>
 
@@ -217,9 +190,47 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bookmark" />
+                android:text="@string/label_bookmark" />
 
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Overview"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline" />
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="16dp"
+            android:clipToPadding="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/txt_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{movie.overview}"
+                    tools:text="@tools:sample/lorem/random" />
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

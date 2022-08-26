@@ -118,6 +118,13 @@ dependencies {
     implementation"androidx.datastore:datastore-preferences:1.0.0"
     implementation"androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
 
+    //Permisos
+    implementation'androidx.activity:activity-ktx:1.5.1'
+    implementation'androidx.fragment:fragment-ktx:1.5.2'
+    //Nos devuelve de una forma muy sencilla la última localización del dispositivo independientemente si fue esta app la que lo pidió
+    implementation'com.google.android.gms:play-services-location:20.0.0'
+
+
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

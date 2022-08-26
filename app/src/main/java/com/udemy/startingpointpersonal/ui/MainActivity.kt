@@ -26,6 +26,6 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-enum class Status{
+enum class Status {
     SUCCESS, FAILURE, LOADING
 }
