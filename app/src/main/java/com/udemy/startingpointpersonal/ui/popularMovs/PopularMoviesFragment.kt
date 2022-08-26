@@ -62,8 +62,7 @@ class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
         binding.rvMovies.adapter = adapter
-        binding.rvMovies.layoutManager =
-            GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        //binding.rvMovies.layoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
 
         requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_COARSE_LOCATION)
 
