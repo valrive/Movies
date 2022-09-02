@@ -15,4 +15,10 @@ class MoviesRemoteDataSourceImpl @Inject constructor(
         return api.getPopulardMovies(apiKey, region).results
     }
 
+    override fun getPopularMoviesCall(region: String): List<Movie> {
+        val result = api.getPopulardMoviesCall(apiKey, region).execute()
+        val body = result.body()
+        return body!!.results
+    }
+
 }

@@ -11,6 +11,7 @@ import com.udemy.startingpointpersonal.ui.Status
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @HiltViewModel
 class PopularMoviesViewModel @Inject constructor(
@@ -81,7 +82,9 @@ class PopularMoviesViewModel @Inject constructor(
     fun fetchPopularMoviesLive(region: String) = liveData{
         emit(UiState(status = Status.LOADING))
         kotlin.runCatching {
-            getAllMoviesUseCase(region)
+            withContext(Dispatchers.IO){
+                getAllMoviesUseCase(region)
+            }
         }.onSuccess {
             emit(UiState(status = Status.SUCCESS, movies = (it as ApiResult.Success).data))
         }.onFailure {

@@ -35,7 +35,7 @@ class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             when{
-                isGranted -> stateFlowCollectors(isGranted, false)//showFusedLocation(isGranted)//toast("Permission granted")
+                isGranted -> stateFlowCollectors(isGranted, true)//showFusedLocation(isGranted)//toast("Permission granted")
                 shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_COARSE_LOCATION) -> activity?.toast("Should show Rationale")
                 else -> activity?.toast("Permission denied")
             }
@@ -71,41 +71,27 @@ class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
 
 
     private fun stateFlowCollectors(isGranted: Boolean, liveDataMode: Boolean) {
-        if (liveDataMode){
+        if (LIVE_DATA_ON){
             viewLifecycleOwner.lifecycleScope.launch {
                 viewModel.fetchPopularMoviesLive(getRegion(isGranted)).observe(viewLifecycleOwner){
                     handleResult(it)
                 }
             }
-            return
-        }
+        } else {
+            //flow mode
+            viewLifecycleOwner.lifecycleScope.launch {
+                viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                //todo(Agregar la parte de permisos a la corutina para que se vuelva síncrono con el video #44 de DevExperto)
-                viewModel.fetchPopularMoviesFlow(getRegion(isGranted)).collect {
-                    handleResult(it)
+                    //todo(Agregar la parte de permisos a la corutina para que se vuelva síncrono con el video #44 de DevExperto)
+
+                    //viewModel.popularMovies.collect {
+                    //viewModel.getPopularMovies.collect {
+                    viewModel.fetchPopularMoviesFlow(getRegion(isGranted)).collect {
+                        handleResult(it)
+                    }
                 }
             }
         }
-
-        /*viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                //todo(Agregar la parte de permisos a la corutina para que se vuelva síncrono con el video #44 de DevExperto)
-                activity?.toast("Region = ${getRegion(isGranted)}")
-                viewModel.popularMovies.collect {
-                    handleResult(it)
-                }
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.getPopularMovies.collect {
-                    handleResult(it)
-                }
-            }
-        }*/
     }
 
     //Tendremos un control asíncrono de lo que queremos que ocurra
@@ -159,6 +145,7 @@ class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
 
     companion object{
         const val DEFAULT_REGION = "US"
+        const val LIVE_DATA_ON = true
     }
 
 }

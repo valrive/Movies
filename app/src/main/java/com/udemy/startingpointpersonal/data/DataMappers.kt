@@ -13,8 +13,8 @@ fun ServerMovie.toDbMovie(): DbMovie = DbMovie(
     voteCount,
     releaseDate,
     originalLanguage,
-    //"$overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview "
-    overview
+    "$overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview "
+    //overview
 )
 
 fun DbMovie.toDomainMovie(): DomainMovie = DomainMovie(
