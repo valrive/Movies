@@ -7,5 +7,5 @@ import javax.inject.Inject
 class GetAllMoviesUseCase @Inject constructor(
     private val repo: MovieRepository
 ){
-    operator fun invoke(region: String? = PopularMoviesFragment.DEFAULT_REGION) = repo.getPopularMoviesCall(region!!)
+    suspend operator fun invoke(region: String? = PopularMoviesFragment.DEFAULT_REGION) = repo.getPopularMoviesCall(region!!)
 }

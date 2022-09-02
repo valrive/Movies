@@ -20,11 +20,10 @@ class MovieRepositoryImpl @Inject constructor(
         ApiResult.Success(moviesLocalDS.getAll())
     }
 
-    override fun getPopularMoviesCall(region: String): ApiResult<List<Movie>> {
-
+    override suspend fun getPopularMoviesCall(region: String): ApiResult<List<Movie>> = withContext(Dispatchers.IO){
         val movies = moviesRemoteDS.getPopularMoviesCall(region)
         moviesLocalDS.save(movies.map { it.toDbMovie() })
-        return ApiResult.Success(moviesLocalDS.getAll())
+        ApiResult.Success(moviesLocalDS.getAll())
     }
 
     override suspend fun findById(movieId: Int) = withContext(Dispatchers.IO) {

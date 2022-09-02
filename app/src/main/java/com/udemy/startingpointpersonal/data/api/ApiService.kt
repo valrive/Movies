@@ -16,13 +16,13 @@ interface ApiService {
     @GET("movie/popular")
     suspend fun getPopulardMovies(
         @Query("api_key") apiKey: String,
-        @Query("region") region: String
+        @Query("region") countryCode: String
     ): RemoteResult
 
     @GET("movie/popular")
     fun getPopulardMoviesCall(
         @Query("api_key") apiKey: String,
-        @Query("region") region: String): Call<RemoteResult>
+        @Query("region") countryCode: String): Call<RemoteResult>
 
     companion object {
 
