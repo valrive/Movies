@@ -11,16 +11,16 @@ class MoviesLocalDataSourceImpl @Inject constructor(
     private val movieDao: MovieDao
     ): MoviesLocalDataSource {
 
-    override fun isEmpty() = movieDao.movieCount() == 0
+    override suspend fun isEmpty() = movieDao.movieCount() == 0
 
-    override fun save(movies: List<Movie>) {
+    override suspend fun save(movies: List<Movie>) {
         movieDao.insert(
             //converts List to vararg
             *movies.toTypedArray()
         )
     }
 
-    override fun findById(movieId: Int): DomainMovie = movieDao.findById(movieId).toDomainMovie()
+    override suspend fun findById(movieId: Int): DomainMovie = movieDao.findById(movieId).toDomainMovie()
 
-    override fun getAll(): List<DomainMovie> = movieDao.getAll().map { it.toDomainMovie() }
+    override suspend fun getAll(): List<DomainMovie> = movieDao.getAll().map { it.toDomainMovie() }
 }

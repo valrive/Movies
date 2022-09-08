@@ -5,11 +5,11 @@ import com.udemy.startingpointpersonal.data.pojos.Movie as DomainMovie
 
 interface MoviesLocalDataSource {
 
-    fun isEmpty(): Boolean
+    suspend fun isEmpty(): Boolean
 
-    fun save(movies: List<Movie>)
+    suspend fun save(movies: List<Movie>)
 
-    fun findById(movieId: Int): DomainMovie
+    suspend fun findById(movieId: Int): DomainMovie
 
-    fun getAll(): List<DomainMovie>
+    suspend fun getAll(): List<DomainMovie>
 }

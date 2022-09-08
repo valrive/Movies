@@ -13,10 +13,10 @@ class MovieRepositoryImpl @Inject constructor(
     private val moviesRemoteDS: MoviesRemoteDataSourceImpl
 ): MovieRepository {
     override suspend fun getPopularMovies(region: String): ApiResult<List<Movie>> = withContext(Dispatchers.IO) {
-        //if(moviesLocalDS.isEmpty()){
+        if(moviesLocalDS.isEmpty()){
             val movies = moviesRemoteDS.getPopularMovies(region)
             moviesLocalDS.save(movies.map { it.toDbMovie() })
-        //}
+        }
         ApiResult.Success(moviesLocalDS.getAll())
     }
 
