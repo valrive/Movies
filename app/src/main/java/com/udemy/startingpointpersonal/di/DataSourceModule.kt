@@ -1,9 +1,7 @@
 package com.udemy.startingpointpersonal.di
 
-import com.udemy.startingpointpersonal.data.repository.MovieRepositoryImpl
 import com.udemy.startingpointpersonal.data.repository.MoviesLocalDataSourceImpl
 import com.udemy.startingpointpersonal.data.repository.MoviesRemoteDataSourceImpl
-import com.udemy.startingpointpersonal.data.repository.interfaces.MovieRepository
 import com.udemy.startingpointpersonal.data.repository.interfaces.MoviesLocalDataSource
 import com.udemy.startingpointpersonal.data.repository.interfaces.MoviesRemoteDataSource
 import dagger.Binds

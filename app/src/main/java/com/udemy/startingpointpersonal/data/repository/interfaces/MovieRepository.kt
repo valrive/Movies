@@ -7,7 +7,5 @@ interface MovieRepository {
 
     suspend fun getPopularMovies(region: String): ApiResult<List<Movie>>
 
-    suspend fun getPopularMoviesCall(region: String): ApiResult<List<Movie>>
-
     suspend fun findById(movieId: Int): Movie
 }

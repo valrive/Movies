@@ -15,14 +15,6 @@ class MovieRepositoryImpl @Inject constructor(
 ): MovieRepository {
 
     override suspend fun getPopularMovies(region: String): ApiResult<List<Movie>> {
-        if(movieLocalDS.isEmpty()){
-            val movies = movieRemoteDS.getPopularMovies(region)
-            movieLocalDS.save(movies.map { it.toDbMovie() })
-        }
-        return ApiResult.Success(movieLocalDS.getAll())
-    }
-
-    override suspend fun getPopularMoviesCall(region: String): ApiResult<List<Movie>>{
         val movies = movieRemoteDS.getPopularMoviesCall(region)
 
         //Versión que guarda directo en una clase sin pasar por ROOM no Preferencias
