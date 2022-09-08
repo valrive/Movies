@@ -3,31 +3,36 @@ package com.udemy.startingpointpersonal.data.repository
 import com.udemy.startingpointpersonal.data.api.ApiResult
 import com.udemy.startingpointpersonal.data.pojos.Movie
 import com.udemy.startingpointpersonal.data.repository.interfaces.MovieRepository
+import com.udemy.startingpointpersonal.data.repository.interfaces.MoviesLocalDataSource
+import com.udemy.startingpointpersonal.data.repository.interfaces.MoviesRemoteDataSource
 import com.udemy.startingpointpersonal.data.toDbMovie
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
-    private val moviesLocalDS: MoviesLocalDataSourceImpl,
-    private val moviesRemoteDS: MoviesRemoteDataSourceImpl
+    private val movieLocalDS: MoviesLocalDataSource,
+    private val movieRemoteDS: MoviesRemoteDataSource,
+    private val movieProvider: MovieProvider
 ): MovieRepository {
-    override suspend fun getPopularMovies(region: String): ApiResult<List<Movie>> = withContext(Dispatchers.IO) {
-        if(moviesLocalDS.isEmpty()){
-            val movies = moviesRemoteDS.getPopularMovies(region)
-            moviesLocalDS.save(movies.map { it.toDbMovie() })
+
+    override suspend fun getPopularMovies(region: String): ApiResult<List<Movie>> {
+        if(movieLocalDS.isEmpty()){
+            val movies = movieRemoteDS.getPopularMovies(region)
+            movieLocalDS.save(movies.map { it.toDbMovie() })
         }
-        ApiResult.Success(moviesLocalDS.getAll())
+        return ApiResult.Success(movieLocalDS.getAll())
     }
 
-    override suspend fun getPopularMoviesCall(region: String): ApiResult<List<Movie>> = withContext(Dispatchers.IO){
-        val movies = moviesRemoteDS.getPopularMoviesCall(region)
-        moviesLocalDS.save(movies.map { it.toDbMovie() })
-        ApiResult.Success(moviesLocalDS.getAll())
+    override suspend fun getPopularMoviesCall(region: String): ApiResult<List<Movie>>{
+        val movies = movieRemoteDS.getPopularMoviesCall(region)
+
+        //Versión que guarda directo en una clase sin pasar por ROOM no Preferencias
+        movieProvider.movies = movies.map { it.toDbMovie() }
+        //return ApiResult.Success(movieProvider.movies.map { it.toDomainMovie() })
+
+        movieLocalDS.save(movies.map { it.toDbMovie() })
+        return ApiResult.Success(movieLocalDS.getAll())
     }
 
-    override suspend fun findById(movieId: Int) = withContext(Dispatchers.IO) {
-        moviesLocalDS.findById(movieId)
-    }
+    override suspend fun findById(movieId: Int) = movieLocalDS.findById(movieId)
 
 }

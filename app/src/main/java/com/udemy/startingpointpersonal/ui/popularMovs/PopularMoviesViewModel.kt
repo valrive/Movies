@@ -1,6 +1,5 @@
 package com.udemy.startingpointpersonal.ui.popularMovs
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.udemy.startingpointpersonal.data.api.ApiResult
 import com.udemy.startingpointpersonal.data.pojos.Movie
@@ -10,7 +9,6 @@ import javax.inject.Inject
 import com.udemy.startingpointpersonal.ui.Status
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @HiltViewModel

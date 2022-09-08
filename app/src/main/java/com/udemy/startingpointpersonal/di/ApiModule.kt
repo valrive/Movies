@@ -19,27 +19,36 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object ApiModule  {
+object ApiModule {
 
     @Singleton
     @Provides
     fun provideGson(): Gson = GsonBuilder().setDateFormat(ApiService.DATE_FORMAT)
-        .registerTypeHierarchyAdapter(Date::class.java, object: JsonDeserializer<Date> {
+        .registerTypeHierarchyAdapter(Date::class.java, object : JsonDeserializer<Date> {
 
-            override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): Date? {
+            override fun deserialize(
+                json: JsonElement?,
+                typeOfT: Type?,
+                context: JsonDeserializationContext?
+            ): Date? {
                 return json?.let { Date(it.asLong) }
             }
         })
-        .registerTypeHierarchyAdapter(Date::class.java, object: JsonSerializer<Date> {
+        .registerTypeHierarchyAdapter(Date::class.java, object : JsonSerializer<Date> {
 
-            override fun serialize(date: Date?, typeOfSrc: Type?, context: JsonSerializationContext?): JsonElement? {
+            override fun serialize(
+                date: Date?,
+                typeOfSrc: Type?,
+                context: JsonSerializationContext?
+            ): JsonElement? {
                 return date?.let { JsonPrimitive(it.time) }
             }
         }).create()
 
     @Singleton
     @Provides
-    fun provideGsonConverterFactory(gson: Gson): GsonConverterFactory = GsonConverterFactory.create(gson)
+    fun provideGsonConverterFactory(gson: Gson): GsonConverterFactory =
+        GsonConverterFactory.create(gson)
 
     @Provides
     fun provideHeadersInterceptor() = Interceptor {
@@ -63,7 +72,10 @@ object ApiModule  {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(headersInterceptor: Interceptor, logging: HttpLoggingInterceptor): OkHttpClient = OkHttpClient
+    fun provideOkHttpClient(
+        headersInterceptor: Interceptor,
+        logging: HttpLoggingInterceptor
+    ): OkHttpClient = OkHttpClient
         .Builder()
         .addInterceptor(headersInterceptor)
         .addInterceptor(logging)
@@ -71,15 +83,18 @@ object ApiModule  {
 
     @Singleton
     @Provides
-    fun provideApiService(
+    fun provideRetrofit(
         @Named("apiUrl") apiUrl: String,
         converterFactory: GsonConverterFactory,
         httpClient: OkHttpClient
-    ): ApiService = Retrofit.Builder()
+    ): Retrofit = Retrofit.Builder()
         .baseUrl(apiUrl)
         .addConverterFactory(converterFactory)
         .client(httpClient)
         .build()
-        .create(ApiService::class.java)
+
+    @Singleton
+    @Provides
+    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
 
 }
