@@ -2,18 +2,21 @@ package com.udemy.startingpointpersonal.ui.popularMovs.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.udemy.startingpointpersonal.R
 import com.udemy.startingpointpersonal.databinding.MovieItemBinding
 import com.udemy.startingpointpersonal.data.pojos.Movie
 
 class MovieAdapter(
     private val onAction: (Action) -> Unit
-) : /**
-    Lo que está comentado se descomentará para utilizar la versión de siempre con RecyclerView.Adapter
-    */
-    //RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) :
+/**
+Lo que está comentado se descomentará para utilizar la versión de siempre con RecyclerView.Adapter
+ */
+//RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     ListAdapter<Movie, RecyclerView.ViewHolder>(DiffUtilCallback()) {
 
     /*var movies: List<Movie> by basicDiffUtil(
@@ -32,8 +35,12 @@ class MovieAdapter(
         val movie = getItem(position)//movies[position]
         when (holder) {
             is ItemViewHolder -> {
+
+                holder.itemView.animation = AnimationUtils.loadAnimation(holder.itemView.context,
+                R.anim.recycler_view_item_three)
+
                 holder.bind(movie)
-                holder.itemView.setOnClickListener { onAction(Action.Click(movie)) }
+                //holder.itemView.setOnClickListener { onAction(Action.Click(movie)) }
             }
         }
     }
@@ -42,6 +49,14 @@ class MovieAdapter(
         val binding: MovieItemBinding,
         val onAction: (Action) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
+
+        //Se setea el listener desde init para que no se esté re-seteando cada que se recicla la vista dentro de onBindViewHolder (Es más óptimo)
+        init {
+            binding.root.setOnClickListener {
+                onAction(Action.Click(getItem(bindingAdapterPosition)))
+            }
+        }
+
         fun bind(movie: Movie) {
             with(binding) {
                 //root.setOnClickListener { onAction(Action.Click(movie)) }
@@ -56,7 +71,7 @@ class MovieAdapter(
 
 }
 
-private class DiffUtilCallback : DiffUtil.ItemCallback<Movie>(){
+private class DiffUtilCallback : DiffUtil.ItemCallback<Movie>() {
     override fun areItemsTheSame(oldItem: Movie, newItem: Movie) =
         oldItem.id == newItem.id
 
