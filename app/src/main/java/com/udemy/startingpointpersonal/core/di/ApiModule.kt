@@ -1,8 +1,8 @@
-package com.udemy.startingpointpersonal.di
+package com.udemy.startingpointpersonal.core.di
 
 import com.google.gson.*
 import com.udemy.startingpointpersonal.BuildConfig
-import com.udemy.startingpointpersonal.data.api.ApiService
+import com.udemy.startingpointpersonal.data.api.ApiClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,7 +23,7 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideGson(): Gson = GsonBuilder().setDateFormat(ApiService.DATE_FORMAT)
+    fun provideGson(): Gson = GsonBuilder().setDateFormat(ApiClient.DATE_FORMAT)
         .registerTypeHierarchyAdapter(Date::class.java, object : JsonDeserializer<Date> {
 
             override fun deserialize(
@@ -95,6 +95,6 @@ object ApiModule {
 
     @Singleton
     @Provides
-    fun provideApiService(retrofit: Retrofit): ApiService = retrofit.create(ApiService::class.java)
+    fun provideApiService(retrofit: Retrofit): ApiClient = retrofit.create(ApiClient::class.java)
 
 }

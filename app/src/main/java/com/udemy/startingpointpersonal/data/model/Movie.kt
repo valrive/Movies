@@ -1,4 +1,4 @@
-package com.udemy.startingpointpersonal.data.pojos
+package com.udemy.startingpointpersonal.data.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

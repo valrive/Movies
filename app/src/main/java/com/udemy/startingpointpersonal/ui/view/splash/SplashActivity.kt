@@ -1,4 +1,4 @@
-package com.udemy.startingpointpersonal.ui.splash
+package com.udemy.startingpointpersonal.ui.view.splash
 
 import android.os.Bundle
 import android.os.Handler

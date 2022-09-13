@@ -1,4 +1,4 @@
-package com.udemy.startingpointpersonal.di
+package com.udemy.startingpointpersonal.core.di
 
 import com.udemy.startingpointpersonal.data.repository.MoviesLocalDataSourceImpl
 import com.udemy.startingpointpersonal.data.repository.MoviesRemoteDataSourceImpl

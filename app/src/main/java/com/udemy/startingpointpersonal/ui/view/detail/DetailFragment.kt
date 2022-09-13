@@ -1,4 +1,4 @@
-package com.udemy.startingpointpersonal.ui.detail
+package com.udemy.startingpointpersonal.ui.view.detail
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -6,11 +6,9 @@ import android.os.Bundle
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
-import androidx.core.text.buildSpannedString
-import androidx.core.text.italic
 import androidx.navigation.fragment.navArgs
 import com.udemy.startingpointpersonal.R
-import com.udemy.startingpointpersonal.data.pojos.Movie
+import com.udemy.startingpointpersonal.data.model.Movie
 import com.udemy.startingpointpersonal.databinding.FragmentDetail2Binding
 import com.udemy.startingpointpersonal.ui.BaseFragment
 import com.udemy.startingpointpersonal.ui.MainActivity

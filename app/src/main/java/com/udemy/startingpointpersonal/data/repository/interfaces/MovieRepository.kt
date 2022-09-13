@@ -1,7 +1,7 @@
 package com.udemy.startingpointpersonal.data.repository.interfaces
 
 import com.udemy.startingpointpersonal.data.api.ApiResult
-import com.udemy.startingpointpersonal.data.pojos.Movie
+import com.udemy.startingpointpersonal.data.model.Movie
 
 interface MovieRepository {
 

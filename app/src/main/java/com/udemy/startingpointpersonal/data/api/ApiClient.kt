@@ -5,7 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 
-interface ApiService {
+interface ApiClient {
 
     @GET("movie/upcoming")
     suspend fun getUpcomingMovies(@Query("api_key") apiKey: String): RemoteResult

@@ -1,4 +1,4 @@
-package com.udemy.startingpointpersonal.ui.popularMovs.adapter
+package com.udemy.startingpointpersonal.ui.view.popularMovs.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.udemy.startingpointpersonal.R
 import com.udemy.startingpointpersonal.databinding.MovieItemBinding
-import com.udemy.startingpointpersonal.data.pojos.Movie
+import com.udemy.startingpointpersonal.data.model.Movie
 
 class MovieAdapter(
     private val onAction: (Action) -> Unit

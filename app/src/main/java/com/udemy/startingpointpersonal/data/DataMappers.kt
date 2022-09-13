@@ -2,7 +2,7 @@ package com.udemy.startingpointpersonal.data
 
 import com.udemy.startingpointpersonal.data.api.Movie as ServerMovie
 import com.udemy.startingpointpersonal.data.dao.Movie as DbMovie
-import com.udemy.startingpointpersonal.data.pojos.Movie as DomainMovie
+import com.udemy.startingpointpersonal.data.model.Movie as DomainMovie
 
 fun ServerMovie.toDbMovie(): DbMovie = DbMovie(
     id,

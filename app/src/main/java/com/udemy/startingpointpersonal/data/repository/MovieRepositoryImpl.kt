@@ -1,7 +1,7 @@
 package com.udemy.startingpointpersonal.data.repository
 
 import com.udemy.startingpointpersonal.data.api.ApiResult
-import com.udemy.startingpointpersonal.data.pojos.Movie
+import com.udemy.startingpointpersonal.data.model.Movie
 import com.udemy.startingpointpersonal.data.repository.interfaces.MovieRepository
 import com.udemy.startingpointpersonal.data.repository.interfaces.MoviesLocalDataSource
 import com.udemy.startingpointpersonal.data.repository.interfaces.MoviesRemoteDataSource
@@ -17,7 +17,7 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun getPopularMovies(region: String): ApiResult<List<Movie>> {
         val movies = movieRemoteDS.getPopularMoviesCall(region)
 
-        //Versión que guarda directo en una clase sin pasar por ROOM no Preferencias
+        //Versión que guarda directo en una clase sin pasar por ROOM ni Preferencias
         movieProvider.movies = movies.map { it.toDbMovie() }
         //return ApiResult.Success(movieProvider.movies.map { it.toDomainMovie() })
 

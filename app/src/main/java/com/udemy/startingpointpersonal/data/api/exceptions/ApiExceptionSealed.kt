@@ -1,7 +1,5 @@
 package com.udemy.startingpointpersonal.data.api.exceptions
 
-import com.google.android.gms.common.api.ApiException
-
 sealed class ApiExceptionSealed<out T> {
 
     /**

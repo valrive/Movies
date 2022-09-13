@@ -1,8 +1,8 @@
-package com.udemy.startingpointpersonal.ui.popularMovs
+package com.udemy.startingpointpersonal.ui.viewmodel
 
 import androidx.lifecycle.*
 import com.udemy.startingpointpersonal.data.api.ApiResult
-import com.udemy.startingpointpersonal.data.pojos.Movie
+import com.udemy.startingpointpersonal.data.model.Movie
 import com.udemy.startingpointpersonal.domain.GetAllMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

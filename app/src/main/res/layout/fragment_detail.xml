@@ -5,7 +5,7 @@
     tools:context=".ui.detail.MovieDetailFragment">
 
     <data>
-        <variable name="movie" type="com.udemy.startingpointpersonal.data.pojos.Movie" />
+        <variable name="movie" type="com.udemy.startingpointpersonal.data.model.Movie" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

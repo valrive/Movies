@@ -1,6 +1,6 @@
-package com.udemy.startingpointpersonal.di
+package com.udemy.startingpointpersonal.core.di
 
-import com.udemy.startingpointpersonal.data.api.ApiService
+import com.udemy.startingpointpersonal.data.api.ApiClient
 import com.udemy.startingpointpersonal.data.dao.MovieDao
 import com.udemy.startingpointpersonal.data.repository.MoviesLocalDataSourceImpl
 import com.udemy.startingpointpersonal.data.repository.MoviesRemoteDataSourceImpl
@@ -29,6 +29,6 @@ class DataSourceVMModule {
     @ViewModelScoped
     fun moviesRemoteDataSourceProvider(
         @Named("apiKey") apiKey: String,
-        api: ApiService
+        api: ApiClient
     ) = MoviesRemoteDataSourceImpl(apiKey, api)
 }

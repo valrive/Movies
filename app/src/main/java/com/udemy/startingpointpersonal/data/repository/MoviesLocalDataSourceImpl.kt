@@ -1,7 +1,7 @@
 package com.udemy.startingpointpersonal.data.repository
 
 import com.udemy.startingpointpersonal.data.dao.Movie
-import com.udemy.startingpointpersonal.data.pojos.Movie as DomainMovie
+import com.udemy.startingpointpersonal.data.model.Movie as DomainMovie
 import com.udemy.startingpointpersonal.data.dao.MovieDao
 import com.udemy.startingpointpersonal.data.repository.interfaces.MoviesLocalDataSource
 import com.udemy.startingpointpersonal.data.toDomainMovie

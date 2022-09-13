@@ -1,4 +1,4 @@
-package com.udemy.startingpointpersonal.di
+package com.udemy.startingpointpersonal.core.di
 
 import android.app.Application
 import androidx.room.Room

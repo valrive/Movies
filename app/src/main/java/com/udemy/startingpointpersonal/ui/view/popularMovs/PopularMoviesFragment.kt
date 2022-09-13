@@ -1,9 +1,7 @@
-package com.udemy.startingpointpersonal.ui.popularMovs
+package com.udemy.startingpointpersonal.ui.view.popularMovs
 
-import android.icu.util.TimeZone.getRegion
 import android.location.Geocoder
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
@@ -11,14 +9,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.udemy.startingpointpersonal.databinding.FragmentPopularMoviesBinding
-import com.udemy.startingpointpersonal.data.pojos.Movie
+import com.udemy.startingpointpersonal.data.model.Movie
 import com.udemy.startingpointpersonal.ui.*
-import com.udemy.startingpointpersonal.ui.popularMovs.adapter.Action
-import com.udemy.startingpointpersonal.ui.popularMovs.adapter.MovieAdapter
+import com.udemy.startingpointpersonal.ui.view.popularMovs.adapter.Action
+import com.udemy.startingpointpersonal.ui.view.popularMovs.adapter.MovieAdapter
+import com.udemy.startingpointpersonal.ui.viewmodel.PopularMoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
