@@ -1,4 +1,4 @@
-package com.udemy.startingpointpersonal.core.di
+package com.udemy.startingpointpersonal.di
 
 import android.app.Application
 import com.udemy.startingpointpersonal.R

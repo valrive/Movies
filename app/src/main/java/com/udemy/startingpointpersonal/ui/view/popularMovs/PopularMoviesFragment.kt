@@ -46,9 +46,9 @@ class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
                 return@addOnCompleteListener
             }
 
-            val geocoder = Geocoder(activity)
+            val geocoder = Geocoder(requireContext())
             val result = geocoder.getFromLocation(it.result.latitude, it.result.longitude, 1)
-            activity?.toast(result.firstOrNull()?.countryCode ?: DEFAULT_REGION)
+            activity?.toast(result?.firstOrNull()?.countryCode ?: DEFAULT_REGION)
             //stateFlowCollectors(result.firstOrNull()?.countryCode)
         }
     }
@@ -106,9 +106,9 @@ class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
                 return@addOnCompleteListener
             }
 
-            val geocoder = Geocoder(activity)
+            val geocoder = Geocoder(requireContext())
             val result = geocoder.getFromLocation(it.result.latitude, it.result.longitude, 1)
-            continuation.resume(result.firstOrNull()?.countryCode ?: DEFAULT_REGION)
+            continuation.resume(result?.firstOrNull()?.countryCode ?: DEFAULT_REGION)
         }
     }
 

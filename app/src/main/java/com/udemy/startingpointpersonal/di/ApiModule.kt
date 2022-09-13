@@ -1,4 +1,4 @@
-package com.udemy.startingpointpersonal.core.di
+package com.udemy.startingpointpersonal.di
 
 import com.google.gson.*
 import com.udemy.startingpointpersonal.BuildConfig

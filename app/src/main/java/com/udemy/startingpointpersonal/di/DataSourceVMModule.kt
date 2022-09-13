@@ -1,4 +1,4 @@
-package com.udemy.startingpointpersonal.core.di
+package com.udemy.startingpointpersonal.di
 
 import com.udemy.startingpointpersonal.data.api.ApiClient
 import com.udemy.startingpointpersonal.data.dao.MovieDao

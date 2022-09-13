@@ -1,17 +1,10 @@
-package com.udemy.startingpointpersonal.core.di
+package com.udemy.startingpointpersonal.di
 
 import com.udemy.startingpointpersonal.data.repository.MovieRepositoryImpl
-import com.udemy.startingpointpersonal.data.repository.MoviesLocalDataSourceImpl
-import com.udemy.startingpointpersonal.data.repository.MoviesRemoteDataSourceImpl
 import com.udemy.startingpointpersonal.data.repository.interfaces.MovieRepository
-import com.udemy.startingpointpersonal.data.repository.interfaces.MoviesLocalDataSource
-import com.udemy.startingpointpersonal.data.repository.interfaces.MoviesRemoteDataSource
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
