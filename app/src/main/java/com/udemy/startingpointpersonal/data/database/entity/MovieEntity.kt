@@ -8,8 +8,8 @@ import androidx.room.PrimaryKey
  * Debemos agregar la anotación @ColumnInfo porque cuando se agregue ProGuard puede dar
  * problemas el renombramiento de variables
  */
-@Entity(tableName = "movie")
-data class Movie(
+@Entity(tableName = "movie_table")
+data class MovieEntity(
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val id: Int = 0,
     @ColumnInfo(name = "title") val title: String,
     @ColumnInfo(name = "posterPath") val posterPath: String,

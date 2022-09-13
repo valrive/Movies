@@ -4,12 +4,12 @@ import com.google.gson.annotations.SerializedName
 
 data class RemoteResult(
     val page: Int,
-    val results: List<Movie>,
+    val results: List<MovieRemote>,
     @SerializedName("total_pages") val totalPages: Int,
     @SerializedName("total_results") val totalResults: Int
 )
 
-data class Movie(
+data class MovieRemote(
     val id: Int,
     val adult: Boolean,
     @SerializedName("backdrop_path") val backdropPath: String,

@@ -3,6 +3,7 @@ package com.udemy.startingpointpersonal.ui.view.popularMovs
 import android.location.Geocoder
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -12,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.udemy.startingpointpersonal.databinding.FragmentPopularMoviesBinding
-import com.udemy.startingpointpersonal.data.model.Movie
+import com.udemy.startingpointpersonal.domain.model.Movie
 import com.udemy.startingpointpersonal.ui.*
 import com.udemy.startingpointpersonal.ui.view.popularMovs.adapter.Action
 import com.udemy.startingpointpersonal.ui.view.popularMovs.adapter.MovieAdapter
@@ -114,17 +115,22 @@ class PopularMoviesFragment : BaseFragment<FragmentPopularMoviesBinding>() {
 
 
     private fun handleResult(state: PopularMoviesViewModel.UiState) {
-        when(state.status){
+        when(state.status) {
             Status.LOADING -> {
                 binding.loading = true
                 requireActivity().muestraProgressBar()
             }
-            Status.SUCCESS, Status.FAILURE -> {
+            Status.SUCCESS -> {
                 binding.loading = false
                 requireActivity().escondeProgressBar()
+                adapter.submitList(state.movies)
+            }
+            Status.FAILURE -> {
+                binding.loading = false
+                requireActivity().escondeProgressBar()
+                activity?.toast(state.error?.message.toString())
             }
         }
-        adapter.submitList(state.movies)
     }
 
 

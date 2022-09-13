@@ -1,4 +1,4 @@
-package com.udemy.startingpointpersonal.data.model
+package com.udemy.startingpointpersonal.domain.model
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
@@ -22,5 +22,5 @@ data class Movie(
  * En este caso tenemos :
  * Movie para la respuesta del server
  * Movie para guardado en db
- * Movie para args del Navigation
+ * Movie para usarlo en el dominio de la app
  */

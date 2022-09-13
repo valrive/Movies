@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.udemy.startingpointpersonal.R
 import com.udemy.startingpointpersonal.databinding.MovieItemBinding
-import com.udemy.startingpointpersonal.data.model.Movie
+import com.udemy.startingpointpersonal.domain.model.Movie
 
 class MovieAdapter(
     private val onAction: (Action) -> Unit

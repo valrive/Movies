@@ -1,15 +1,12 @@
 package com.udemy.startingpointpersonal.ui.viewmodel
 
 import androidx.lifecycle.*
-import com.udemy.startingpointpersonal.data.api.ApiResult
-import com.udemy.startingpointpersonal.data.model.Movie
+import com.udemy.startingpointpersonal.domain.model.Movie
 import com.udemy.startingpointpersonal.domain.GetAllMoviesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import com.udemy.startingpointpersonal.ui.Status
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.withContext
 
 @HiltViewModel
 class PopularMoviesViewModel @Inject constructor(
@@ -32,7 +29,7 @@ class PopularMoviesViewModel @Inject constructor(
         kotlin.runCatching {
             getAllMoviesUseCase()
         }.onSuccess {
-            emit(UiState(status = Status.SUCCESS, movies = (it as ApiResult.Success).data))
+            emit(UiState(status = Status.SUCCESS, movies = it))
         }.onFailure {
             emit(UiState(status = Status.FAILURE, error = it))
         }
@@ -80,11 +77,9 @@ class PopularMoviesViewModel @Inject constructor(
     fun fetchPopularMoviesLive(region: String) = liveData{
         emit(UiState(status = Status.LOADING))
         kotlin.runCatching {
-            withContext(Dispatchers.IO){
-                getAllMoviesUseCase(region)
-            }
+            getAllMoviesUseCase(region)
         }.onSuccess {
-            emit(UiState(status = Status.SUCCESS, movies = (it as ApiResult.Success).data))
+            emit(UiState(status = Status.SUCCESS, movies = it))
         }.onFailure {
             emit(UiState(status = Status.FAILURE, error = it))
         }
@@ -95,7 +90,7 @@ class PopularMoviesViewModel @Inject constructor(
         kotlin.runCatching {
             getAllMoviesUseCase(region)
         }.onSuccess {
-            emit(UiState(status = Status.SUCCESS, movies = (it as ApiResult.Success).data))
+            emit(UiState(status = Status.SUCCESS, movies = it))
         }.onFailure {
             emit(UiState(status = Status.FAILURE, error = it))
         }
@@ -104,14 +99,5 @@ class PopularMoviesViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = UiState(status = Status.LOADING)
     )
-
-
-
-
-    /**
-     * ViewModelScope.coroutineContext + Dispatchers.Main indica que la corutina se ejecutará en el hilo main mientras el view model viva
-     * dentro del repo se estarán ejecutando las corrutinas con el dispatcher.IO
-     */
-
 
 }

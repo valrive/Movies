@@ -15,7 +15,7 @@ object ApiWrapper {
         val response = call.execute()
 
         if (!response.isSuccessful) {
-            throw HttpCodeException("response.message()", response.code())
+            throw HttpCodeException("HttpCodeException ", response.code())
         }
 
         // success

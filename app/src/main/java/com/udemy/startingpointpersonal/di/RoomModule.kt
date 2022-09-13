@@ -14,12 +14,14 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RoomModule {
 
+    private const val DB_NAME = "vale.db"
+
     @Singleton
     @Provides
     fun provideDatabase(@ApplicationContext context: Context) = Room
-        .databaseBuilder(context, LocalRoomDatabase::class.java, LocalRoomDatabase.DB_NAME)
-        .allowMainThreadQueries()
-        .fallbackToDestructiveMigration()
+        .databaseBuilder(context, LocalRoomDatabase::class.java, DB_NAME)
+        //.allowMainThreadQueries()
+        //.fallbackToDestructiveMigration()
         .build()
 
     @Singleton

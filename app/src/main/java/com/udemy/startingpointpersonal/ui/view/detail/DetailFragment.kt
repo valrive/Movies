@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.navigation.fragment.navArgs
 import com.udemy.startingpointpersonal.R
-import com.udemy.startingpointpersonal.data.model.Movie
+import com.udemy.startingpointpersonal.domain.model.Movie
 import com.udemy.startingpointpersonal.databinding.FragmentDetail2Binding
 import com.udemy.startingpointpersonal.ui.BaseFragment
 import com.udemy.startingpointpersonal.ui.MainActivity

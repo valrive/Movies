@@ -1,7 +1,7 @@
 package com.udemy.startingpointpersonal.data.repository
 
-import com.udemy.startingpointpersonal.data.database.entity.Movie
-import com.udemy.startingpointpersonal.data.model.Movie as DomainMovie
+import com.udemy.startingpointpersonal.data.database.entity.MovieEntity
+import com.udemy.startingpointpersonal.domain.model.Movie as DomainMovie
 import com.udemy.startingpointpersonal.data.database.dao.MovieDao
 import com.udemy.startingpointpersonal.data.repository.interfaces.MoviesLocalDataSource
 import com.udemy.startingpointpersonal.data.toDomainMovie
@@ -15,7 +15,7 @@ class MoviesLocalDataSourceImpl @Inject constructor(
 
     override suspend fun isEmpty() = withContext(Dispatchers.IO) { movieDao.movieCount() == 0 }
 
-    override suspend fun save(movies: List<Movie>) = withContext(Dispatchers.IO) {
+    override suspend fun save(movies: List<MovieEntity>) = withContext(Dispatchers.IO) {
         movieDao.insert(
             //converts List to vararg
             *movies.toTypedArray()
@@ -27,4 +27,8 @@ class MoviesLocalDataSourceImpl @Inject constructor(
 
     override suspend fun getAll(): List<DomainMovie> =
         withContext(Dispatchers.IO) { movieDao.getAll().map { it.toDomainMovie() } }
+
+    override suspend fun clearMovies() = withContext(Dispatchers.IO){
+        movieDao.deleteAll()
+    }
 }
