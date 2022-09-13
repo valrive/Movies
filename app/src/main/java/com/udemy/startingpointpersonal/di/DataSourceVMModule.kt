@@ -1,7 +1,7 @@
 package com.udemy.startingpointpersonal.di
 
 import com.udemy.startingpointpersonal.data.api.ApiClient
-import com.udemy.startingpointpersonal.data.dao.MovieDao
+import com.udemy.startingpointpersonal.data.database.dao.MovieDao
 import com.udemy.startingpointpersonal.data.repository.MoviesLocalDataSourceImpl
 import com.udemy.startingpointpersonal.data.repository.MoviesRemoteDataSourceImpl
 import dagger.Module

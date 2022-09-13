@@ -1,22 +1,23 @@
 package com.udemy.startingpointpersonal.di
 
-import android.app.Application
+import android.content.Context
 import androidx.room.Room
-import com.udemy.startingpointpersonal.data.dao.LocalRoomDatabase
+import com.udemy.startingpointpersonal.data.database.LocalRoomDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object DaoModule {
+object RoomModule {
 
     @Singleton
     @Provides
-    fun provideDatabase(application: Application) = Room
-        .databaseBuilder(application, LocalRoomDatabase::class.java,LocalRoomDatabase.DB_NAME)
+    fun provideDatabase(@ApplicationContext context: Context) = Room
+        .databaseBuilder(context, LocalRoomDatabase::class.java, LocalRoomDatabase.DB_NAME)
         .allowMainThreadQueries()
         .fallbackToDestructiveMigration()
         .build()

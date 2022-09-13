@@ -1,6 +1,7 @@
-package com.udemy.startingpointpersonal.data.dao
+package com.udemy.startingpointpersonal.data.database.dao
 
 import androidx.room.*
+import com.udemy.startingpointpersonal.data.database.entity.Movie
 
 @Dao
 interface MovieDao {

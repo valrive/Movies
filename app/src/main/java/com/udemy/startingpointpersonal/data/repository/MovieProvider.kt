@@ -1,6 +1,6 @@
 package com.udemy.startingpointpersonal.data.repository
 
-import com.udemy.startingpointpersonal.data.dao.Movie
+import com.udemy.startingpointpersonal.data.database.entity.Movie
 import javax.inject.Inject
 import javax.inject.Singleton
 

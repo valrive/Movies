@@ -1,10 +1,11 @@
 package com.udemy.startingpointpersonal.di
 
-import android.app.Application
+import android.content.Context
 import com.udemy.startingpointpersonal.R
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Named
 import javax.inject.Singleton
@@ -16,16 +17,16 @@ object EnvironmentModule {
     @Singleton
     @Provides
     @Named("apiUrl")
-    fun provideApiUrl(application: Application) = application.resources.getString(R.string.config_api_url)
+    fun provideApiUrl(@ApplicationContext context: Context) = context.resources.getString(R.string.config_api_url)
 
     @Singleton
     @Provides
     @Named("apiKey")
-    fun provideApiKey(application: Application) = application.resources.getString(R.string.api_key)
+    fun provideApiKey(@ApplicationContext context: Context) = context.resources.getString(R.string.api_key)
 
     @Singleton
     @Provides
     @Named("environment")
-    fun provideEnvironment(application: Application) = application.resources.getString(R.string.config_info_version)
+    fun provideEnvironment(@ApplicationContext context: Context) = context.resources.getString(R.string.config_info_version)
 
 }
