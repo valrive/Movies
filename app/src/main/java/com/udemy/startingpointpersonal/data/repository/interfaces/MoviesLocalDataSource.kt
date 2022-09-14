@@ -7,7 +7,7 @@ interface MoviesLocalDataSource {
 
     suspend fun isEmpty(): Boolean
 
-    suspend fun save(movies: List<MovieEntity>)
+    suspend fun insert(movies: List<MovieEntity>)
 
     suspend fun findById(movieId: Int): DomainMovie
 

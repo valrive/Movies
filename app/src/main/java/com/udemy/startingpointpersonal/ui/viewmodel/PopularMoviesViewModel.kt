@@ -1,12 +1,14 @@
 package com.udemy.startingpointpersonal.ui.viewmodel
 
-import androidx.lifecycle.*
-import com.udemy.startingpointpersonal.domain.model.Movie
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
+import androidx.lifecycle.viewModelScope
 import com.udemy.startingpointpersonal.domain.GetAllMoviesUseCase
-import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import com.udemy.startingpointpersonal.domain.model.Movie
 import com.udemy.startingpointpersonal.ui.Status
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
+import javax.inject.Inject
 
 @HiltViewModel
 class PopularMoviesViewModel @Inject constructor(
@@ -25,7 +27,7 @@ class PopularMoviesViewModel @Inject constructor(
      *
      * Primer modo, implementando el builder flow dentro de la misma variable
      */
-    val popularMovies : StateFlow<UiState> = flow{
+    val popularMovies: StateFlow<UiState> = flow {
         kotlin.runCatching {
             getAllMoviesUseCase()
         }.onSuccess {
@@ -49,22 +51,13 @@ class PopularMoviesViewModel @Inject constructor(
     /*init {
         _state.update { it }
         viewModelScope.launch{
-            when (val result = getAllMoviesUseCase()) {
-                is ApiResult.Success -> {
-                    _state.update { it.copy(status = Status.SUCCESS, movies = result.data) }
+            kotlin.runCatching {
+                getAllMoviesUseCase()
+            }.onSuccess { movies ->
+                _state.update { UiState(status = Status.SUCCESS, movies = movies)
                 }
-*//*
-                is ApiResult.ErrorSEH -> {
-                    _errorPopularMovies.value = result.err
-                    _status.value = Status.FAILURE
-                }
-
-                is ResourceNew.ErrorEP ->{
-                    _errorPopularMovies.value = result.err
-                    _status.value = Status.ERROR
-                }
-*//*
-                else -> {}
+            }.onFailure { error ->
+                _state.update { UiState(status = Status.FAILURE, error = error) }
             }
 
         }
@@ -74,7 +67,7 @@ class PopularMoviesViewModel @Inject constructor(
     /**
      * 3ra opción: Mediante un método que pueda recibir algún parámetro
      */
-    fun fetchPopularMoviesLive(region: String) = liveData{
+    fun fetchPopularMoviesLive(region: String) = liveData {
         emit(UiState(status = Status.LOADING))
         kotlin.runCatching {
             getAllMoviesUseCase(region)
@@ -86,7 +79,7 @@ class PopularMoviesViewModel @Inject constructor(
 
     }
 
-    fun fetchPopularMoviesFlow(region: String) = flow{
+    fun fetchPopularMoviesFlow(region: String) = flow {
         kotlin.runCatching {
             getAllMoviesUseCase(region)
         }.onSuccess {

@@ -1,13 +1,11 @@
 package com.udemy.startingpointpersonal.data.repository
 
-import com.udemy.startingpointpersonal.data.api.ApiResult
 import com.udemy.startingpointpersonal.data.database.entity.MovieEntity
 import com.udemy.startingpointpersonal.domain.model.Movie
 import com.udemy.startingpointpersonal.data.repository.interfaces.MovieRepository
 import com.udemy.startingpointpersonal.data.repository.interfaces.MoviesLocalDataSource
 import com.udemy.startingpointpersonal.data.repository.interfaces.MoviesRemoteDataSource
 import com.udemy.startingpointpersonal.data.toDomainMovie
-import com.udemy.startingpointpersonal.data.toEntityMovie
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -25,12 +23,12 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun clearMovies() = movieLocalDS.clearMovies()
 
-    override suspend fun saveMovies(list: List<MovieEntity>) {
+    override suspend fun insertMovies(list: List<MovieEntity>) {
         //Versión que guarda directo en una clase sin pasar por ROOM ni Preferencias
         //movieProvider.movies = movies.map { it.toEntityMovie() }
         //return movieProvider.movies.map { it.toDomainMovie() }
 
-        movieLocalDS.save(list)
+        movieLocalDS.insert(list)
     }
 
     override suspend fun getAllMovies(): List<Movie> = movieLocalDS.getAll()

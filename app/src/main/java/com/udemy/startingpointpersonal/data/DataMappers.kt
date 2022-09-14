@@ -36,8 +36,8 @@ fun Movie.toEntityMovie(): MovieEntity = MovieEntity(
     "https://image.tmdb.org/t/p/w780/$backdropPath",
     voteAverage,
     voteCount,
-    releaseDate,
-    originalLanguage,
+    releaseDate.orEmpty(),
+    originalLanguage.orEmpty(),
     //"$overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview "
-    overview
+    overview.orEmpty()
 )

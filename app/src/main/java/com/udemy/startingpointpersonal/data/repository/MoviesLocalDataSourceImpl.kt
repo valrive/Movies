@@ -15,7 +15,7 @@ class MoviesLocalDataSourceImpl @Inject constructor(
 
     override suspend fun isEmpty() = withContext(Dispatchers.IO) { movieDao.movieCount() == 0 }
 
-    override suspend fun save(movies: List<MovieEntity>) = withContext(Dispatchers.IO) {
+    override suspend fun insert(movies: List<MovieEntity>) = withContext(Dispatchers.IO) {
         movieDao.insert(
             //converts List to vararg
             *movies.toTypedArray()
