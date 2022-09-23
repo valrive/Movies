@@ -32,7 +32,7 @@ class PopularMoviesFragment
     private val viewModel by viewModels<PopularMoviesViewModel>()
 
     private val adapter = MovieAdapter { onAction(it) }
-    private val GLAdapterL = GLAdapterL<Movie>(
+    private val gLAdapterL = GLAdapterL<Movie>(
             layoutId = R.layout.movie_item,
             bind = { item, _, _, binding ->
                 bindMovie(binding as MovieItemBinding, item)
@@ -62,7 +62,7 @@ class PopularMoviesFragment
 
     private val GRVAdapterDB = GRVAdapterDB(
         data = emptyList<Movie>(),
-        onBind = {binding, movie, size ->
+        onBind = {binding, movie, _ ->
             bindMovie(binding , movie)
         },
         inflate = {li, parent, attachToParent ->
@@ -74,7 +74,7 @@ class PopularMoviesFragment
         inflate = {li, parent, attachToParent ->
             MovieItemBinding.inflate(li, parent, attachToParent)
         },
-        onBind = { binding: MovieItemBinding, movie: Movie, _ ->
+        onBind = { binding, movie: Movie, _ ->
             bindMovie(binding, movie)
         },
         onAction = { onAction(it) }

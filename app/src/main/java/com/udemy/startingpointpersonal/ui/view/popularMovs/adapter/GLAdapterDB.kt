@@ -10,19 +10,14 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.udemy.startingpointpersonal.R
 
-class GLAdapterDB<T : Any, VDB: ViewDataBinding>(
+class GLAdapterDB<T : Any, VDB : ViewDataBinding>(
     private val inflate: (layoutInflater: LayoutInflater, parent: ViewGroup?, attachToParent: Boolean) -> VDB,
     private val onBind: (VDB, T, Int) -> Unit,
     private val onAction: (Action) -> Unit
 ) : ListAdapter<T, GLAdapterDB<T, VDB>.BaseHolder>(BaseItemCallback<T>()) {
 
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseHolder =
-        BaseHolder(
-            inflate(LayoutInflater.from(parent.context), parent, false),
-            onAction
-        )
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = BaseHolder(
+        inflate(LayoutInflater.from(parent.context), parent, false), onAction)
 
     override fun onBindViewHolder(holder: BaseHolder, position: Int) {
         //Animamos la presentación de los items
