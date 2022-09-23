@@ -81,9 +81,9 @@ private class DiffUtilCallback : DiffUtil.ItemCallback<Movie>() {
 }
 
 sealed interface Action {
-    class Click(val movie: Movie) : Action
-    class Share(val movie: Movie) : Action
-    class Favorite(val movie: Movie) : Action
-    class Delete(val movie: Movie) : Action
+    class Click(val item: Any) : Action
+    class Share(val item: Any) : Action
+    class Favorite(val item: Any) : Action
+    class Delete(val item: Any) : Action
 }
 
