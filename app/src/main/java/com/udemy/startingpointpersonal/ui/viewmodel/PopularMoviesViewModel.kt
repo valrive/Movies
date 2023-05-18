@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PopularMoviesViewModel @Inject constructor(
-    private val getAllMoviesUseCase: GetAllMoviesUseCase
+    private val getAllMoviesUseCase: GetAllMoviesUseCase,
 ) : ViewModel() {
 
     data class UiState(

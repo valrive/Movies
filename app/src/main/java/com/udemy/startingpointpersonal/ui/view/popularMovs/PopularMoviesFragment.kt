@@ -1,6 +1,5 @@
 package com.udemy.startingpointpersonal.ui.view.popularMovs
 
-import android.icu.util.TimeZone.getRegion
 import android.location.Geocoder
 import android.os.Bundle
 import android.view.View
@@ -18,6 +17,7 @@ import com.udemy.startingpointpersonal.databinding.FragmentPopularMoviesBinding
 import com.udemy.startingpointpersonal.databinding.MovieItemBinding
 import com.udemy.startingpointpersonal.domain.model.Movie
 import com.udemy.startingpointpersonal.ui.*
+import com.udemy.startingpointpersonal.ui.view.permission.AndroidPermissionChecker
 import com.udemy.startingpointpersonal.ui.view.popularMovs.adapter.*
 import com.udemy.startingpointpersonal.ui.viewmodel.PopularMoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -26,40 +26,32 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
 @AndroidEntryPoint
-class PopularMoviesFragment
-    : BaseFragment<FragmentPopularMoviesBinding>() {
+class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
 
     private val viewModel by viewModels<PopularMoviesViewModel>()
-
-    private val adapter = MovieAdapter { onAction(it) }
-    private val gLAdapterL = GLAdapterL<Movie>(
-            layoutId = R.layout.movie_item,
-            bind = { item, _, _, binding ->
-                bindMovie(binding as MovieItemBinding, item)
-            },
-            onAction = { onAction(it) }
-        )
-
-    /**
-     * Generic Recycler Adapter
-     */
     private var movies: List<Movie> = emptyList()
+
+    /** Adapters */
+
+    //validados
+    private val adapter = MovieAdapter { onAction(it) }
+
+
+    //sin validar
+    private val adapterLA = MovieAdapterLA { onAction(it) }
+    private val gLAdapterL = GLAdapterL<Movie>(
+        layoutId = R.layout.movie_item,
+        bind = { item, _, _, binding ->
+            bindMovie(binding as MovieItemBinding, item)
+        },
+        onAction = { onAction(it) }
+    )
     private val GRVAdapterL = GRVAdapterL(
         movies,
         R.layout.movie_item
     ){ item, binding ->
         bindMovie(binding as MovieItemBinding, item)
     }
-
-    private val bindingInterface = object:
-        GRVAdapterL.GenericRecyclerAdapterBindingInterface<Movie> {
-        override fun bindData(item: Movie, binding: ViewDataBinding) {
-            TODO("Not yet implemented")
-        }
-
-
-    }
-
     private val GRVAdapterDB = GRVAdapterDB(
         data = emptyList<Movie>(),
         onBind = {binding, movie, _ ->
@@ -79,6 +71,20 @@ class PopularMoviesFragment
         },
         onAction = { onAction(it) }
     )
+
+    private val bindingInterface = object:
+        GRVAdapterL.GenericRecyclerAdapterBindingInterface<Movie> {
+        override fun bindData(item: Movie, binding: ViewDataBinding) {
+            TODO("Not yet implemented")
+        }
+    }
+
+    /** Adapters */
+
+
+
+
+
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -113,10 +119,13 @@ class PopularMoviesFragment
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        AndroidPermissionChecker(requireActivity()).checkPermissions()
+
         (requireActivity() as MainActivity).supportActionBar?.hide()
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
-        binding.rvMovies.adapter = gLAdapterDB
+        binding.rvMovies.adapter = adapterLA
+        //binding.rvMovies.adapter = gLAdapterDB
         //binding.rvMovies.layoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
 
         requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -180,8 +189,8 @@ class PopularMoviesFragment
             Status.SUCCESS -> {
                 binding.loading = false
                 requireActivity().escondeProgressBar()
-                //adapter.submitList(state.movies)
-                gLAdapterDB.submitList(state.movies)
+                adapterLA.submitList(state.movies)
+                //gLAdapterDB.submitList(state.movies)
             }
             Status.FAILURE -> {
                 binding.loading = false

@@ -52,7 +52,6 @@ object ApiModule {
 
     @Provides
     fun provideHeadersInterceptor() = Interceptor {
-
         it.proceed(
             it.request().newBuilder()
                 .addHeader("x-version-name", BuildConfig.VERSION_NAME)
@@ -66,7 +65,7 @@ object ApiModule {
     fun provideLoggingInterceptor(): HttpLoggingInterceptor {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         return httpLoggingInterceptor.apply {
-            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.HEADERS
         }
     }
 
