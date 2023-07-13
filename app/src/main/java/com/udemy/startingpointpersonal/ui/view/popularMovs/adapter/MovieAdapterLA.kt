@@ -13,7 +13,7 @@ import com.udemy.startingpointpersonal.domain.model.Movie
  * Adapter que incluye ListAdapter por lo que no es necesario pasar la lista como parámetro
  */
 class MovieAdapterLA( private val onAction: (Action) -> Unit)
-    : ListAdapter<Movie, RecyclerView.ViewHolder>(DiffUtilCallback()) {
+    : ListAdapter<Movie, RecyclerView.ViewHolder>(TypedDiffUtilCallback()) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
@@ -23,11 +23,13 @@ class MovieAdapterLA( private val onAction: (Action) -> Unit)
         )
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        holder.itemView.animation = AnimationUtils.loadAnimation(
-            holder.itemView.context,
-            R.anim.recycler_view_item_three
-        )
-        ( holder as? ItemViewHolder)?.bind(getItem(position))
+        ( holder as? ItemViewHolder)?.apply {
+            itemView.animation = AnimationUtils.loadAnimation(
+                holder.itemView.context,
+                R.anim.recycler_view_item_three
+            )
+            bind(getItem(position))
+        }
     }
 
     private inner class ItemViewHolder(

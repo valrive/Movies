@@ -9,12 +9,14 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.udemy.startingpointpersonal.R
+import com.udemy.startingpointpersonal.databinding.MovieItemBinding
+import com.udemy.startingpointpersonal.domain.model.Movie
 
 class GLAdapterL<T : Any>(
     @LayoutRes val layoutId: Int,
-    inline val bind: (item: T, holder: GLAdapterL<T>.BaseViewHolder, itemCount: Int, binding: ViewDataBinding) -> Unit,
+    //inline val bind: (item: T, holder: GLAdapterL<T>.BaseViewHolder, itemCount: Int, binding: ViewDataBinding) -> Unit,
     private val onAction: (Action) -> Unit
-) : ListAdapter<T, GLAdapterL<T>.BaseViewHolder>(BaseItemCallback<T>()) {
+) : ListAdapter<T, GLAdapterL<T>.BaseViewHolder>(TypedDiffUtilCallback<T>()) {
 
     private lateinit var binding: ViewDataBinding
 
@@ -26,9 +28,6 @@ class GLAdapterL<T : Any>(
         )
         binding = DataBindingUtil.bind(view)!!
         return BaseViewHolder(binding, onAction)
-
-        //val root = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-        //return BaseViewHolder(root as ViewGroup)
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder, position: Int) {
@@ -37,7 +36,8 @@ class GLAdapterL<T : Any>(
             holder.itemView.context,
             R.anim.recycler_view_item_three
         )
-        bind(getItem(position), holder, itemCount, binding)
+        holder.bind(getItem(position))
+        //bind(getItem(position), holder, itemCount, binding)
     }
 
     override fun getItemViewType(position: Int) = layoutId
@@ -54,6 +54,16 @@ class GLAdapterL<T : Any>(
                 onAction(Action.Click(getItem(bindingAdapterPosition)))
             }
         }
+
+        fun bind(item: T) = when (item){
+            is Movie -> with(binding as MovieItemBinding){
+                url = item.posterPath
+                title = item.title
+            }
+
+            else -> {}
+        }
+
     }
 
 }

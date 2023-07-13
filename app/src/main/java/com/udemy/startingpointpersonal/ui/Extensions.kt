@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.provider.SyncStateContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,10 +15,13 @@ import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.*
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.udemy.startingpointpersonal.R
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.properties.Delegates
@@ -115,3 +117,10 @@ fun Activity.escondeProgressBar() {
     progressBar = null
     IS_PROGRESSBAR_VISIBLE = false
 }
+
+fun <T> LifecycleOwner.launchAndCollect(collectable: StateFlow<T>, onResult: (T) -> Unit) =
+    lifecycleScope.launch {
+        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            collectable.collect {onResult(it) }
+        }
+    }

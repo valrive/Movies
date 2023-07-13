@@ -3,6 +3,7 @@ package com.udemy.startingpointpersonal.ui.view.popularMovs.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.udemy.startingpointpersonal.R
 import com.udemy.startingpointpersonal.databinding.MovieItemBinding
@@ -12,7 +13,8 @@ import com.udemy.startingpointpersonal.ui.basicDiffUtil
 /**
  * Adapter básico optimizado con basicDiffUtil, ya no lleva el list como parámetro
  */
-class MovieAdapter( private val onAction: (Action) -> Unit ) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+class MovieAdapter2( private val onAction: (Action) -> Unit ) :
+    ListAdapter<Movie, MovieAdapter2.ViewHolder>(TypedDiffUtilCallback()) {
 
     var movies: List<Movie> by basicDiffUtil(
         areItemsTheSame = {old, new -> old.id === new.id}

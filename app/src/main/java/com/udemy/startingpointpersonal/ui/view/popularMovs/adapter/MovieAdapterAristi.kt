@@ -3,24 +3,30 @@ package com.udemy.startingpointpersonal.ui.view.popularMovs.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.udemy.startingpointpersonal.R
 import com.udemy.startingpointpersonal.databinding.MovieItemBinding
 import com.udemy.startingpointpersonal.domain.model.Movie
-import com.udemy.startingpointpersonal.ui.basicDiffUtil
 
 /**
- * Adapter básico optimizado con basicDiffUtil, ya no lleva el list como parámetro
+ * Adapter básico optimizado con DiffUtil
  */
-class MovieAdapter( private val onAction: (Action) -> Unit ) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
+class MovieAdapterAristi(
+    private var list: List<Movie>,
+    private val onAction: (Action) -> Unit
+) : RecyclerView.Adapter<MovieAdapterAristi.ItemViewHolder>() {
 
-    var movies: List<Movie> by basicDiffUtil(
-        areItemsTheSame = {old, new -> old.id === new.id}
-    )
-
+    
+    fun submitList(newList: List<Movie>){
+        val movieDiff = MovieDiffUtil(list, newList)
+        val result = DiffUtil.calculateDiff(movieDiff)
+        list = newList
+        result.dispatchUpdatesTo(this)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        ViewHolder(
+        ItemViewHolder(
             MovieItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -29,25 +35,25 @@ class MovieAdapter( private val onAction: (Action) -> Unit ) : RecyclerView.Adap
             onAction
         )
 
-    override fun getItemCount() = movies.size
+    override fun getItemCount() = list.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.itemView.animation = AnimationUtils.loadAnimation(
             holder.itemView.context,
             R.anim.recycler_view_item_three
         )
-        holder.bind(movies[position])
+        holder.bind(list[position])
     }
 
-    inner class ViewHolder(
+    inner class ItemViewHolder(
         val binding: MovieItemBinding,
         val onAction: (Action) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         //Se inicializa el listener desde init para que no se esté re-seteando cada que se recicla la vista dentro de onBindViewHolder (Es más óptimo)
         init {
-            binding.root.setOnClickListener {
-                onAction(Action.Click(movies[bindingAdapterPosition]))
+            binding.tvTitle.setOnClickListener {
+                onAction(Action.Click(list[bindingAdapterPosition]))
             }
         }
 
