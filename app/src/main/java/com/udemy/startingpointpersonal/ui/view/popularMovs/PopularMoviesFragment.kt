@@ -2,13 +2,13 @@ package com.udemy.startingpointpersonal.ui.view.popularMovs
 
 import android.location.Geocoder
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.udemy.startingpointpersonal.R
@@ -19,7 +19,6 @@ import com.udemy.startingpointpersonal.ui.*
 import com.udemy.startingpointpersonal.ui.view.permission.AndroidPermissionChecker
 import com.udemy.startingpointpersonal.ui.view.popularMovs.adapter.*
 import com.udemy.startingpointpersonal.ui.viewmodel.FlowAristidevsExampleViewModel
-import com.udemy.startingpointpersonal.ui.viewmodel.PopularMoviesUIState
 import com.udemy.startingpointpersonal.ui.viewmodel.PopularMoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -29,7 +28,7 @@ import kotlin.coroutines.resume
 @AndroidEntryPoint
 class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
 
-    private val viewModel by viewModels<PopularMoviesViewModel>()
+    private val viewModel: PopularMoviesViewModel by viewModels()
     private val aristiViewModel by viewModels<FlowAristidevsExampleViewModel>()
     private var movies: List<Movie> = emptyList()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -37,7 +36,7 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             when {
                 isGranted -> {
-                    stateFlowCollectors(isGranted, true)
+                    stateFlowCollectors(isGranted, false)
                     //showFusedLocation(isGranted)//toast("Permission granted")
                 }
                 shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_COARSE_LOCATION) -> {
@@ -49,8 +48,8 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
 
     /** Adapters */
     private val adapter =
+        MovieAdapterLA { onAction(it) }
 
-        //MovieAdapterLA { onAction(it) }
         /*GLAdapterDB(
             inflate = {li, parent, attachToParent ->
                 MovieItemBinding.inflate(li, parent, attachToParent)
@@ -73,9 +72,9 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         //MovieAdapter { onAction(it) }
 
         //ejemplo de adapter de Aristi con DiffUtil
-        MovieAdapterAristi(movies) { onAction(it) }
+        //MovieAdapterAristi(movies) { onAction(it) }
 
-        //ejemplo de adapter de Aristi con DiffUtil
+        //ejemplo de adapter de Leiva con DiffUtil
         //MovieAdapter{ onAction(it) }
 
 
@@ -130,22 +129,17 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
         binding.rvMovies.adapter = adapter
-        //binding.rvMovies.adapter = adapterLA
-        //binding.rvMovies.adapter = gLAdapterDB
-        //binding.rvMovies.layoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        binding.rvMovies.layoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
 
         requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_COARSE_LOCATION)
 
         //stateFlowCollectors()
+
         //Aristidev example
-        aristiViewModel.example()
         viewLifecycleOwner.launchAndCollect(aristiViewModel.uiState){
-            when(it){
-                PopularMoviesUIState.Loading -> Log.i("aristiDev", "loading...")
-                is PopularMoviesUIState.Success -> Log.i("aristiDev", "success: ${it.list.size} películas")
-                is PopularMoviesUIState.Error -> Log.i("aristiDev", "error: ${it.mensaje}")
-            }
+            handleResult(it)
         }
+        aristiViewModel.example()
     }
 
     private fun showFusedLocation(isGranted: Boolean) {
@@ -164,6 +158,7 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
 
 
     private fun stateFlowCollectors(isGranted: Boolean, liveDataMode: Boolean) =
+        //El launch lo uso solo para obtener la región
         viewLifecycleOwner.lifecycleScope.launch{
             val region = getRegion(isGranted)
 
@@ -182,7 +177,9 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
 
 
                 //segundo modo de llamado; Llamando directamente a un fun y no depender de observar una var y llamar a una fun
-                viewModel.fetchPopularMoviesLD(region).observe(viewLifecycleOwner, Observer{handleResult(it)})
+                viewModel.fetchPopularMoviesLD(region).observe(viewLifecycleOwner, Observer{
+                    handleResult(it)}
+                )
 
             } else { //flow mode
 
@@ -235,25 +232,25 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         }
 
 
-    private fun handleResult(state: PopularMoviesViewModel.PopularMoviesUiState) {
-        when (state.status) {
-            Status.LOADING -> {
+    private fun handleResult(state: PopularMoviesUIState<List<Movie>>) {
+        when (state) {
+            PopularMoviesUIState.Loading -> {
                 binding.loading = true
                 requireActivity().muestraProgressBar()
             }
-            Status.SUCCESS -> {
+            is PopularMoviesUIState.Success -> {
                 binding.loading = false
                 requireActivity().escondeProgressBar()
 
                 //el método submitList() extiende solo de ListAdapter, si queremos que funcione
                 // para ambos (ListAdapter y ReciclerView.Adapter) entonces al ReciclerView.Adapter
                 // hay que agregarle una función con el mismo nombre
-                adapter.submitList(state.movies)
+                adapter.submitList(state.list)
             }
-            Status.FAILURE -> {
+            is PopularMoviesUIState.Error -> {
                 binding.loading = false
                 requireActivity().escondeProgressBar()
-                activity?.toast(state.error?.message.toString())
+                activity?.toast(state.mensaje)
             }
         }
     }
@@ -283,4 +280,14 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
 
 }
 
+sealed class PopularMoviesUIState<out T> {
+    object Loading: PopularMoviesUIState<Nothing>()
+    data class Success<out T>(val list: T): PopularMoviesUIState<T>()
+    data class Error(val mensaje: String): PopularMoviesUIState<Nothing>()
+}
 
+sealed class PopularMoviesUIState2{
+    object Loading: PopularMoviesUIState2()
+    data class Success(val list: Movie): PopularMoviesUIState2()
+    data class Error(val mensaje: String): PopularMoviesUIState2()
+}

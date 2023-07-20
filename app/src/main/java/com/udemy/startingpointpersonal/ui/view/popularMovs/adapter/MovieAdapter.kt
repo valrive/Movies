@@ -18,7 +18,6 @@ class MovieAdapter( private val onAction: (Action) -> Unit ) : RecyclerView.Adap
         areItemsTheSame = {old, new -> old.id === new.id}
     )
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ViewHolder(
             MovieItemBinding.inflate(

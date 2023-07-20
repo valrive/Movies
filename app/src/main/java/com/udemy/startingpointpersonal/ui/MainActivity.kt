@@ -3,8 +3,6 @@ package com.udemy.startingpointpersonal.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
 import com.udemy.startingpointpersonal.R
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,8 +17,4 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-}
-
-enum class Status {
-    SUCCESS, FAILURE, LOADING
 }

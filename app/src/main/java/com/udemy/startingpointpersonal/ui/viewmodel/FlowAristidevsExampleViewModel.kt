@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.udemy.startingpointpersonal.domain.FlowExampleUseCase
 import com.udemy.startingpointpersonal.domain.model.Movie
+import com.udemy.startingpointpersonal.ui.view.popularMovs.PopularMoviesUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -33,6 +34,7 @@ class FlowAristidevsExampleViewModel @Inject constructor(
             }
 
             bombitasUseCase.invoke()
+                .onEach { println(it.toString()) }
                 .catch { _uiState.value = PopularMoviesUIState.Error(it.message ?: "default error message") }
                 .flowOn(Dispatchers.IO) // por default el flow se ejecuta en el hilo principal y flowOn se ejecuta en las líneas de arriba, el collect lo ejecuta en ui
                 .collect{ movies: List<Movie> ->
@@ -46,10 +48,4 @@ class FlowAristidevsExampleViewModel @Inject constructor(
         //save in database
     }
 
-}
-
-sealed class PopularMoviesUIState<out T> {
-    object Loading: PopularMoviesUIState<Nothing>()
-    data class Success<out T>(val list: T): PopularMoviesUIState<T>()
-    data class Error(val mensaje: String): PopularMoviesUIState<Nothing>()
 }
