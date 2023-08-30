@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import androidx.recyclerview.widget.DiffUtil
 import com.udemy.startingpointpersonal.domain.model.Movie
 
-class DiffUtilCallback : DiffUtil.ItemCallback<Movie>() {
+object DiffUtilCallback : DiffUtil.ItemCallback<Movie>() {
     override fun areItemsTheSame(oldItem: Movie, newItem: Movie) = oldItem.id == newItem.id
     override fun areContentsTheSame(oldItem: Movie, newItem: Movie) = oldItem == newItem
 }
@@ -24,6 +24,14 @@ class MovieDiffUtil(
 
 class TypedDiffUtilCallback<T : Any> : DiffUtil.ItemCallback<T>() {
     override fun areItemsTheSame(oldItem: T, newItem: T) = oldItem.toString() == newItem.toString()
+    @SuppressLint("DiffUtilEquals")
+    override fun areContentsTheSame(oldItem: T, newItem: T) = oldItem == newItem
+}
+
+class basicDiffUtil<T : Any>(
+    var arreItemsTheSame: (T, T) -> Boolean = { old, new -> old == new },
+) : DiffUtil.ItemCallback<T>() {
+    override fun areItemsTheSame(oldItem: T, newItem: T) = arreItemsTheSame(oldItem, newItem)
     @SuppressLint("DiffUtilEquals")
     override fun areContentsTheSame(oldItem: T, newItem: T) = oldItem == newItem
 }

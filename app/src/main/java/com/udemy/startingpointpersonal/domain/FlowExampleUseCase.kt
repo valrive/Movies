@@ -14,9 +14,9 @@ class FlowExampleUseCase @Inject constructor(
     val counter: Flow<Int> = flow {
         var bombitas = 0
         while(bombitas < 10){
+            delay(1000)
             bombitas += 1
             emit(bombitas)
-            delay(1000)
         }
     }
     suspend operator fun invoke(region: String? = PopularMoviesFragment.DEFAULT_REGION): Flow<List<Movie>> = flow {

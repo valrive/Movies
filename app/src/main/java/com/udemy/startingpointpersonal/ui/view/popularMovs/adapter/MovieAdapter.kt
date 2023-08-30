@@ -14,9 +14,15 @@ import com.udemy.startingpointpersonal.ui.basicDiffUtil
  */
 class MovieAdapter( private val onAction: (Action) -> Unit ) : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
 
-    var movies: List<Movie> by basicDiffUtil(
-        areItemsTheSame = {old, new -> old.id === new.id}
+    private var movies: List<Movie> by basicDiffUtil(
+        areItemsTheSame = {old, new ->
+            old.id == new.id
+        }
     )
+
+    fun submitList(newList: List<Movie>){
+        movies = newList
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         ViewHolder(

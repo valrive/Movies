@@ -3,6 +3,7 @@ package com.udemy.startingpointpersonal.ui.view.popularMovs
 import android.location.Geocoder
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.viewModels
@@ -48,6 +49,9 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
 
     /** Adapters */
     private val adapter =
+        //ejemplo de adapter de Leiva con DiffUtil
+        //MovieAdapter{ onAction(it) }
+
         MovieAdapterLA { onAction(it) }
 
         /*GLAdapterDB(
@@ -74,8 +78,7 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         //ejemplo de adapter de Aristi con DiffUtil
         //MovieAdapterAristi(movies) { onAction(it) }
 
-        //ejemplo de adapter de Leiva con DiffUtil
-        //MovieAdapter{ onAction(it) }
+
 
 
 
@@ -136,10 +139,10 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         //stateFlowCollectors()
 
         //Aristidev example
-        viewLifecycleOwner.launchAndCollect(aristiViewModel.uiState){
+        viewLifecycleOwner.launchAndCollect(aristiViewModel.bombitaUIState){
             handleResult(it)
         }
-        aristiViewModel.example()
+        aristiViewModel.example3()
     }
 
     private fun showFusedLocation(isGranted: Boolean) {
@@ -232,24 +235,30 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         }
 
 
-    private fun handleResult(state: PopularMoviesUIState<List<Movie>>) {
+    private fun <T>handleResult(state: PopularMoviesUIState<T>) {
         when (state) {
             PopularMoviesUIState.Loading -> {
                 binding.loading = true
-                requireActivity().muestraProgressBar()
+                //requireActivity().muestraProgressBar()
             }
             is PopularMoviesUIState.Success -> {
                 binding.loading = false
-                requireActivity().escondeProgressBar()
+                //requireActivity().escondeProgressBar()
 
                 //el método submitList() extiende solo de ListAdapter, si queremos que funcione
                 // para ambos (ListAdapter y ReciclerView.Adapter) entonces al ReciclerView.Adapter
                 // hay que agregarle una función con el mismo nombre
-                adapter.submitList(state.list)
+                (state.data as? List<Movie>)?.let { list: List<Movie> ->
+                    adapter.submitList(list)
+                }
+
+                (state.data as? Int)?.let {
+                    activity?.toast("Bombitas: $it")
+                }
             }
             is PopularMoviesUIState.Error -> {
                 binding.loading = false
-                requireActivity().escondeProgressBar()
+                //requireActivity().escondeProgressBar()
                 activity?.toast(state.mensaje)
             }
         }
@@ -282,12 +291,12 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
 
 sealed class PopularMoviesUIState<out T> {
     object Loading: PopularMoviesUIState<Nothing>()
-    data class Success<out T>(val list: T): PopularMoviesUIState<T>()
+    data class Success<out T>(val data: T): PopularMoviesUIState<T>()
     data class Error(val mensaje: String): PopularMoviesUIState<Nothing>()
 }
 
 sealed class PopularMoviesUIState2{
     object Loading: PopularMoviesUIState2()
-    data class Success(val list: Movie): PopularMoviesUIState2()
+    data class Success(val data: Movie): PopularMoviesUIState2()
     data class Error(val mensaje: String): PopularMoviesUIState2()
 }

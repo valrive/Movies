@@ -66,15 +66,15 @@ fun <VH : RecyclerView.ViewHolder, T> RecyclerView.Adapter<VH>.basicDiffUtil(
 ) =
     Delegates.observable(initialValue) { _, old, new ->
         DiffUtil.calculateDiff(object : DiffUtil.Callback() {
-            override fun getOldListSize() = old.size
-
-            override fun getNewListSize() = new.size
 
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
                 areItemsTheSame(old[oldItemPosition], new[newItemPosition])
 
             override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int) =
                 areContentsTheSame(old[oldItemPosition], new[newItemPosition])
+
+            override fun getOldListSize() = old.size
+            override fun getNewListSize() = new.size
         }).dispatchUpdatesTo(this)
     }
 
@@ -121,6 +121,6 @@ fun Activity.escondeProgressBar() {
 fun <T> LifecycleOwner.launchAndCollect(collectable: StateFlow<T>, onResult: (T) -> Unit) =
     lifecycleScope.launch {
         lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            collectable.collect {onResult(it) }
+            collectable.collect { onResult(it) }
         }
     }

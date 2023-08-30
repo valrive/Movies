@@ -6,9 +6,7 @@ import com.udemy.startingpointpersonal.domain.model.Movie
 import com.udemy.startingpointpersonal.ui.view.popularMovs.PopularMoviesFragment
 import javax.inject.Inject
 
-class GetAllMoviesUseCase @Inject constructor(
-    private val repo: MovieRepository
-) {
+class GetAllMoviesUseCase( private val repo: MovieRepository) {
     suspend operator fun invoke(region: String? = PopularMoviesFragment.DEFAULT_REGION): List<Movie> {
         val movies = repo.getPopularMovies(region!!)
 
