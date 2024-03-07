@@ -2,10 +2,11 @@ package com.udemy.startingpointpersonal.data.repository.interfaces
 
 import com.udemy.startingpointpersonal.data.database.entity.MovieEntity
 import com.udemy.startingpointpersonal.domain.model.Movie
+import kotlinx.coroutines.flow.Flow
 
 interface MovieRepository {
 
-    suspend fun getPopularMovies(region: String): List<Movie>
+    fun getMovies(region: String): Flow<List<Movie>>
 
     suspend fun findById(movieId: Int): Movie
 

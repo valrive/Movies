@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.udemy.startingpointpersonal.R
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -118,7 +119,7 @@ fun Activity.escondeProgressBar() {
     IS_PROGRESSBAR_VISIBLE = false
 }
 
-fun <T> LifecycleOwner.launchAndCollect(collectable: StateFlow<T>, onResult: (T) -> Unit) =
+fun <T> LifecycleOwner.launchAndCollect(collectable: Flow<T>, onResult: (T) -> Unit) =
     lifecycleScope.launch {
         lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
             collectable.collect { onResult(it) }

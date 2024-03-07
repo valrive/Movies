@@ -14,8 +14,7 @@
         tools:layout_margin="1dp"
         android:gravity="center"
         android:foregroundGravity="center"
-        android:orientation="horizontal"
-        tools:background="@android:color/darker_gray">
+        android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
