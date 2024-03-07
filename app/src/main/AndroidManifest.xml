@@ -16,6 +16,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="@bool/use_clear_traffic"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
+        android:exported="false"
         tools:targetApi="m">
 
         <!-- use splash theme to show splash background -->
@@ -29,7 +30,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.MainActivity"/>
+        <activity android:name=".ui.MainActivity"
+            android:exported="false"/>
 
     </application>
 

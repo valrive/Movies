@@ -2,8 +2,7 @@ package com.udemy.startingpointpersonal.ui.viewmodel
 
 import androidx.lifecycle.*
 import com.udemy.startingpointpersonal.domain.GetAllMoviesUseCase
-import com.udemy.startingpointpersonal.domain.model.Movie
-import com.udemy.startingpointpersonal.ui.view.popularMovs.PopularMoviesUIState
+import com.udemy.startingpointpersonal.ui.view.popularMovs.ViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
@@ -40,15 +39,15 @@ class PopularMoviesViewModel @Inject constructor(
         kotlin.runCatching {
             getAllMoviesUseCase()
         }.onSuccess {movies ->
-            emit(PopularMoviesUIState.Success(movies))
+            emit(ViewState.Success(movies))
         }.onFailure {error ->
-            emit(PopularMoviesUIState.Error(error.message ?: DEFAULT_ERROR_MSG))
+            emit(ViewState.Error(error.message ?: DEFAULT_ERROR_MSG))
         }
     }.flowOn(Dispatchers.IO) // por default el flow se ejecuta en el hilo principal y flowOn se ejecuta en las líneas de arriba, el collect lo ejecuta en ui
     .stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
-        initialValue = PopularMoviesUIState.Loading
+        initialValue = ViewState.Loading
     )
 
     val popularMoviesLD = popularMoviesF.asLiveData()
@@ -63,8 +62,8 @@ class PopularMoviesViewModel @Inject constructor(
     /**
      * Segundo modo, usando las variables separadas y creando un método que detone la actualización de _state
      */
-    private val _uiState = MutableStateFlow<PopularMoviesUIState<List<Movie>>>(PopularMoviesUIState.Loading)
-    val getPopularMoviesSF: StateFlow<PopularMoviesUIState<List<Movie>>> = _uiState
+    private val _uiState = MutableStateFlow<ViewState<*>>(ViewState.Loading)
+    val getPopularMoviesSF: StateFlow<ViewState<*>> = _uiState
     val getPopularMoviesLD = _uiState.asLiveData()//.asStateFlow()
     fun initGetPopularMovies() {
         _uiState.update { it }
@@ -72,9 +71,9 @@ class PopularMoviesViewModel @Inject constructor(
             kotlin.runCatching {
                 getAllMoviesUseCase()
             }.onSuccess { movies ->
-                _uiState.update { PopularMoviesUIState.Success(movies) }
+                _uiState.update { ViewState.Success(movies) }
             }.onFailure { error ->
-                _uiState.value = PopularMoviesUIState.Error(error.message ?: DEFAULT_ERROR_MSG)
+                _uiState.value = ViewState.Error(error.message ?: DEFAULT_ERROR_MSG)
             }
 
         }
@@ -89,13 +88,13 @@ class PopularMoviesViewModel @Inject constructor(
 
 
     fun fetchPopularMoviesLD(region: String) = liveData {
-        emit(PopularMoviesUIState.Loading)
+        emit(ViewState.Loading)
         kotlin.runCatching {
             getAllMoviesUseCase(region)
         }.onSuccess {movies ->
-            emit(PopularMoviesUIState.Success(movies))
+            emit(ViewState.Success(movies))
         }.onFailure {error ->
-            emit(PopularMoviesUIState.Error(error.message ?: DEFAULT_ERROR_MSG))
+            emit(ViewState.Error(error.message ?: DEFAULT_ERROR_MSG))
         }
 
     }
@@ -105,7 +104,7 @@ class PopularMoviesViewModel @Inject constructor(
                 .stateIn(
                     scope = viewModelScope,
                     started = SharingStarted.WhileSubscribed(5000),
-                    initialValue = PopularMoviesUIState.Loading
+                    initialValue = ViewState.Loading
                 )
     /**
      * la función de abajo es reemplazada por la función de arriba para demostrar la conversión de un livedata a flow

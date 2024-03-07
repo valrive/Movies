@@ -3,7 +3,6 @@ package com.udemy.startingpointpersonal.ui.view.popularMovs
 import android.location.Geocoder
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.viewModels
@@ -19,7 +18,6 @@ import com.udemy.startingpointpersonal.domain.model.Movie
 import com.udemy.startingpointpersonal.ui.*
 import com.udemy.startingpointpersonal.ui.view.permission.AndroidPermissionChecker
 import com.udemy.startingpointpersonal.ui.view.popularMovs.adapter.*
-import com.udemy.startingpointpersonal.ui.viewmodel.FlowAristidevsExampleViewModel
 import com.udemy.startingpointpersonal.ui.viewmodel.PopularMoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -30,7 +28,6 @@ import kotlin.coroutines.resume
 class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
 
     private val viewModel: PopularMoviesViewModel by viewModels()
-    private val aristiViewModel by viewModels<FlowAristidevsExampleViewModel>()
     private var movies: List<Movie> = emptyList()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val requestPermissionLauncher =
@@ -139,10 +136,10 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         //stateFlowCollectors()
 
         //Aristidev example
-        viewLifecycleOwner.launchAndCollect(aristiViewModel.bombitaUIState){
+        /*viewLifecycleOwner.launchAndCollect(aristiViewModel.bombitaUIState){
             handleResult(it)
         }
-        aristiViewModel.example3()
+        aristiViewModel.example3()*/
     }
 
     private fun showFusedLocation(isGranted: Boolean) {
@@ -235,19 +232,10 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         }
 
 
-    private fun <T>handleResult(state: PopularMoviesUIState<T>) {
+    private fun <T>handleResult(state: ViewState<T>) {
+        binding.loading = state is ViewState.Loading
         when (state) {
-            PopularMoviesUIState.Loading -> {
-                binding.loading = true
-                //requireActivity().muestraProgressBar()
-            }
-            is PopularMoviesUIState.Success -> {
-                binding.loading = false
-                //requireActivity().escondeProgressBar()
-
-                //el método submitList() extiende solo de ListAdapter, si queremos que funcione
-                // para ambos (ListAdapter y ReciclerView.Adapter) entonces al ReciclerView.Adapter
-                // hay que agregarle una función con el mismo nombre
+            is ViewState.Success -> {
                 (state.data as? List<Movie>)?.let { list: List<Movie> ->
                     adapter.submitList(list)
                 }
@@ -256,11 +244,9 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
                     activity?.toast("Bombitas: $it")
                 }
             }
-            is PopularMoviesUIState.Error -> {
-                binding.loading = false
-                //requireActivity().escondeProgressBar()
-                activity?.toast(state.mensaje)
-            }
+            is ViewState.Error ->
+                activity?.toast(state.message)
+
         }
     }
 
@@ -289,14 +275,8 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
 
 }
 
-sealed class PopularMoviesUIState<out T> {
-    object Loading: PopularMoviesUIState<Nothing>()
-    data class Success<out T>(val data: T): PopularMoviesUIState<T>()
-    data class Error(val mensaje: String): PopularMoviesUIState<Nothing>()
-}
-
-sealed class PopularMoviesUIState2{
-    object Loading: PopularMoviesUIState2()
-    data class Success(val data: Movie): PopularMoviesUIState2()
-    data class Error(val mensaje: String): PopularMoviesUIState2()
+sealed class ViewState<T> {
+    object Loading: ViewState<Nothing>()
+    data class Success<T>(val data: T): ViewState<T>()
+    data class Error(val message: String): ViewState<Nothing>()
 }
