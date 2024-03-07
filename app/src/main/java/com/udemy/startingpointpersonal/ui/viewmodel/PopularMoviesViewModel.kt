@@ -23,14 +23,12 @@ class PopularMoviesViewModel @Inject constructor(
      * Primer modo, implementando el builder flow dentro de la misma variable
      */
     val popularMoviesF = flow {
-        kotlin.runCatching {
-            getAllMoviesUseCase().collect{
+        getAllMoviesUseCase()
+            .catch {
+                emit(ViewState.Error(it.message ?: DEFAULT_ERROR_MSG))
+            }.collect{
                 emit(ViewState.Success(it))
             }
-        }.onSuccess {
-        }.onFailure {error ->
-            emit(ViewState.Error(error.message ?: DEFAULT_ERROR_MSG))
-        }
     }
 
     val popularMoviesLD = popularMoviesF.asLiveData()

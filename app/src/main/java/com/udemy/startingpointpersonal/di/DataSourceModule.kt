@@ -1,9 +1,9 @@
 package com.udemy.startingpointpersonal.di
 
-import com.udemy.startingpointpersonal.data.repository.MoviesLocalDataSourceImpl
-import com.udemy.startingpointpersonal.data.repository.MoviesRemoteDataSourceImpl
-import com.udemy.startingpointpersonal.data.repository.interfaces.MoviesLocalDataSource
-import com.udemy.startingpointpersonal.data.repository.interfaces.MoviesRemoteDataSource
+import com.udemy.startingpointpersonal.data.repository.LocalDataSourceImpl
+import com.udemy.startingpointpersonal.data.repository.RemoteDataSourceImpl
+import com.udemy.startingpointpersonal.data.repository.interfaces.LocalDataSource
+import com.udemy.startingpointpersonal.data.repository.interfaces.RemoteDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -23,12 +23,12 @@ abstract class DataSourceModule {
     @Binds
     //@ViewModelScoped
     @Singleton
-    abstract fun provideMoviesLocalDataSource(moviesLocalDS: MoviesLocalDataSourceImpl): MoviesLocalDataSource
+    abstract fun provideLocalDataSource(moviesLocalDS: LocalDataSourceImpl): LocalDataSource
 
     @Binds
     //@ViewModelScoped
     @Singleton
-    abstract fun provideMoviesRemoteDataSource(moviesRemoteDS: MoviesRemoteDataSourceImpl): MoviesRemoteDataSource
+    abstract fun provideRemoteDataSource(moviesRemoteDS: RemoteDataSourceImpl): RemoteDataSource
 
 
 }

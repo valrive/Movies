@@ -3,15 +3,15 @@ package com.udemy.startingpointpersonal.data.repository
 import com.udemy.startingpointpersonal.data.database.entity.MovieEntity
 import com.udemy.startingpointpersonal.domain.model.Movie as DomainMovie
 import com.udemy.startingpointpersonal.data.database.dao.MovieDao
-import com.udemy.startingpointpersonal.data.repository.interfaces.MoviesLocalDataSource
+import com.udemy.startingpointpersonal.data.repository.interfaces.LocalDataSource
 import com.udemy.startingpointpersonal.data.toDomainMovie
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class MoviesLocalDataSourceImpl @Inject constructor(
+class LocalDataSourceImpl @Inject constructor(
     private val movieDao: MovieDao
-) : MoviesLocalDataSource {
+) : LocalDataSource {
 
     override suspend fun isEmpty() = withContext(Dispatchers.IO) { movieDao.movieCount() == 0 }
 

@@ -3,7 +3,7 @@ package com.udemy.startingpointpersonal.data.repository.interfaces
 import com.udemy.startingpointpersonal.data.database.entity.MovieEntity
 import com.udemy.startingpointpersonal.domain.model.Movie as DomainMovie
 
-interface MoviesLocalDataSource {
+interface LocalDataSource {
 
     suspend fun isEmpty(): Boolean
 

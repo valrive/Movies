@@ -3,8 +3,8 @@ package com.udemy.startingpointpersonal.data.repository
 import com.udemy.startingpointpersonal.data.database.entity.MovieEntity
 import com.udemy.startingpointpersonal.domain.model.Movie
 import com.udemy.startingpointpersonal.data.repository.interfaces.MovieRepository
-import com.udemy.startingpointpersonal.data.repository.interfaces.MoviesLocalDataSource
-import com.udemy.startingpointpersonal.data.repository.interfaces.MoviesRemoteDataSource
+import com.udemy.startingpointpersonal.data.repository.interfaces.LocalDataSource
+import com.udemy.startingpointpersonal.data.repository.interfaces.RemoteDataSource
 import com.udemy.startingpointpersonal.data.toDomainMovie
 import com.udemy.startingpointpersonal.data.toEntityMovie
 import kotlinx.coroutines.delay
@@ -13,8 +13,8 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
-    private val localDataSource: MoviesLocalDataSource,
-    private val remoteDataSource: MoviesRemoteDataSource,
+    private val localDataSource: LocalDataSource,
+    private val remoteDataSource: RemoteDataSource,
     private val movieProvider: MovieProvider
 ): MovieRepository {
 
