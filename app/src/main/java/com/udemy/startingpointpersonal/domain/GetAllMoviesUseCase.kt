@@ -8,8 +8,6 @@ import kotlinx.coroutines.flow.Flow
 class GetAllMoviesUseCase( private val repo: MovieRepository) {
 
 
-    operator fun invoke(region: String? = PopularMoviesFragment.DEFAULT_REGION): Flow<List<Movie>> {
-        val movies = repo.getMovies(region!!)
-        return movies
-    }
+    operator fun invoke(region: String? = PopularMoviesFragment.DEFAULT_REGION): Flow<List<Movie>> =
+        repo.getMovies(region!!)
 }

@@ -1,12 +1,13 @@
 package com.udemy.startingpointpersonal.data.repository
 
+import com.udemy.startingpointpersonal.data.api.MovieRemote
+import com.udemy.startingpointpersonal.data.api.toDomainMovies
 import com.udemy.startingpointpersonal.data.database.entity.MovieEntity
 import com.udemy.startingpointpersonal.domain.model.Movie
 import com.udemy.startingpointpersonal.data.repository.interfaces.MovieRepository
 import com.udemy.startingpointpersonal.data.repository.interfaces.LocalDataSource
 import com.udemy.startingpointpersonal.data.repository.interfaces.RemoteDataSource
-import com.udemy.startingpointpersonal.data.toDomainMovie
-import com.udemy.startingpointpersonal.data.toEntityMovie
+import com.udemy.startingpointpersonal.domain.model.toEntityMovies
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -20,13 +21,17 @@ class MovieRepositoryImpl @Inject constructor(
 
     override fun getMovies(region: String): Flow<List<Movie>> = flow{
         if(localDataSource.isEmpty()){
-            val moviesRemote = remoteDataSource.getPopularMoviesCall(region)
-            val moviesDomain = moviesRemote.map { it.toDomainMovie() }
-            localDataSource.saveMovies(moviesDomain.map { it.toEntityMovie() })
+            val moviesRemote: List<MovieRemote> = remoteDataSource.getPopularMoviesCall(region)
+            val moviesDomain: List<Movie> = moviesRemote.toDomainMovies()
+            val moviesEntity: List<MovieEntity> = moviesDomain.toEntityMovies()
+            localDataSource.saveMovies(moviesEntity)
         }
-        while (true){
-            delay(2000)
-            emit(localDataSource.getMovies().shuffled())
+
+        localDataSource.getMovies().collect{ movies: List<Movie> ->
+            while(true){
+                delay(2000)
+                emit(movies.shuffled())
+            }
         }
     }
 
@@ -41,6 +46,4 @@ class MovieRepositoryImpl @Inject constructor(
 
         localDataSource.saveMovies(list)
     }
-
-    override suspend fun getAllMovies(): List<Movie> = localDataSource.getMovies()
 }

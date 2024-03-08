@@ -1,6 +1,7 @@
 package com.udemy.startingpointpersonal.domain.model
 
 import android.os.Parcelable
+import com.udemy.startingpointpersonal.data.database.entity.MovieEntity
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -15,6 +16,21 @@ data class Movie(
     val originalLanguage: String? = "",
     val overview: String? = ""
     ): Parcelable
+
+fun Movie.toEntityMovie(): MovieEntity = MovieEntity(
+    id,
+    title,
+    "https://image.tmdb.org/t/p/w185/$posterPath",
+    "https://image.tmdb.org/t/p/w780/$backdropPath",
+    voteAverage,
+    voteCount,
+    releaseDate.orEmpty(),
+    originalLanguage.orEmpty(),
+    //"$overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview "
+    overview.orEmpty()
+)
+
+fun List<Movie>.toEntityMovies(): List<MovieEntity> = map { it.toEntityMovie() }
 
 /**
  * Debemos tener 3 modelos de datos para ser lo más independientes posibles del api:

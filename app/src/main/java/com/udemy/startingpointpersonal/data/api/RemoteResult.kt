@@ -1,6 +1,7 @@
 package com.udemy.startingpointpersonal.data.api
 
 import com.google.gson.annotations.SerializedName
+import com.udemy.startingpointpersonal.domain.model.Movie
 
 data class RemoteResult(
     val page: Int,
@@ -25,3 +26,18 @@ data class MovieRemote(
     @SerializedName("vote_average") val voteAverage: Double,
     @SerializedName("vote_count") val voteCount: Int
 )
+
+fun MovieRemote.toDomainMovie(): Movie = Movie(
+    id,
+    title,
+    "https://image.tmdb.org/t/p/w185/$posterPath",
+    "https://image.tmdb.org/t/p/w780/$backdropPath",
+    voteAverage,
+    voteCount,
+    releaseDate,
+    originalLanguage,
+    //"$overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview "
+    overview
+)
+
+fun List<MovieRemote>.toDomainMovies(): List<Movie> = map { it.toDomainMovie() }

@@ -3,6 +3,7 @@ package com.udemy.startingpointpersonal.data.database.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.udemy.startingpointpersonal.domain.model.Movie
 
 /**
  * Debemos agregar la anotación @ColumnInfo porque cuando se agregue ProGuard puede dar
@@ -20,3 +21,17 @@ data class MovieEntity(
     @ColumnInfo(name = "originalLanguage") val originalLanguage: String,
     @ColumnInfo(name = "overview") val overview: String
 )
+
+fun MovieEntity.toDomainMovie(): Movie = Movie(
+    id,
+    title,
+    posterPath,
+    backdropPath,
+    voteAverage,
+    voteCount,
+    releaseDate,
+    originalLanguage,
+    overview
+)
+
+fun List<MovieEntity>.toDomainMovies(): List<Movie> = map { it.toDomainMovie() }

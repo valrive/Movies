@@ -14,7 +14,5 @@ interface MovieRepository {
 
     suspend fun insertMovies(list: List<MovieEntity>)
 
-    suspend fun getAllMovies(): List<Movie>
-
 
 }

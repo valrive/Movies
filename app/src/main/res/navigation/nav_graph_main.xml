@@ -10,15 +10,18 @@
         android:name="com.udemy.startingpointpersonal.ui.view.popularMovs.PopularMoviesFragment"
         android:label="PopularMoviesFragment"
         tools:layout="@layout/fragment_popular_movies">
+
         <action
             android:id="@+id/action_popularMoviesFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+
     </fragment>
 
     <fragment android:id="@+id/detailFragment"
-            android:name="com.udemy.startingpointpersonal.ui.view.detail.DetailFragment"
-            android:label="DetailFragment"
+        android:name="com.udemy.startingpointpersonal.ui.view.detail.DetailFragment"
+        android:label="DetailFragment"
         tools:layout="@layout/fragment_detail">
+
         <argument
             android:name="movie"
             app:argType="com.udemy.startingpointpersonal.domain.model.Movie" />
