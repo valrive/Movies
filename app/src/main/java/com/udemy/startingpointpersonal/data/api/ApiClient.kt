@@ -19,10 +19,12 @@ interface ApiClient {
         @Query("region") countryCode: String
     ): RemoteResult
 
-    @GET("movie/popular")
+    //@GET("movie/popular")
+    @GET("discover/movie?sort_by=popularity.desc")
     fun getPopulardMoviesCall(
         @Query("api_key") apiKey: String,
-        @Query("region") countryCode: String): Call<RemoteResult>
+        //@Query("region") countryCode: String,
+        @Query("page") page: Int): Call<RemoteResult>
 
     companion object {
 

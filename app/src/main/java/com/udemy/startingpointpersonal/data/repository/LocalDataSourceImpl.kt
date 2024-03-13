@@ -6,6 +6,8 @@ import com.udemy.startingpointpersonal.data.database.dao.MovieDao
 import com.udemy.startingpointpersonal.data.database.entity.toDomainMovie
 import com.udemy.startingpointpersonal.data.database.entity.toDomainMovies
 import com.udemy.startingpointpersonal.data.repository.interfaces.LocalDataSource
+import com.udemy.startingpointpersonal.domain.model.toEntityMovies
+import com.udemy.startingpointpersonal.ui.view.popularMovs.ViewState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -19,9 +21,11 @@ class LocalDataSourceImpl @Inject constructor(
 
     override suspend fun isEmpty() = withContext(Dispatchers.IO) { movieDao.movieCount() == 0 }
 
-    override suspend fun saveMovies(movies: List<MovieEntity>) = withContext(Dispatchers.IO) {
+    override suspend fun size(): Int = withContext(Dispatchers.IO) { movieDao.movieCount() }
+
+    override suspend fun saveMovies(movies: List<DomainMovie>) = withContext(Dispatchers.IO) {
         //converts List to vararg
-        movieDao.insert(*movies.toTypedArray())
+        movieDao.insert(*movies.toEntityMovies().toTypedArray())
     }
 
     override suspend fun findById(movieId: Int): DomainMovie =
@@ -31,9 +35,11 @@ class LocalDataSourceImpl @Inject constructor(
         movieDao.getAll().map { it.toDomainMovie() }
     }*/
 
-    override fun getMovies(): Flow<List<DomainMovie>> = movieDao.getAllFlow()
+    override fun getMovies(): Flow<ViewState<List<DomainMovie>>> = movieDao.getMoviesFlow()
         .flowOn(Dispatchers.IO)
-        .map { it.toDomainMovies() }
+        .map {
+            ViewState.Success(it.toDomainMovies())
+        }
 
     override suspend fun clearMovies() = withContext(Dispatchers.IO){
         movieDao.deleteAll()

@@ -1,16 +1,13 @@
 package com.udemy.startingpointpersonal.data.repository
 
-import com.udemy.startingpointpersonal.data.api.MovieRemote
+import android.util.Log
 import com.udemy.startingpointpersonal.data.api.toDomainMovies
-import com.udemy.startingpointpersonal.data.database.entity.MovieEntity
 import com.udemy.startingpointpersonal.domain.model.Movie
 import com.udemy.startingpointpersonal.data.repository.interfaces.MovieRepository
 import com.udemy.startingpointpersonal.data.repository.interfaces.LocalDataSource
 import com.udemy.startingpointpersonal.data.repository.interfaces.RemoteDataSource
-import com.udemy.startingpointpersonal.domain.model.toEntityMovies
-import kotlinx.coroutines.delay
+import com.udemy.startingpointpersonal.ui.view.popularMovs.ViewState
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -19,31 +16,32 @@ class MovieRepositoryImpl @Inject constructor(
     private val movieProvider: MovieProvider
 ): MovieRepository {
 
-    override fun getMovies(region: String): Flow<List<Movie>> = flow{
-        if(localDataSource.isEmpty()){
-            val moviesRemote: List<MovieRemote> = remoteDataSource.getPopularMoviesCall(region)
-            val moviesDomain: List<Movie> = moviesRemote.toDomainMovies()
-            val moviesEntity: List<MovieEntity> = moviesDomain.toEntityMovies()
-            localDataSource.saveMovies(moviesEntity)
-        }
-
-        localDataSource.getMovies().collect{ movies: List<Movie> ->
-            while(true){
-                delay(2000)
-                emit(movies.shuffled())
-            }
-        }
+    companion object{
+        private const val PAGE_SIZE = 20
+        private const val PAGE_THRESHOLD = 4
     }
+
+    override fun getMovies(region: String): Flow<ViewState<List<Movie>>> = localDataSource.getMovies()
 
     override suspend fun findById(movieId: Int) = localDataSource.findById(movieId)
 
     override suspend fun clearMovies() = localDataSource.clearMovies()
 
-    override suspend fun insertMovies(list: List<MovieEntity>) {
+    override suspend fun insertMovies(list: List<Movie>) {
         //Versión que guarda directo en una clase sin pasar por ROOM ni Preferencias
         //movieProvider.movies = movies.map { it.toEntityMovie() }
         //return movieProvider.movies.map { it.toDomainMovie() }
-
         localDataSource.saveMovies(list)
+    }
+
+    override suspend fun checkRequireNewPage(region: String, lastVisible: Int){
+        val size = localDataSource.size()
+        if(lastVisible >= size - PAGE_THRESHOLD){
+            val page = size / PAGE_SIZE + 1
+            val newMovies = remoteDataSource.getPopularMoviesCall(region, page).toDomainMovies()
+            localDataSource.saveMovies(newMovies)
+            Log.d("MovieRepositoryImpl", "API pagination: $page")
+            Log.d("MovieRepositoryImpl", "movies size: ${size + newMovies.size}")
+        }
     }
 }

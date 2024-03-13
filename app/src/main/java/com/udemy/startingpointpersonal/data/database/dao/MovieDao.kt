@@ -18,7 +18,7 @@ interface MovieDao {
     suspend fun getAll(): List<MovieEntity>
 
     @Query("select * from movie_table")
-    fun getAllFlow(): Flow<List<MovieEntity>>
+    fun getMoviesFlow(): Flow<List<MovieEntity>>
 
     @Query("select * from movie_table where id = :movieId")
     suspend fun findById(movieId: Int): MovieEntity

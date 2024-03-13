@@ -6,5 +6,5 @@ interface RemoteDataSource {
 
     suspend fun getPopularMovies(countryCode: String): List<MovieRemote>
 
-    suspend fun getPopularMoviesCall(countryCode: String): List<MovieRemote>
+    suspend fun getPopularMoviesCall(countryCode: String, page: Int): List<MovieRemote>
 }

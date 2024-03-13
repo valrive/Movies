@@ -5,7 +5,8 @@
 
     <data>
         <import type="android.view.View"/>
-        <variable name="loading" type="java.lang.Boolean"/>
+        <variable name="shimmer" type="java.lang.Boolean"/>
+        <variable name="viewModel" type="com.udemy.startingpointpersonal.ui.viewmodel.PopularMoviesViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,7 +16,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_movies"
-            android:visibility="@{(loading ?? false) ? View.GONE: View.VISIBLE}"
+            android:visibility="@{(shimmer ?? false) ? View.GONE: View.VISIBLE}"
             tools:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -29,7 +30,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.facebook.shimmer.ShimmerFrameLayout
-            android:visibility="@{(loading ?? false) ? View.VISIBLE: View.GONE}"
+            android:visibility="@{(shimmer ?? false) ? View.VISIBLE: View.GONE}"
             android:id="@+id/view_loading"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

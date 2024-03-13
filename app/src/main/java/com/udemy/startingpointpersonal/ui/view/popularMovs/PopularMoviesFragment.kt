@@ -1,5 +1,6 @@
 package com.udemy.startingpointpersonal.ui.view.popularMovs
 
+import android.icu.util.TimeZone.getRegion
 import android.location.Geocoder
 import android.os.Bundle
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.udemy.startingpointpersonal.R
@@ -29,12 +31,17 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
 
     private val viewModel: PopularMoviesViewModel by viewModels()
     private var movies: List<Movie> = emptyList()
+    private val layoutManager by lazy {
+        GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+    }
+
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             when {
                 isGranted -> {
-                    stateFlowCollectors(isGranted, false)
+                    setObservers(isGranted)
+                    setRVListener()
                     //showFusedLocation(isGranted)//toast("Permission granted")
                 }
                 shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_COARSE_LOCATION) -> {
@@ -128,18 +135,17 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         (requireActivity() as MainActivity).supportActionBar?.hide()
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
 
-        binding.rvMovies.adapter = adapter
-        binding.rvMovies.layoutManager = GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
+        setBindings()
 
         requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_COARSE_LOCATION)
+    }
 
-        //stateFlowCollectors()
+    private fun setBindings() = with(binding){
+        lifecycleOwner = this@PopularMoviesFragment
+        viewModel = this@PopularMoviesFragment.viewModel
 
-        //Aristidev example
-        /*viewLifecycleOwner.launchAndCollect(aristiViewModel.bombitaUIState){
-            handleResult(it)
-        }
-        aristiViewModel.example3()*/
+        rvMovies.adapter = adapter
+        rvMovies.layoutManager = layoutManager
     }
 
     private fun showFusedLocation(isGranted: Boolean) {
@@ -152,61 +158,20 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
             val geocoder = Geocoder(requireContext())
             val result = geocoder.getFromLocation(it.result.latitude, it.result.longitude, 1)
             activity?.toast(result?.firstOrNull()?.countryCode ?: DEFAULT_REGION)
-            //stateFlowCollectors(result.firstOrNull()?.countryCode)
         }
     }
 
 
-    private fun stateFlowCollectors(isGranted: Boolean, liveDataMode: Boolean) =
+    private fun setObservers(isGranted: Boolean) =
         //El launch lo uso solo para obtener la región
         viewLifecycleOwner.lifecycleScope.launch{
             val region = getRegion(isGranted)
 
-            //3 modos de llamar a los livedata y state flow
-            if (liveDataMode) {
+            //LiveData
+            //viewModel.moviesLD.observe(viewLifecycleOwner){ handleResult(it) }
 
-                //viewModel.popularMoviesLD.observe(viewLifecycleOwner, Observer{handleResult(it)})
-
-
-
-                //primer modo de llamado (fun en viewModel + listener apartados como en banortec)
-                /*viewModel.initGetPopularMovies()
-                viewModel.getPopularMoviesLD.observe(viewLifecycleOwner, Observer{handleResult(it)})
-                */
-
-
-
-                //segundo modo de llamado; Llamando directamente a un fun y no depender de observar una var y llamar a una fun
-                viewModel.fetchPopularMoviesLD(region).observe(viewLifecycleOwner, Observer{
-                    handleResult(it)}
-                )
-
-            } else { //flow mode
-
-                viewLifecycleOwner.launchAndCollect(viewModel.popularMoviesF){
-                    handleResult(it)
-                }
-
-                //primer modo de llamado (fun en viewModel + listener apartados como en banortec)
-                /*viewModel.initGetPopularMovies()
-                viewLifecycleOwner.launchAndCollect(viewModel.getPopularMoviesSF){
-                    handleResult(it)
-                }*/
-
-                //segundo modo de llamado; Llamando directamente a un fun y no depender de observar una var y llamar a una fun
-                /*viewLifecycleOwner.launchAndCollect(viewModel.fetchPopularMoviesSF(region)){
-                    handleResult(it)
-                }*/
-                //opción vieja
-                /*viewLifecycleOwner.lifecycleScope.launch {
-                    viewLifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                        //todo(Agregar la parte de permisos a la corutina para que se vuelva síncrono con el video #44 de DevExperto)
-                        viewModel.fetchPopularMoviesFlow(getRegion(isGranted)).collect {
-                            handleResult(it)
-                        }
-                    }
-                }*/
-            }
+            //Flow
+            viewModel.moviesF.collect{ handleResult(it) }
         }
 
 
@@ -233,21 +198,32 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
 
 
     private fun <T>handleResult(state: ViewState<T>) {
-        binding.loading = state is ViewState.Loading
+        binding.shimmer = state is ViewState.Loading
         when (state) {
-            is ViewState.Success -> {
+            is ViewState.Success ->
                 (state.data as? List<Movie>)?.let { list: List<Movie> ->
                     adapter.submitList(list)
                 }
 
-                (state.data as? Int)?.let {
-                    activity?.toast("Bombitas: $it")
-                }
-            }
             is ViewState.Error ->
                 activity?.toast(state.message)
 
+            else -> {}
+
         }
+    }
+
+    private fun setRVListener() {
+        val layoutManager = binding.rvMovies.layoutManager as GridLayoutManager
+
+        binding.rvMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                viewModel.lastVisible.value = layoutManager.findLastVisibleItemPosition()
+            }
+
+        })
     }
 
 
@@ -275,8 +251,8 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
 
 }
 
-sealed class ViewState<T> {
-    object Loading: ViewState<Nothing>()
-    data class Success<T>(val data: T): ViewState<T>()
-    data class Error(val message: String): ViewState<Nothing>()
+sealed interface ViewState<out T> {
+    object Loading: ViewState<Nothing>
+    data class Success<T>(val data: T): ViewState<T>
+    data class Error(val message: String): ViewState<Nothing>
 }
