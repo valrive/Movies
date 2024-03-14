@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.udemy.startingpointpersonal.R
@@ -213,17 +212,8 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         }
     }
 
-    private fun setRVListener() {
-        val layoutManager = binding.rvMovies.layoutManager as GridLayoutManager
-
-        binding.rvMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                viewModel.lastVisible.value = layoutManager.findLastVisibleItemPosition()
-            }
-
-        })
+    private fun setRVListener() = viewLifecycleOwner.launchAndCollect(binding.rvMovies.lastVisibleEvents) {
+        viewModel.lastVisible.value = it
     }
 
 

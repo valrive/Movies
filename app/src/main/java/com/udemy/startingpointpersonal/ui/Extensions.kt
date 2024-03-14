@@ -17,11 +17,14 @@ import androidx.core.graphics.drawable.DrawableCompat
 import androidx.databinding.BindingAdapter
 import androidx.lifecycle.*
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.udemy.startingpointpersonal.R
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.conflate
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -125,3 +128,24 @@ fun <T> LifecycleOwner.launchAndCollect(collectable: Flow<T>, onResult: (T) -> U
             collectable.collect { onResult(it) }
         }
     }
+
+val View.onClickEvents:Flow<View>
+    get() = callbackFlow {
+        val listener = View.OnClickListener { trySend(it).isSuccess }
+        setOnClickListener(listener)
+        awaitClose { setOnClickListener(null) }
+    }.conflate() //obtenemos solo el último valor en caso de que haya muchos eventos seguidos
+
+val RecyclerView.lastVisibleEvents:Flow<Int>
+    get() = callbackFlow {
+        val layoutManager = layoutManager as GridLayoutManager
+
+        val listener = object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                trySend(layoutManager.findLastVisibleItemPosition())//.isSuccess
+            }
+        }
+
+        addOnScrollListener(listener)
+        awaitClose { removeOnScrollListener(listener) }
+    }.conflate() //obtenemos solo el último valor en caso de que haya muchos eventos seguidos
