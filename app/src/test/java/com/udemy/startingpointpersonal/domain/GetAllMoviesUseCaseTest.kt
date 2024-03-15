@@ -43,7 +43,7 @@ class GetAllMoviesUseCaseTest {
         //Then
         coVerify(exactly = 0) { movieRepository.clearMovies() }
         coVerify(exactly = 0) { movieRepository.insertMovies(any()) }
-        coVerify(exactly = 1) { movieRepository.getAllMovies() }
+        coVerify(exactly = 1) { movieRepository.getMovies(any()) }
     }
 
     @Test
