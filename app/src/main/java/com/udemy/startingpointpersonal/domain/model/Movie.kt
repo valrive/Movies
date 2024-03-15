@@ -2,7 +2,7 @@ package com.udemy.startingpointpersonal.domain.model
 
 import android.os.Parcelable
 import com.udemy.startingpointpersonal.data.database.entity.MovieEntity
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Movie(
