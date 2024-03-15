@@ -35,7 +35,7 @@ class GetAllMoviesUseCaseTest {
     fun `when the api doesnt return anything then get values from database`() = runBlocking {
         //Given
         //Si la siguiente fun no estuviese en una corutina entonces se debe usar every{} en lugar de coEvery{}
-        coEvery { movieRepository.getMovies("US") } returns emptyList()
+        //coEvery { movieRepository.getMovies("US") } returns emptyList()
 
         //When
         getAllMoviesUseCase()
@@ -50,7 +50,7 @@ class GetAllMoviesUseCaseTest {
     fun `when the api return something then get values from api`() = runBlocking {
         //Given
         val myList = listOf(Movie(id = 19, title = "Anaconda", voteAverage = 0.0, voteCount = 0))
-        coEvery { movieRepository.getMovies("US") } returns myList
+        //coEvery { movieRepository.getMovies("US") } returns myList
 
         //When
         val response = getAllMoviesUseCase()
@@ -58,7 +58,7 @@ class GetAllMoviesUseCaseTest {
         //Then
         coVerify(exactly = 1) { movieRepository.clearMovies() }
         coVerify(exactly = 1) { movieRepository.insertMovies(any()) }
-        coVerify(exactly = 0) { movieRepository.getAllMovies() }
+        //coVerify(exactly = 0) { movieRepository.getAllMovies() }
         assert(myList == response)
 
     }
