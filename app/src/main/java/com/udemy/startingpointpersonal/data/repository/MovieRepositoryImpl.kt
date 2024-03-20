@@ -12,8 +12,7 @@ import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource,
-    private val remoteDataSource: RemoteDataSource,
-    private val movieProvider: MovieProvider
+    private val remoteDataSource: RemoteDataSource
 ): MovieRepository {
 
     companion object{

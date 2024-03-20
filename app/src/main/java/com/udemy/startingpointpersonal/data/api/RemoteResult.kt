@@ -12,19 +12,19 @@ data class RemoteResult(
 
 data class MovieRemote(
     val id: Int,
-    val adult: Boolean,
-    @SerializedName("backdrop_path") val backdropPath: String,
-    @SerializedName("genre_ids") val genreIds: List<Int>,
-    @SerializedName("original_title") val originalTitle: String,
-    @SerializedName("original_language") val originalLanguage: String,
-    val overview: String,
-    val popularity: Double,
-    @SerializedName("poster_path") val posterPath: String,
-    @SerializedName("release_date") val releaseDate: String,
-    val title: String,
-    val video: Boolean,
-    @SerializedName("vote_average") val voteAverage: Double,
-    @SerializedName("vote_count") val voteCount: Int
+    val adult: Boolean = false,
+    @SerializedName("backdrop_path") val backdropPath: String = "",
+    @SerializedName("genre_ids") val genreIds: List<Int> = emptyList(),
+    @SerializedName("original_title") val originalTitle: String = "",
+    @SerializedName("original_language") val originalLanguage: String = "",
+    val overview: String = "",
+    val popularity: Double = 0.0,
+    @SerializedName("poster_path") val posterPath: String = "",
+    @SerializedName("release_date") val releaseDate: String = "",
+    val title: String = "",
+    val video: Boolean = false,
+    @SerializedName("vote_average") val voteAverage: Double = 0.0,
+    @SerializedName("vote_count") val voteCount: Int = 0
 )
 
 fun MovieRemote.toDomainMovie(): Movie = Movie(

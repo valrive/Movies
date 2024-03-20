@@ -1,24 +1,20 @@
 package com.udemy.startingpointpersonal.di
 
-import android.content.Context
-import com.udemy.startingpointpersonal.R
-import com.udemy.startingpointpersonal.data.repository.interfaces.MovieRepository
 import com.udemy.startingpointpersonal.domain.GetAllMoviesUseCase
+import com.udemy.startingpointpersonal.domain.model.interfaces.GeneralUseCase
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object UseCaseModule {
+abstract class UseCaseModule {
 
+    @Binds
     @Singleton
-    @Provides
-    fun provideGetAllMoviesUseCase(repository: MovieRepository) = GetAllMoviesUseCase(repository)
+    abstract fun provideGetAllMoviesUseCase(getAllMoviesUseCase: GetAllMoviesUseCase) : GeneralUseCase
 
 
 }

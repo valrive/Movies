@@ -1,19 +1,17 @@
 package com.udemy.startingpointpersonal.ui.viewmodel
 
 import androidx.lifecycle.*
-import com.udemy.startingpointpersonal.domain.GetAllMoviesUseCase
-import com.udemy.startingpointpersonal.domain.GetAllMoviesUseCase.Companion.DEFAULT_ERROR_MSG
 import com.udemy.startingpointpersonal.domain.model.Movie
+import com.udemy.startingpointpersonal.domain.model.interfaces.GeneralUseCase
 import com.udemy.startingpointpersonal.ui.view.popularMovs.ViewState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PopularMoviesViewModel @Inject constructor(
-    private val getAllMoviesUseCase: GetAllMoviesUseCase,
+    private val getAllMoviesUseCase: GeneralUseCase,
 ) : ViewModel() {
 
     private val _progressBar = MutableStateFlow(true)
