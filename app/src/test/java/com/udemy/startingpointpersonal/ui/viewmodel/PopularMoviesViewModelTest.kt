@@ -9,6 +9,7 @@ import com.udemy.startingpointpersonal.data.repository.MovieRepositoryImpl
 import com.udemy.startingpointpersonal.fakeMovies
 import com.udemy.startingpointpersonal.ui.view.popularMovs.ViewState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Assert
 import org.junit.Rule
@@ -32,12 +33,25 @@ class PopularMoviesViewModelTest{
             FakeRemoteDataSource(movies = fakeMovies)
         )
         val useCase = FakeGetAllMoviesUseCase(repository)
-
-        //todo: agregar interfaz para UseCase e implementarla en domain y test
         val viewModel = PopularMoviesViewModel(useCase)
         viewModel.moviesF.collect{ viewState ->
             Assert.assertEquals(viewState, ViewState.Success(fakeMovies.map { it.toDomainMovie() }))
         }
     }
+
+
+    @Test(expected = TimeoutCancellationException::class)
+    fun `After timeout, an exception is thrown`() = coroutinesTestRule.testDispatcher.runBlockingTest {
+
+        val repository = MovieRepositoryImpl(
+            FakeLocalDataSource(),
+            FakeRemoteDataSource(delay = 6_000)
+        )
+       repository.checkRequireNewPage("US", 0)
+    }
+
+
+
+
 
 }

@@ -8,6 +8,7 @@ import com.udemy.startingpointpersonal.data.repository.interfaces.LocalDataSourc
 import com.udemy.startingpointpersonal.data.repository.interfaces.RemoteDataSource
 import com.udemy.startingpointpersonal.ui.view.popularMovs.ViewState
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -37,7 +38,7 @@ class MovieRepositoryImpl @Inject constructor(
         val size = localDataSource.size()
         if(lastVisible >= size - PAGE_THRESHOLD){
             val page = size / PAGE_SIZE + 1
-            val newMovies = remoteDataSource.getPopularMoviesCall(region, page).toDomainMovies()
+            val newMovies = withTimeout(5_000) { remoteDataSource.getPopularMoviesCall(region, page).toDomainMovies() }
             localDataSource.saveMovies(newMovies)
             Log.d("MovieRepositoryImpl", "API pagination: $page")
             Log.d("MovieRepositoryImpl", "movies size: ${size + newMovies.size}")
