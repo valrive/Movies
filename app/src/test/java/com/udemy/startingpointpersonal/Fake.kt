@@ -54,7 +54,7 @@ class FakeRemoteDataSource(
     private val delay: Long = 0
 ) : RemoteDataSource {
 
-    override suspend fun getPopularMovies(countryCode: String): List<MovieRemote> = movies
+    override suspend fun getPopularMovies(countryCode: String, page: Int): List<MovieRemote> = movies
 
     override suspend fun getPopularMoviesCall(countryCode: String, page: Int): List<MovieRemote> =
         movies.apply{

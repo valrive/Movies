@@ -15,6 +15,8 @@ class PopularMoviesViewModel @Inject constructor(
     private val getAllMoviesUseCase: GeneralUseCase,
 ) : ViewModel() {
 
+    val lastVisible = MutableStateFlow(0)
+
     private var userRegion = DEFAULT_REGION
 
     private val _progressBar = MutableStateFlow(true)
@@ -27,26 +29,19 @@ class PopularMoviesViewModel @Inject constructor(
     val moviesLD: LiveData<ViewState<List<Movie>>> = getAllMoviesUseCase(userRegion).asLiveData()
 
     fun getMoviesF(region: String): Flow<ViewState<List<Movie>>> = flow{
-        getAllMoviesUseCase(region).onStart {
-            userRegion = region
-            notifyLastVisibleItem(0)
+        userRegion = region
+        getAllMoviesUseCase(userRegion).onStart {
+            checkRequireNewPage()
         }.collect{
             emit(it)
         }
     }
 
-    val lastVisible = MutableStateFlow(0)
-    init {
-        viewModelScope.launch {
-            lastVisible.collect{
-                if(it > 0)
-                    notifyLastVisibleItem(it)
-            }
+    private fun checkRequireNewPage() = viewModelScope.launch {
+        lastVisible.collect { lastVisibleItem ->
+            getAllMoviesUseCase.checkRequireNewPage(userRegion, lastVisibleItem)
         }
     }
-
-    private suspend fun notifyLastVisibleItem(lastVisibleItem: Int) =
-        getAllMoviesUseCase.checkRequireNewPage(userRegion, lastVisibleItem)
 
 
 }

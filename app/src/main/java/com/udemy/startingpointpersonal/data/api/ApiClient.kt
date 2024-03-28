@@ -13,10 +13,11 @@ interface ApiClient {
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies(@Query("api_key") apiKey: String): RemoteResult
 
-    @GET("movie/popular")
+    @GET("discover/movie?sort_by=popularity.desc")
     suspend fun getPopulardMovies(
         @Query("api_key") apiKey: String,
-        @Query("region") countryCode: String
+        @Query("region") countryCode: String,
+        @Query("page") page: Int
     ): RemoteResult
 
     //@GET("movie/popular")

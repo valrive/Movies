@@ -28,19 +28,15 @@ import kotlin.coroutines.resume
 @AndroidEntryPoint
 class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
 
+    companion object {
+        const val DEFAULT_REGION = "US"
+    }
+
     private val viewModel: PopularMoviesViewModel by viewModels()
     private var movies: List<Movie> = emptyList()
     private val layoutManager by lazy {
         GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
     }
-
-    private val fusedLocationClient by lazy {
-        LocationServices.getFusedLocationProviderClient(requireActivity())
-    }
-
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission(), ::setObservers
-    )
 
     /** Adapters */
     private val adapter =
@@ -112,20 +108,19 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         }
     }
 
+    private fun bindMovie(binding: MovieItemBinding, movie: Movie) = with(binding){
+        url = movie.posterPath
+        title = movie.title
+    }
     /** Adapters */
-
-
 
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         (requireActivity() as MainActivity).supportActionBar?.hide()
-
-        AndroidPermissionChecker(requireActivity()).checkPermissions()
-        requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_COARSE_LOCATION)
-
         setBindings()
+        setObservers()
     }
 
     private fun setBindings() = with(binding){
@@ -136,14 +131,11 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         rvMovies.layoutManager = layoutManager
     }
 
-    private fun getRegionFromLocation(location: Location) : String {
-        val result = Geocoder(requireContext()).getFromLocation(location.latitude, location.longitude, 1)
-        return result?.firstOrNull()?.countryCode ?: DEFAULT_REGION
-    }
-
-    private fun setObservers(isLocationGranted: Boolean){
+    private fun setObservers(){
+        setOnScrollListener()
         //El launch lo uso solo para obtener la región
         viewLifecycleOwner.lifecycleScope.launch{
+            val isLocationGranted = requestPermission()
             val region = getRegion(isLocationGranted)
 
             //LiveData
@@ -152,9 +144,14 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
             //Flow
             //viewLifecycleOwner.launchAndCollect(viewModel.moviesF, ::handleResult)
             viewModel.getMoviesF(region).collect(::handleResult)
-            setOnScrollListener()
-
         }
+    }
+
+    private suspend fun requestPermission() : Boolean = suspendCancellableCoroutine{ continuation ->
+        registerForActivityResult(
+            ActivityResultContracts.RequestPermission()){ isGranted ->
+            continuation.resume(isGranted)
+        }.launch(android.Manifest.permission.ACCESS_COARSE_LOCATION)
     }
 
 
@@ -165,6 +162,7 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
     @SuppressLint("MissingPermission")
     private suspend fun getRegion(isLocationGranted: Boolean): String = suspendCancellableCoroutine { continuation ->
             if (isLocationGranted) {
+                val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
                 fusedLocationClient.lastLocation.addOnCompleteListener { taskLocation ->
                     continuation.resume(getRegionFromLocation(taskLocation.result))
                 }
@@ -173,6 +171,8 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
             }
         }
 
+    private fun getRegionFromLocation(location: Location) = Geocoder(requireContext())
+        .getFromLocation(location.latitude, location.longitude, 1)?.firstOrNull()?.countryCode ?: DEFAULT_REGION
 
     private fun <T>handleResult(state: ViewState<T>) {
         binding.shimmer = state is ViewState.Loading
@@ -194,7 +194,6 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         viewModel.lastVisible.value = it
     }
 
-
     private fun onAction(action: Action) {
         when (action) {
             is Action.Click -> navigateToDetail(action.item as Movie)
@@ -204,18 +203,9 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         }
     }
 
-    private fun bindMovie(binding: MovieItemBinding, movie: Movie) = with(binding){
-        url = movie.posterPath
-        title = movie.title
-    }
-
     private fun navigateToDetail(movie: Movie) = findNavController().navigate(
         PopularMoviesFragmentDirections.actionPopularMoviesFragmentToDetailFragment(movie)
     )
-
-    companion object {
-        const val DEFAULT_REGION = "US"
-    }
 
 }
 

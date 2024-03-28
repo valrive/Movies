@@ -37,7 +37,8 @@ class MovieRepositoryImpl @Inject constructor(
         val size = localDataSource.size()
         if(lastVisible >= size - PAGE_THRESHOLD){
             val page = size / PAGE_SIZE + 1
-            val newMovies = withTimeout(5_000) { remoteDataSource.getPopularMoviesCall(region, page).toEntityMovies() }
+            //val newMovies = withTimeout(5_000) { remoteDataSource.getPopularMoviesCall(region, page).toEntityMovies() }
+            val newMovies = withTimeout(5_000) { remoteDataSource.getPopularMovies(region, page).toEntityMovies() }
             localDataSource.saveMovies(newMovies)
             Toast.makeText(context, "region: $region / page: $page  / size: ${size + newMovies.size}", Toast.LENGTH_SHORT).show()
         }

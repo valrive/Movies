@@ -14,16 +14,14 @@ class RemoteDataSourceImpl @Inject constructor(
     private val api: ApiClient
 ) : RemoteDataSource {
 
-    override suspend fun getPopularMovies(countryCode: String): List<MovieRemote> =
-        withContext( Dispatchers.IO) {
-            api.getPopulardMovies(apiKey, countryCode).results
+    override suspend fun getPopularMovies(countryCode: String, page: Int): List<MovieRemote> = withContext( Dispatchers.IO) {
+            api.getPopulardMovies(apiKey, countryCode, page).results
     }
 
-    override suspend fun getPopularMoviesCall(countryCode: String, page: Int): List<MovieRemote> =
-        withContext(Dispatchers.IO) {
-            val body =
-                ApiWrapper.createForRequiredBody(api.getPopulardMoviesCall(apiKey, countryCode, page))
-            body.results
-        }
+    override suspend fun getPopularMoviesCall(countryCode: String, page: Int): List<MovieRemote> = withContext(Dispatchers.IO) {
+        val body =
+            ApiWrapper.createForRequiredBody(api.getPopulardMoviesCall(apiKey, countryCode, page))
+        body.results
+    }
 
 }
