@@ -1,16 +1,16 @@
 package com.udemy.startingpointpersonal.ui.view.popularMovs
 
-import android.icu.util.TimeZone.getRegion
+import android.annotation.SuppressLint
 import android.location.Geocoder
+import android.location.Location
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.*
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.udemy.startingpointpersonal.R
 import com.udemy.startingpointpersonal.databinding.FragmentPopularMoviesBinding
@@ -34,21 +34,13 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         GridLayoutManager(requireContext(), 3, GridLayoutManager.VERTICAL, false)
     }
 
-    private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            when {
-                isGranted -> {
-                    setObservers(isGranted)
-                    setRVListener()
-                    //showFusedLocation(isGranted)//toast("Permission granted")
-                }
-                shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_COARSE_LOCATION) -> {
-                    activity?.toast( "Should show Rationale" )
-                }
-                else -> activity?.toast("Permission denied")
-            }
-        }
+    private val fusedLocationClient by lazy {
+        LocationServices.getFusedLocationProviderClient(requireActivity())
+    }
+
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission(), ::setObservers
+    )
 
     /** Adapters */
     private val adapter =
@@ -128,15 +120,12 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (requireActivity() as MainActivity).supportActionBar?.hide()
 
         AndroidPermissionChecker(requireActivity()).checkPermissions()
-
-        (requireActivity() as MainActivity).supportActionBar?.hide()
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+        requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_COARSE_LOCATION)
 
         setBindings()
-
-        requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_COARSE_LOCATION)
     }
 
     private fun setBindings() = with(binding){
@@ -147,51 +136,40 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         rvMovies.layoutManager = layoutManager
     }
 
-    private fun showFusedLocation(isGranted: Boolean) {
-        fusedLocationClient.lastLocation.addOnCompleteListener {
-            if (it.result == null) {
-                //stateFlowCollectors()
-                return@addOnCompleteListener
-            }
+    private fun getRegionFromLocation(location: Location) : String {
+        val result = Geocoder(requireContext()).getFromLocation(location.latitude, location.longitude, 1)
+        return result?.firstOrNull()?.countryCode ?: DEFAULT_REGION
+    }
 
-            val geocoder = Geocoder(requireContext())
-            val result = geocoder.getFromLocation(it.result.latitude, it.result.longitude, 1)
-            activity?.toast(result?.firstOrNull()?.countryCode ?: DEFAULT_REGION)
+    private fun setObservers(isLocationGranted: Boolean){
+        //El launch lo uso solo para obtener la región
+        viewLifecycleOwner.lifecycleScope.launch{
+            val region = getRegion(isLocationGranted)
+
+            //LiveData
+            //viewModel.moviesLD.observe(viewLifecycleOwner, ::handleResult)
+
+            //Flow
+            //viewLifecycleOwner.launchAndCollect(viewModel.moviesF, ::handleResult)
+            viewModel.getMoviesF(region).collect(::handleResult)
+            setOnScrollListener()
+
         }
     }
 
 
-    private fun setObservers(isGranted: Boolean) =
-        //El launch lo uso solo para obtener la región
-        viewLifecycleOwner.lifecycleScope.launch{
-            val region = getRegion(isGranted)
-
-            //LiveData
-            //viewModel.moviesLD.observe(viewLifecycleOwner){ handleResult(it) }
-
-            //Flow
-            viewModel.moviesF.collect{ handleResult(it) }
-        }
-
-
     //Tendremos un control asíncrono de lo que queremos que ocurra
-    //"continuation" convertirá la parte asíncrona en una parte asíncrona. video #44 de DevExperto
-    private suspend fun getRegion(isGranted: Boolean): String =
-        suspendCancellableCoroutine { continuation ->
-            if (!isGranted) {
-                continuation.resume(DEFAULT_REGION)
-                return@suspendCancellableCoroutine
-            }
-
-            fusedLocationClient.lastLocation.addOnCompleteListener {
-                if (it.result == null) {
-                    continuation.resume(DEFAULT_REGION)
-                    return@addOnCompleteListener
+    //"continuation" convertirá la parte asíncrona en una parte síncrona. video #44 de DevExperto
+    //https://www.youtube.com/watch?v=DX-CIdg3jWY&list=PLrn69hTK5FByEfJEtLzJMEi0cKIwCVgJi
+    //https://youtu.be/UOAV_yrTalo?list=PLrn69hTK5FByEfJEtLzJMEi0cKIwCVgJi&t=244
+    @SuppressLint("MissingPermission")
+    private suspend fun getRegion(isLocationGranted: Boolean): String = suspendCancellableCoroutine { continuation ->
+            if (isLocationGranted) {
+                fusedLocationClient.lastLocation.addOnCompleteListener { taskLocation ->
+                    continuation.resume(getRegionFromLocation(taskLocation.result))
                 }
-
-                val geocoder = Geocoder(requireContext())
-                val result = geocoder.getFromLocation(it.result.latitude, it.result.longitude, 1)
-                continuation.resume(result?.firstOrNull()?.countryCode ?: DEFAULT_REGION)
+            } else {
+                continuation.resume(DEFAULT_REGION)
             }
         }
 
@@ -212,7 +190,7 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         }
     }
 
-    private fun setRVListener() = viewLifecycleOwner.launchAndCollect(binding.rvMovies.lastVisibleEvents) {
+    private fun setOnScrollListener() = viewLifecycleOwner.launchAndCollect(binding.rvMovies.lastVisibleEvents) {
         viewModel.lastVisible.value = it
     }
 
@@ -242,7 +220,7 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
 }
 
 sealed interface ViewState<out T> {
-    object Loading: ViewState<Nothing>
+    data object Loading: ViewState<Nothing>
     data class Success<T>(val data: T): ViewState<T>
     data class Error(val message: String): ViewState<Nothing>
 }

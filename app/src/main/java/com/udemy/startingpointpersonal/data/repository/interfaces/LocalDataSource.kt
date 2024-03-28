@@ -11,7 +11,7 @@ interface LocalDataSource {
 
     suspend fun size(): Int
 
-    suspend fun saveMovies(movies: List<DomainMovie>)
+    suspend fun saveMovies(movies: List<MovieEntity>)
 
     suspend fun findById(movieId: Int): DomainMovie
 

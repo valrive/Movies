@@ -18,16 +18,15 @@ data class Movie(
     ): Parcelable
 
 fun Movie.toEntityMovie(): MovieEntity = MovieEntity(
-    id,
-    title,
-    "https://image.tmdb.org/t/p/w185/$posterPath",
-    "https://image.tmdb.org/t/p/w780/$backdropPath",
-    voteAverage,
-    voteCount,
-    releaseDate.orEmpty(),
-    originalLanguage.orEmpty(),
-    //"$overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview "
-    overview.orEmpty()
+    id = id,
+    title = title,
+    posterPath = "https://image.tmdb.org/t/p/w185/$posterPath",
+    backdropPath ="https://image.tmdb.org/t/p/w780/$backdropPath",
+    voteAverage = voteAverage,
+    voteCount = voteCount,
+    releaseDate = releaseDate.orEmpty(),
+    originalLanguage = originalLanguage.orEmpty(),
+    overview = overview.orEmpty()
 )
 
 fun List<Movie>.toEntityMovies(): List<MovieEntity> = map { it.toEntityMovie() }

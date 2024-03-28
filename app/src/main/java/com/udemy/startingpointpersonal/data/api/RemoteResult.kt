@@ -1,6 +1,7 @@
 package com.udemy.startingpointpersonal.data.api
 
 import com.google.gson.annotations.SerializedName
+import com.udemy.startingpointpersonal.data.database.entity.MovieEntity
 import com.udemy.startingpointpersonal.domain.model.Movie
 
 data class RemoteResult(
@@ -41,3 +42,18 @@ fun MovieRemote.toDomainMovie(): Movie = Movie(
 )
 
 fun List<MovieRemote>.toDomainMovies(): List<Movie> = map { it.toDomainMovie() }
+
+fun MovieRemote.toEntityMovie(): MovieEntity = MovieEntity(
+    id = id,
+    title = title,
+    posterPath = "https://image.tmdb.org/t/p/w185/$posterPath",
+    backdropPath ="https://image.tmdb.org/t/p/w780/$backdropPath",
+    voteAverage = voteAverage,
+    voteCount = voteCount,
+    releaseDate = releaseDate,
+    originalLanguage = originalLanguage,
+    //"$overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview $overview "
+    overview = overview
+)
+
+fun List<MovieRemote>.toEntityMovies(): List<MovieEntity> = map { it.toEntityMovie() }

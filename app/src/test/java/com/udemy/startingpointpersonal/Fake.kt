@@ -1,6 +1,7 @@
 package com.udemy.startingpointpersonal
 
 import com.udemy.startingpointpersonal.data.api.MovieRemote
+import com.udemy.startingpointpersonal.data.database.entity.MovieEntity
 import com.udemy.startingpointpersonal.data.repository.interfaces.LocalDataSource
 import com.udemy.startingpointpersonal.data.repository.interfaces.MovieRepository
 import com.udemy.startingpointpersonal.data.repository.interfaces.RemoteDataSource
@@ -38,7 +39,7 @@ class FakeLocalDataSource : LocalDataSource {
 
     override suspend fun size(): Int = movies.size
 
-    override suspend fun saveMovies(movies: List<Movie>) { this.movies += movies }
+    override suspend fun saveMovies(movies: List<MovieEntity>) { this.movies += movies }
 
     override fun getMovies(): Flow<ViewState<List<Movie>>> = flowOf(ViewState.Success(movies))
 

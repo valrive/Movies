@@ -1,12 +1,11 @@
 package com.udemy.startingpointpersonal.data.repository
 
-import com.udemy.startingpointpersonal.data.database.entity.MovieEntity
 import com.udemy.startingpointpersonal.domain.model.Movie as DomainMovie
 import com.udemy.startingpointpersonal.data.database.dao.MovieDao
+import com.udemy.startingpointpersonal.data.database.entity.MovieEntity
 import com.udemy.startingpointpersonal.data.database.entity.toDomainMovie
 import com.udemy.startingpointpersonal.data.database.entity.toDomainMovies
 import com.udemy.startingpointpersonal.data.repository.interfaces.LocalDataSource
-import com.udemy.startingpointpersonal.domain.model.toEntityMovies
 import com.udemy.startingpointpersonal.ui.view.popularMovs.ViewState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -23,9 +22,8 @@ class LocalDataSourceImpl @Inject constructor(
 
     override suspend fun size(): Int = withContext(Dispatchers.IO) { movieDao.movieCount() }
 
-    override suspend fun saveMovies(movies: List<DomainMovie>) = withContext(Dispatchers.IO) {
-        //converts List to vararg
-        movieDao.insert(*movies.toEntityMovies().toTypedArray())
+    override suspend fun saveMovies(movies: List<MovieEntity>) = withContext(Dispatchers.IO) {
+        movieDao.insert(*movies.toTypedArray())//converts List to vararg
     }
 
     override suspend fun findById(movieId: Int): DomainMovie =
