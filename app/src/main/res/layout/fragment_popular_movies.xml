@@ -29,29 +29,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:visibility="@{(shimmer ?? false) ? View.VISIBLE: View.GONE}"
-            android:id="@+id/view_loading"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:shimmer_auto_start="true"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <include layout="@layout/movie_item_loading"/>
-                <include layout="@layout/movie_item_loading"/>
-                <include layout="@layout/movie_item_loading"/>
-                <include layout="@layout/movie_item_loading"/>
-                <include layout="@layout/movie_item_loading"/>
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-        </com.facebook.shimmer.ShimmerFrameLayout>
+        <include layout="@layout/movies_shimmer_loading"
+            app:shimmer="@{shimmer}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

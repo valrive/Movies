@@ -17,7 +17,6 @@ import com.udemy.startingpointpersonal.databinding.FragmentPopularMoviesBinding
 import com.udemy.startingpointpersonal.databinding.MovieItemBinding
 import com.udemy.startingpointpersonal.domain.model.Movie
 import com.udemy.startingpointpersonal.ui.*
-import com.udemy.startingpointpersonal.ui.view.permission.AndroidPermissionChecker
 import com.udemy.startingpointpersonal.ui.view.popularMovs.adapter.*
 import com.udemy.startingpointpersonal.ui.viewmodel.PopularMoviesViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -137,12 +136,14 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         viewLifecycleOwner.lifecycleScope.launch{
             val isLocationGranted = requestPermission()
             val region = getRegion(isLocationGranted)
-
-            //LiveData
+            viewLifecycleOwner.launchAndCollect(viewModel.paginationLoading) {
+                if (it){
+                    activity?.muestraProgressBar()
+                } else{
+                    activity?.escondeProgressBar()
+                }
+            }
             //viewModel.moviesLD.observe(viewLifecycleOwner, ::handleResult)
-
-            //Flow
-            //viewLifecycleOwner.launchAndCollect(viewModel.moviesF, ::handleResult)
             viewModel.getMoviesF(region).collect(::handleResult)
         }
     }
@@ -190,8 +191,9 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         }
     }
 
-    private fun setOnScrollListener() = viewLifecycleOwner.launchAndCollect(binding.rvMovies.lastVisibleEvents) {
-        viewModel.lastVisible.value = it
+    private fun setOnScrollListener() = viewLifecycleOwner.launchAndCollect(binding.rvMovies.lastVisibleEvents) { itemPosition ->
+        if(viewModel.lastVisible.value < itemPosition)
+            viewModel.lastVisible.value = itemPosition
     }
 
     private fun onAction(action: Action) {
