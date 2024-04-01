@@ -46,7 +46,7 @@ class PopularMoviesViewModel @Inject constructor(
             _paginationLoading.value = true
             Log.d("PopularMoviesViewModel", "lastVisibleItem: $lastVisibleItem")
             val time = measureTimeMillis {
-                delay(1_000)
+                delay(200)
                 runCatching {
                     getAllMoviesUseCase.checkRequireNewPage(userRegion, lastVisibleItem)
                 }.onFailure {
