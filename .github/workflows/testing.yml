@@ -23,5 +23,5 @@ jobs:
         run: ./gradlew testDebugUnitTest
 
       - name: Android Test Report
-        uses: asadmansr/android-test-reporter@v1.2.0
+        uses: asadmansr/android-test-report-action@v1.2.0
         if: ${{ always() }} # This will always run the action even if the previous steps fails
