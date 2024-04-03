@@ -7,11 +7,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.databinding.ViewDataBinding
+import androidx.datastore.preferences.core.edit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.gms.location.LocationServices
+import com.google.gson.Gson
 import com.udemy.startingpointpersonal.R
 import com.udemy.startingpointpersonal.databinding.FragmentPopularMoviesBinding
 import com.udemy.startingpointpersonal.databinding.MovieItemBinding
@@ -19,6 +21,7 @@ import com.udemy.startingpointpersonal.domain.model.Movie
 import com.udemy.startingpointpersonal.ui.*
 import com.udemy.startingpointpersonal.ui.view.popularMovs.adapter.*
 import com.udemy.startingpointpersonal.ui.viewmodel.PopularMoviesViewModel
+import com.udemy.startingpointpersonal.util.DataStoreKeys
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
@@ -179,9 +182,9 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         binding.shimmer = state is ViewState.Loading
         when (state) {
             is ViewState.Success ->
-                (state.data as? List<Movie>)?.let { list: List<Movie> ->
-                    adapter.submitList(list)
-                }
+                //(state.data as? List<Movie>)?.let { list: List<Movie> ->
+                    adapter.submitList(state.data as List<Movie>)
+                //}
 
             is ViewState.Error ->
                 activity?.toast(state.message)
@@ -205,9 +208,17 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         }
     }
 
-    private fun navigateToDetail(movie: Movie) = findNavController().navigate(
-        PopularMoviesFragmentDirections.actionPopularMoviesFragmentToDetailFragment(movie)
-    )
+    private fun navigateToDetail(movie: Movie) = findNavController()
+        .navigate(
+            R.id.action_popularMoviesFragment_to_detailFragment
+        ).also {
+        viewLifecycleOwner.lifecycleScope.launch {
+            requireContext().dataStore.edit { preferences ->
+                preferences[DataStoreKeys.movieStringKey] = Gson().toJson(movie)
+            }
+        }
+
+    }
 
 }
 

@@ -15,6 +15,9 @@ import androidx.annotation.LayoutRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.databinding.BindingAdapter
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.*
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
@@ -149,3 +152,5 @@ val RecyclerView.lastVisibleEvents:Flow<Int>
         addOnScrollListener(listener)
         awaitClose { removeOnScrollListener(listener) }
     }.conflate() //obtenemos solo el último valor en caso de que haya muchos eventos seguidos
+
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore("moviesDataStore")
