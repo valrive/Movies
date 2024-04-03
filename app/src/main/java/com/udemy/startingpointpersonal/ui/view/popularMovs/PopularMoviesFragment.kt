@@ -182,9 +182,9 @@ class PopularMoviesFragment: BaseFragment<FragmentPopularMoviesBinding>() {
         binding.shimmer = state is ViewState.Loading
         when (state) {
             is ViewState.Success ->
-                (state.data as? List<Movie>)?.let { list: List<Movie> ->
-                    adapter.submitList(list)
-                }
+                //(state.data as? List<Movie>)?.let { list: List<Movie> ->
+                    adapter.submitList(state.data as List<Movie>)
+                //}
 
             is ViewState.Error ->
                 activity?.toast(state.message)

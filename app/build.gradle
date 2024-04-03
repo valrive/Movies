@@ -45,6 +45,7 @@ android {
             dimension "general"
             resValue "string", "app_name", "Hi-Lex Seq"
             resValue "string", "config_api_url", "https://mxsalls0002.phx-dc.dhl.com:8143/dhl-hilex-seq-api/"
+            resValue "string", "api_key", "6e85a9d3ce3f6a60280166679f8ccc6a"
             resValue "string", "config_info_version", "Versión " + android.defaultConfig.versionName
             resValue "bool", "use_clear_traffic", "true"
         }
@@ -52,6 +53,7 @@ android {
             dimension "general"
             resValue "string", "app_name", "Hi-Lex Seq-Test"
             resValue "string", "config_api_url", "http://mxsalls0002.phx-dc.dhl.com:8180/dhl-hilex-seq-api/"
+            resValue "string", "api_key", "6e85a9d3ce3f6a60280166679f8ccc6a"
             resValue "string", "config_info_version", "Versión " + android.defaultConfig.versionName + ", Pruebas"
             resValue "bool", "use_clear_traffic", "true"
         }
