@@ -22,10 +22,6 @@
         android:label="DetailFragment"
         tools:layout="@layout/fragment_detail">
 
-        <argument
-            android:name="movie"
-            app:argType="com.udemy.startingpointpersonal.domain.model.Movie" />
-
     </fragment>
 
 </navigation>

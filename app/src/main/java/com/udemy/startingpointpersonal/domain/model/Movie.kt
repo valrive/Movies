@@ -1,10 +1,7 @@
 package com.udemy.startingpointpersonal.domain.model
 
-import android.os.Parcelable
 import com.udemy.startingpointpersonal.data.database.entity.MovieEntity
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
 data class Movie(
     val id: Int = 0,
     val title: String? = "",
@@ -15,7 +12,7 @@ data class Movie(
     val releaseDate: String? = "",
     val originalLanguage: String? = "",
     val overview: String? = ""
-    ): Parcelable
+    )
 
 fun Movie.toEntityMovie(): MovieEntity = MovieEntity(
     id = id,
