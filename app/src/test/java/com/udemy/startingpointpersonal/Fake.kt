@@ -2,6 +2,7 @@ package com.udemy.startingpointpersonal
 
 import com.udemy.startingpointpersonal.data.api.MovieRemote
 import com.udemy.startingpointpersonal.data.database.entity.MovieEntity
+import com.udemy.startingpointpersonal.data.database.entity.toDomainMovies
 import com.udemy.startingpointpersonal.data.repository.interfaces.LocalDataSource
 import com.udemy.startingpointpersonal.data.repository.interfaces.MovieRepository
 import com.udemy.startingpointpersonal.data.repository.interfaces.RemoteDataSource
@@ -39,7 +40,7 @@ class FakeLocalDataSource : LocalDataSource {
 
     override suspend fun size(): Int = movies.size
 
-    override suspend fun saveMovies(movies: List<MovieEntity>) { this.movies += movies }
+    override suspend fun saveMovies(movies: List<MovieEntity>) { this.movies += movies.toDomainMovies() }
 
     override fun getMovies(): Flow<ViewState<List<Movie>>> = flowOf(ViewState.Success(movies))
 
@@ -54,7 +55,10 @@ class FakeRemoteDataSource(
     private val delay: Long = 0
 ) : RemoteDataSource {
 
-    override suspend fun getPopularMovies(countryCode: String, page: Int): List<MovieRemote> = movies
+    override suspend fun getPopularMovies(countryCode: String, page: Int): List<MovieRemote> =
+        movies.apply{
+            delay(delay)
+        }
 
     override suspend fun getPopularMoviesCall(countryCode: String, page: Int): List<MovieRemote> =
         movies.apply{

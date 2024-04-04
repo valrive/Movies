@@ -1,7 +1,5 @@
 package com.udemy.startingpointpersonal.data.repository
 
-import android.content.Context
-import android.widget.Toast
 import com.udemy.startingpointpersonal.data.api.toEntityMovies
 import com.udemy.startingpointpersonal.domain.model.Movie
 import com.udemy.startingpointpersonal.data.repository.interfaces.MovieRepository
@@ -9,15 +7,13 @@ import com.udemy.startingpointpersonal.data.repository.interfaces.LocalDataSourc
 import com.udemy.startingpointpersonal.data.repository.interfaces.RemoteDataSource
 import com.udemy.startingpointpersonal.domain.model.toEntityMovies
 import com.udemy.startingpointpersonal.ui.view.popularMovs.ViewState
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
     private val localDataSource: LocalDataSource,
-    private val remoteDataSource: RemoteDataSource,
-    @ApplicationContext val context: Context
+    private val remoteDataSource: RemoteDataSource
 ): MovieRepository {
 
     companion object{
@@ -40,7 +36,6 @@ class MovieRepositoryImpl @Inject constructor(
             //val newMovies = withTimeout(5_000) { remoteDataSource.getPopularMoviesCall(region, page).toEntityMovies() }
             val newMovies = withTimeout(5_000) { remoteDataSource.getPopularMovies(region, page).toEntityMovies() }
             localDataSource.saveMovies(newMovies)
-            Toast.makeText(context, "región: $region / page: $page  / size: ${size + newMovies.size}", Toast.LENGTH_SHORT).show()
         }
     }
 }

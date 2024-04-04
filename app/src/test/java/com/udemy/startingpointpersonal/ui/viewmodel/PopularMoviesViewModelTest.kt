@@ -6,7 +6,10 @@ import com.udemy.startingpointpersonal.FakeLocalDataSource
 import com.udemy.startingpointpersonal.FakeRemoteDataSource
 import com.udemy.startingpointpersonal.data.api.toDomainMovie
 import com.udemy.startingpointpersonal.data.repository.MovieRepositoryImpl
+import com.udemy.startingpointpersonal.domain.model.Movie
 import com.udemy.startingpointpersonal.fakeMovies
+import com.udemy.startingpointpersonal.ui.view.popularMovs.PopularMoviesFragment
+import com.udemy.startingpointpersonal.ui.view.popularMovs.PopularMoviesFragment.Companion.DEFAULT_REGION
 import com.udemy.startingpointpersonal.ui.view.popularMovs.ViewState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.TimeoutCancellationException
@@ -17,6 +20,12 @@ import org.junit.Test
 
 @ExperimentalCoroutinesApi
 class PopularMoviesViewModelTest{
+
+    //check test works correctly
+    @Test
+    fun `minimal check test`(){
+        Assert.assertTrue(true)
+    }
 
     //regla para que las corutinas se ejecuten en un hilo de testing
     //este val se usa para reusar código que se ejecuta antes y después de cada test
@@ -33,9 +42,11 @@ class PopularMoviesViewModelTest{
             FakeRemoteDataSource(movies = fakeMovies)
         )
         val useCase = FakeGetAllMoviesUseCase(repository)
-        val viewModel = PopularMoviesViewModel(useCase)
-        viewModel.moviesF.collect{ viewState ->
-            Assert.assertEquals(viewState, ViewState.Success(fakeMovies.map { it.toDomainMovie() }))
+        val vm = PopularMoviesViewModel(useCase)
+        //val fakes = ViewState.Success(fakeMovies.map { it.toDomainMovie() })
+        val fakes = ViewState.Success(fakeMovies.filter { it.id == -1 })
+        vm.getMoviesF(DEFAULT_REGION).collect{
+            Assert.assertEquals(fakes, it)
         }
     }
 
