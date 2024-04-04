@@ -44,16 +44,16 @@ class PopularMoviesViewModel @Inject constructor(
     private fun checkRequireNewPage() = viewModelScope.launch {
         lastVisible.collect { lastVisibleItem ->
             _paginationLoading.value = true
-            Log.d("PopularMoviesViewModel", "lastVisibleItem: $lastVisibleItem")
+            //Log.d("PopularMoviesViewModel", "lastVisibleItem: $lastVisibleItem")
             val time = measureTimeMillis {
                 delay(200)
                 runCatching {
                     getAllMoviesUseCase.checkRequireNewPage(userRegion, lastVisibleItem)
                 }.onFailure {
-                    Log.e("PopularMoviesViewModel", "Error: ${it.message}")
+                    //Log.e("PopularMoviesViewModel", "Error: ${it.message}")
                 }
             }
-            Log.d("PopularMoviesViewModel", "api call duration: $time")
+            //Log.d("PopularMoviesViewModel", "api call duration: $time")
             _paginationLoading.value = false
         }
     }
