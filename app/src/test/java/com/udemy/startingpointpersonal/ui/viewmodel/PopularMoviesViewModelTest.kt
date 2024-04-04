@@ -43,8 +43,8 @@ class PopularMoviesViewModelTest{
         )
         val useCase = FakeGetAllMoviesUseCase(repository)
         val vm = PopularMoviesViewModel(useCase)
-        //val fakes = ViewState.Success(fakeMovies.map { it.toDomainMovie() })
-        val fakes = ViewState.Success(fakeMovies.filter { it.id == -1 })
+        val fakes = ViewState.Success(fakeMovies.map { it.toDomainMovie() })
+        //val fakes = ViewState.Success(fakeMovies.filter { it.id == -1 })
         vm.getMoviesF(DEFAULT_REGION).collect{
             Assert.assertEquals(fakes, it)
         }
