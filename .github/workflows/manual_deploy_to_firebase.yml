@@ -9,6 +9,7 @@ on:
         type: string
         required: true
         default: 'Manual Debug Build'
+        description: 'Release notes for this build'
 
 
 jobs:
