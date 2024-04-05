@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1077121937329",
+    "project_id": "movies-52bd2",
+    "storage_bucket": "movies-52bd2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1077121937329:android:fbeac8204306943ccf9790",
+        "android_client_info": {
+          "package_name": "com.udemy.startingpointpersonal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAE2FoUEQtNGaJB223-YVDNpCRn7w68iiM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
