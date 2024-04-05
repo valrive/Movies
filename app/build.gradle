@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'com.google.devtools.ksp'
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -127,6 +128,10 @@ dependencies {
     implementation'androidx.fragment:fragment-ktx:1.6.2'
     //Nos devuelve de una forma muy sencilla la última localización del dispositivo independientemente si fue esta app la que lo pidió
     implementation'com.google.android.gms:play-services-location:21.2.0'
+
+    //firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
 
 
 

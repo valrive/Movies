@@ -14,6 +14,9 @@ buildscript {
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
         //extension ksp
         classpath "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:$ksp_version"
+        //google-services
+        classpath 'com.google.gms:google-services:4.4.1'
+
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
