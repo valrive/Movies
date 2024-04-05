@@ -1,0 +1,47 @@
+
+# https://www.youtube.com/watch?v=KYG8lXZCVr4&list=PLj0aVRF4hXSXP3NgNggHnfhDHx-yFbbu_&index=3&t=190s
+name: Build & deploy to Firebase App Distribution
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_notes:
+        type: string
+        required: true
+        default: 'Manual Debug Build'
+
+
+jobs:
+  build:
+    name: Building and distributing app
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'gradle'
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Execute Gradle command - assembleDebug
+        run: ./gradlew assembleDebug
+      #- name: build release
+        #run: ./gradlew assembleRelease
+
+      - name: upload artifact to Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{secrets.FIREBASE_APP_ID}}
+          serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+          groups: testers
+          #file: app/build/outputs/apk/release/app-release-unsigned.apk
+          file: app/build/outputs/apk/debug/app-debug.apk
