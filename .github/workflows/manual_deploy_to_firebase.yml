@@ -46,4 +46,4 @@ jobs:
           groups: testers
           releaseNotes: ${{ github.event.inputs.release_notes }}
           #file: app/build/outputs/apk/release/app-release-unsigned.apk
-          file: app/build/outputs/apk/desarrollo/debug/app-desarrollo-debug.apk
+          file: app/build/outputs/apk/dev/debug/app-dev-debug.apk
