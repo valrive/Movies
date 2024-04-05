@@ -24,8 +24,11 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
         }
     }
     dataBinding {
@@ -42,40 +45,36 @@ android {
     // Specifies one flavor dimension.
     flavorDimensions "general"
     productFlavors {
-        productivo {
+        prod {
             dimension "general"
-            resValue "string", "app_name", "Hi-Lex Seq"
-            resValue "string", "config_api_url", "https://mxsalls0002.phx-dc.dhl.com:8143/dhl-hilex-seq-api/"
+            //resValue "string", "app_name", "Movies"
+            resValue "string", "config_api_url", "https://api.themoviedb.org/3/"
             resValue "string", "api_key", "6e85a9d3ce3f6a60280166679f8ccc6a"
             resValue "string", "config_info_version", "Versión " + android.defaultConfig.versionName
             resValue "bool", "use_clear_traffic", "true"
+            //applicationIdSuffix ".dev"
         }
-        pruebas {
+        QA {
             dimension "general"
-            resValue "string", "app_name", "Hi-Lex Seq-Test"
-            resValue "string", "config_api_url", "http://mxsalls0002.phx-dc.dhl.com:8180/dhl-hilex-seq-api/"
+            //resValue "string", "app_name", "Movies-Test"
+            resValue "string", "config_api_url", "https://api.themoviedb.org/3/"
             resValue "string", "api_key", "6e85a9d3ce3f6a60280166679f8ccc6a"
-            resValue "string", "config_info_version", "Versión " + android.defaultConfig.versionName + ", Pruebas"
+            resValue "string", "config_info_version", "Versión " + android.defaultConfig.versionName + ", test"
             resValue "bool", "use_clear_traffic", "true"
+            //applicationIdSuffix ".test"
         }
-        desarrollo {
+        dev {
             dimension "general"
-            resValue "string", "app_name", "Hi-Lex Seq-Dev"
-            //resValue "string", "config_api_url", "http://187.188.94.172:8080/dhl-hilex-seq-api/"
-            resValue "string", "config_api_url", "https://www.saalma.mx/dhl-hilex-seq-api/"
+            //resValue "string", "app_name", "Movies-Dev"
+            resValue "string", "config_api_url", "https://api.themoviedb.org/3/"
             resValue "string", "api_key", "6e85a9d3ce3f6a60280166679f8ccc6a"
-            resValue "string", "config_info_version", "Versión " + android.defaultConfig.versionName + ", Desarrollo"
+            resValue "string", "config_info_version", "Versión " + android.defaultConfig.versionName + ", dev"
             resValue "bool", "use_clear_traffic", "true"
             //applicationIdSuffix ".dev"
         }
-        valentin {
-            dimension "general"
-            resValue "string", "app_name", "AStarting-Vale"
-            resValue "string", "config_api_url", "https://api.themoviedb.org/3/"
-            resValue "string", "api_key", "6e85a9d3ce3f6a60280166679f8ccc6a"
-            resValue "string", "config_info_version", "Versión " + android.defaultConfig.versionName + ", Valentino"
-            resValue "bool", "use_clear_traffic", "true"
-        }
+    }
+    applicationVariants.all { variant ->
+        variant.resValue "string", "app_name", "Movies_" + variant.productFlavors.get(0).name + '_' + variant.buildType.name + '"'
     }
 
 }
