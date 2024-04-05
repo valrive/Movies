@@ -45,5 +45,5 @@ jobs:
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: testers
           releaseNotes: ${{ github.event.inputs.release_notes }}
-          #file: app/build/outputs/apk/release\app-release-unsigned.apk
-          file: app\build\outputs\apk\desarrollo\debug\app-desarrollo-debug.apk
+          #file: app/build/outputs/apk/release/app-release-unsigned.apk
+          file: app/build/outputs/apk/desarrollo/debug/app-desarrollo-debug.apk
