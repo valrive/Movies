@@ -1,6 +1,6 @@
 
 # https://www.youtube.com/watch?v=KYG8lXZCVr4&list=PLj0aVRF4hXSXP3NgNggHnfhDHx-yFbbu_&index=3&t=190s
-name: Build & deploy to Firebase App Distribution
+name: Deploy to Firebase App Distribution
 
 on:
   workflow_dispatch:
@@ -44,5 +44,6 @@ jobs:
           appId: ${{secrets.FIREBASE_APP_ID}}
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: testers
+          releaseNotes: ${{ github.event.inputs.release_notes }}
           #file: app/build/outputs/apk/release/app-release-unsigned.apk
           file: app/build/outputs/apk/debug/app-debug.apk
