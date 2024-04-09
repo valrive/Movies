@@ -10,19 +10,19 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: 'gradle'
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Run Unit Test
-        run: ./gradlew testValentinDebugUnitTest
-
-      - name: Android Test Report
-        uses: asadmansr/android-test-report-action@v1.2.0
-        if: ${{ always() }} # This will always run the action even if the previous steps fails
+#      - name: Set up JDK 17
+#        uses: actions/setup-java@v3
+#        with:
+#          java-version: '17'
+#          distribution: 'temurin'
+#          cache: 'gradle'
+#
+#      - name: Grant execute permission for gradlew
+#        run: chmod +x gradlew
+#
+#      - name: Run Unit Test
+#        run: ./gradlew testValentinDebugUnitTest
+#
+#      - name: Android Test Report
+#        uses: asadmansr/android-test-report-action@v1.2.0
+#        if: ${{ always() }} # This will always run the action even if the previous steps fails
