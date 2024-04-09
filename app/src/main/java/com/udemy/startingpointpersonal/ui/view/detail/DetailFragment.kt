@@ -38,6 +38,7 @@ class DetailFragment: BaseFragment<FragmentDetail2Binding>(){
             }.firstOrNull()?.let {
                 Gson().fromJson(it, Movie::class.java)
             } ?: Movie()
+            //todo: recuperar el objeto Movie de la dataStore o BD
         }
 
         (activity as MainActivity).setSupportActionBar(view.findViewById(R.id.toolbar))
