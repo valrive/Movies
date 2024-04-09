@@ -40,6 +40,7 @@ jobs:
         if: ${{ always() }}
 
       #- name: Grant execute permission for gradlew
+        #ejecutar en la terminal el siguiente comando para evitar agregar las lineas al ci: git update-index --chmod=+x ./gradlew
        # run: chmod +x gradlew
 
       #- name: Setup Gradle
