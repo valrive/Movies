@@ -21,7 +21,7 @@
 
 > Code should be optimized for readability. Attach some custom style guide or reference some. i.e.:
 
-In order to sanitize coding standards, please follow [this style guide]([https://github.com/airbnb/javascript](https://dev.to/basementdevs/be-a-better-developer-with-these-git-good-practices-2dim)).
+In order to sanitize coding standards, please follow [this style guide]([https://dev.to/basementdevs/be-a-better-developer-with-these-git-good-practices-2dim]).
 
 ## Done checklist
 
