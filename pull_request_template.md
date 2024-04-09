@@ -46,6 +46,7 @@ As a developer. i completed this steps before asking a peer for code review:
 > Show in a checkbox-style, the expected types of changes your project is supposed to have:
 
 - [ ] New feature
+- [ ] Chore (cambio pequeó que no debería ser un featur i.e. corregir un color)
 - [ ] Bugfix
 - [ ] Hotfix
 - [ ] Documentation
