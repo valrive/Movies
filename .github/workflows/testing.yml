@@ -14,7 +14,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           java-version: 1.8
-#          distribution: 'temurin'
+          distribution: 'temurin'
 #          cache: 'gradle'
 #
 #         #ejecutar en la terminal el siguiente comando para evitar agregar las lineas al ci: git update-index --chmod=+x ./gradlew o solo gradlew
