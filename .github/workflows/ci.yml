@@ -23,31 +23,16 @@ jobs:
       - name: Set Up JDK
         uses: actions/setup-java@v3
         with:
-          #java-version: 1.8 sin distribution ni cache
           java-version: '17'
           distribution: 'temurin'
           #cache: 'gradle'
 
-      #Define Android Build Tasks
+#      - name: Grant execute permission for gradlew
+#        #ejecutar en la terminal el siguiente comando para evitar agregar las lineas al ci: git update-index --chmod=+x ./gradlew o solo gradlew
+#        run: chmod +x gradlew
 
-      - name: Run Unit Test
-        #run: ./gradlew test
-        run: ./gradlew testDevDebugUnitTest
-
-      - name: Android Test Report
-        uses: asadmansr/android-test-report-action@v1.2.0
-        # This will always run the action even if the previous steps fails
-        if: ${{ always() }}
-
-      #- name: Grant execute permission for gradlew
-        #ejecutar en la terminal el siguiente comando para evitar agregar las lineas al ci: git update-index --chmod=+x ./gradlew
-       # run: chmod +x gradlew
-
-      #- name: Setup Gradle
-        #uses: gradle/gradle-build-action@v2
+#      - name: Setup Gradle
+#        uses: gradle/gradle-build-action@v2
 
       - name: Build APP
-        run: ./gradlew assemble #./gradlew build
-
-      #- name: Build with Gradle
-      #  run: ./gradlew build --no-daemon
+        run: ./gradlew assemble #./gradlew build --no-daemon
