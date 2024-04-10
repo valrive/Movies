@@ -22,7 +22,7 @@ jobs:
 #        run: chmod +x gradlew
 
       - name: Run Unit Test
-        run: ./gradlew testValentinDebugUnitTest
+        run: ./gradlew testDevDebugUnitTest
 
       - name: Android Test Report
         uses: asadmansr/android-test-report-action@v1.2.0
