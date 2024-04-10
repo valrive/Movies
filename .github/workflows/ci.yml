@@ -1,12 +1,12 @@
 #Pipeline de Aristidev para CI
 #https://www.youtube.com/watch?v=Zfaev5IOBmI
-name: Android CI
+name: Android Build
 
 on:
   #on: [push]
   #on: [pull_request]
   push:
-    branches: ["main"]
+    branches: ["onlyPopularMovies"]
   pull_request:
     branches: ["onlyPopularMovies"]
 
@@ -25,14 +25,25 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          #cache: 'gradle'
+          cache: 'gradle'
 
+#         #ejecutar en la terminal el siguiente comando para evitar agregar las lineas al ci:
+#         #git update-index --chmod=+x ./gradlew o solo gradlew
 #      - name: Grant execute permission for gradlew
-#        #ejecutar en la terminal el siguiente comando para evitar agregar las lineas al ci: git update-index --chmod=+x ./gradlew o solo gradlew
 #        run: chmod +x gradlew
 
 #      - name: Setup Gradle
 #        uses: gradle/gradle-build-action@v2
 
+      - name: Restore cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Build APP
         run: ./gradlew assemble #./gradlew build --no-daemon
+
+#        send notification

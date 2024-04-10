@@ -20,20 +20,22 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up JDK 11
+      - name: Setup JDK
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'temurin'
           cache: 'gradle'
 
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
+#      - name: Setup Gradle
+#        uses: gradle/gradle-build-action@v2
+#
+#         #ejecutar en la terminal el siguiente comando para evitar agregar las lineas al ci:
+#         #git update-index --chmod=+x ./gradlew o solo gradlew
+#      - name: Grant execute permission for gradlew
+#        run: chmod +x ./gradlew
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
-
-      - name: Execute Gradle command - assembleDebug
+      - name: Build APP
         run: ./gradlew assembleDebug
       #- name: build release
         #run: ./gradlew assembleRelease
@@ -47,3 +49,12 @@ jobs:
           releaseNotes: ${{ github.event.inputs.release_notes }}
           #file: app/build/outputs/apk/release/app-release-unsigned.apk
           file: app/build/outputs/apk/dev/debug/app-dev-debug.apk
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: apk
+          path: app/build/outputs/apk/dev/debug/app-dev-debug.apk
+
+      - name: Notify
+        run: echo "Build uploaded to Firebase App Distribution"

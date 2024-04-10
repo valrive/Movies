@@ -1,6 +1,6 @@
 #Pipeline de Aristidev para CI
 #https://www.youtube.com/watch?v=JYeYvEUq8Yw
-name: Android Testing CI
+name: Android Testing
 
 on: [push]
 
@@ -15,14 +15,23 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-#          cache: 'gradle'
-#
-#         #ejecutar en la terminal el siguiente comando para evitar agregar las lineas al ci: git update-index --chmod=+x ./gradlew o solo gradlew
+          cache: 'gradle'
+
+#         #ejecutar en la terminal el siguiente comando para evitar agregar las lineas al ci:
+#         #git update-index --chmod=+x ./gradlew o solo gradlew
 #      - name: Grant execute permission for gradlew
 #        run: chmod +x gradlew
 
+#       Run UI Test
       - name: Run Unit Test
         run: ./gradlew testDevDebugUnitTest
+
+#       Run Linting Test
+      - name: Run Debug ktlint
+        run: ./gradlew ktlintDevDebug #ktlintDevDebugCheck
+
+      - name: Run Linting Test
+        run: ./gradlew lintDevDebug
 
       - name: Android Test Report
         uses: asadmansr/android-test-report-action@v1.2.0
