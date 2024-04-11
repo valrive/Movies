@@ -20,20 +20,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-          cache: 'gradle'
+#      - name: Setup JDK
+#        uses: actions/setup-java@v4
+#        with:
+#          java-version: '17'
+#          distribution: 'temurin'
+#          cache: 'gradle' Se necesita especificar más cosas
 
 #         #ejecutar en la terminal el siguiente comando para evitar agregar las lineas al ci:
 #         #git update-index --chmod=+x ./gradlew o solo gradlew
 #      - name: Grant execute permission for gradlew
 #        run: chmod +x gradlew
 
-#      - name: Setup Gradle
-#        uses: gradle/gradle-build-action@v2
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3
 
 #      - name: Restore cache
 #        uses: actions/cache@v2
@@ -43,5 +43,6 @@ jobs:
 #          restore-keys: |
 #            ${{ runner.os }}-gradle-
 #
-#      - name: Build Project
-#        run: ./gradlew assemble #./gradlew build --no-daemon
+      - name: Assamble with Gradle
+        run: ./gradlew assemble
+#        run: ./gradlew build --no-daemon
