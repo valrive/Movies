@@ -36,3 +36,10 @@ jobs:
       - name: Android Test Report
         uses: asadmansr/android-test-report-action@v1.2.0
         if: ${{ always() }} # This will always run the action even if the previous steps fails
+
+#      - name: Upload Test Results
+#        if: ${{ always() }}
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: test-reports
+#          path: 'app/build/reports/tests/'

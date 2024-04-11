@@ -40,7 +40,7 @@ jobs:
       #- name: build release
         #run: ./gradlew assembleRelease
 
-      - name: upload artifact to Firebase App Distribution
+      - name: Upload apk to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{secrets.FIREBASE_APP_ID}}
@@ -50,11 +50,36 @@ jobs:
           #file: app/build/outputs/apk/release/app-release-unsigned.apk
           file: app/build/outputs/apk/dev/debug/app-dev-debug.apk
 
-      - name: Upload APK
+
+
+
+
+
+
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v2
         with:
           name: apk
           path: app/build/outputs/apk/dev/debug/app-dev-debug.apk
+        run:  echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-id }}'
 
-      - name: Notify
-        run: echo "Build uploaded to Firebase App Distribution"
+  distribute:
+
+    needs: [ build ]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download APK
+        uses: actions/download-artifact@v2.0.5
+        id: download
+        with:
+          name: app
+          path: ./
+      - name: Distribute to App Center
+        uses: wzieba/AppCenter-Github-Action@v1.2.1
+        with:
+          appName: LearnProgrammingAcademy/My-Investments
+          token: ${{secrets.APP_CENTER_TOKEN}}
+          group: Beta Testers
+          file: ${{steps.download.outputs.download-path}}/app-debug.apk
+          notifyTesters: true

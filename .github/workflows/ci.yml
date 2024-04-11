@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set Up JDK
+      - name: Setup JDK
         uses: actions/setup-java@v3
         with:
           java-version: '17'
@@ -43,7 +43,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Build APP
+      - name: Build Project
         run: ./gradlew assemble #./gradlew build --no-daemon
 
 #        send notification
