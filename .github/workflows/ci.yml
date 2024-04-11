@@ -6,7 +6,7 @@ on:
   #on: [push]
   #on: [pull_request]
   push:
-    branches: ["onlyPopularMovies"]
+    branches: ["onlyPopularMovies", "feature/new-stuff-to-ci"]
   pull_request:
     branches: ["onlyPopularMovies"]
 
@@ -18,10 +18,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup JDK
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -35,15 +35,13 @@ jobs:
 #      - name: Setup Gradle
 #        uses: gradle/gradle-build-action@v2
 
-      - name: Restore cache
-        uses: actions/cache@v2
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
-      - name: Build Project
-        run: ./gradlew assemble #./gradlew build --no-daemon
-
-#        send notification
+#      - name: Restore cache
+#        uses: actions/cache@v2
+#        with:
+#          path: ~/.gradle/caches
+#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+#          restore-keys: |
+#            ${{ runner.os }}-gradle-
+#
+#      - name: Build Project
+#        run: ./gradlew assemble #./gradlew build --no-daemon
