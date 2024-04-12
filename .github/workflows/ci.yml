@@ -1,6 +1,6 @@
 #Pipeline de Aristidev para CI
 #https://www.youtube.com/watch?v=Zfaev5IOBmI
-name: Android Build
+name: Android CI
 
 on:
   #on: [push]
@@ -14,6 +14,7 @@ on:
   workflow_dispatch:
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
 
