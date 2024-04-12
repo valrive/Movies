@@ -45,7 +45,6 @@ jobs:
         with:
           name: apk
           path: app/build/outputs/apk/dev/debug/app-dev-debug.apk
-        run:  echo 'Artifact ID is ${{ steps.artifact-upload-step.outputs.artifact-id }}'
 
   distribute:
 
