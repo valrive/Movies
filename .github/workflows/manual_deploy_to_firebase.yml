@@ -47,6 +47,16 @@ jobs:
 #
     steps:
 
+      - name: Restore cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v2
         with:
