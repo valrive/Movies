@@ -2,7 +2,9 @@
 #https://www.youtube.com/watch?v=JYeYvEUq8Yw
 name: Android Testing
 
-on: [push]
+on:
+#  [push]
+  workflow_dispatch:
 
 jobs:
   test:
@@ -23,16 +25,33 @@ jobs:
 #        run: chmod +x gradlew
 
 #       Run UI Test
-      - name: Run Unit Test
+      - name: Run Debug Tests
         run: ./gradlew testDevDebugUnitTest
 
-#       Run Linting Test
-#      - name: Run Debug ktlint
-#        run: ./gradlew ktlintDevDebug #ktlintDevDebugCheck
+#     Run Debug ktlint
+      - name: Run Debug ktlint
+        run: ./gradlew ktlintDevDebugCheck
 
-      - name: Run Linting Test
+      - name: Run Debug Lint
         run: ./gradlew lintDevDebug
 
       - name: Android Test Report
         uses: asadmansr/android-test-report-action@v1.2.0
-        if: ${{ always() }} # This will always run the action even if the previous steps fails
+#       This will always run the action even if the previous steps fails
+        if: ${{ always() }}
+
+      - name: Upload Test Results as Artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-reports
+          path: '**/build/reports/tests/'
+
+#     Upload APK
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: apk
+#          path: app/build/outputs/apk/dev/debug/app-dev-debug.apk
+          path: app/build/outputs/apk/dev/debug/**.apk
+

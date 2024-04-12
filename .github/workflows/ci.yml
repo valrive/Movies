@@ -1,12 +1,12 @@
 #Pipeline de Aristidev para CI
 #https://www.youtube.com/watch?v=Zfaev5IOBmI
-name: Android Build
+name: Android CI
 
 on:
   #on: [push]
   #on: [pull_request]
   push:
-    branches: ["onlyPopularMovies"]
+    branches: ["onlyPopularMovies", "feature/new-stuff-to-ci"]
   pull_request:
     branches: ["onlyPopularMovies"]
 
@@ -14,18 +14,19 @@ on:
   workflow_dispatch:
 
 jobs:
+
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Set Up JDK
-        uses: actions/setup-java@v3
+      - name: Setup JDK
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: 'gradle'
+#          cache: 'gradle' Se necesita especificar más cosas
 
 #         #ejecutar en la terminal el siguiente comando para evitar agregar las lineas al ci:
 #         #git update-index --chmod=+x ./gradlew o solo gradlew
@@ -33,17 +34,18 @@ jobs:
 #        run: chmod +x gradlew
 
 #      - name: Setup Gradle
-#        uses: gradle/gradle-build-action@v2
+#        uses: gradle/gradle-build-action@v3
 
       - name: Restore cache
         uses: actions/cache@v2
         with:
-          path: ~/.gradle/caches
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-
-      - name: Build APP
-        run: ./gradlew assemble #./gradlew build --no-daemon
-
-#        send notification
+#
+      - name: Assamble with Gradle
+        run: ./gradlew assemble
+#        run: ./gradlew build --no-daemon
