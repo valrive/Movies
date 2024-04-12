@@ -40,9 +40,11 @@ jobs:
 #       This will always run the action even if the previous steps fails
         if: ${{ always() }}
 
-      - name: Upload Test Results as Artifacts
+      - name: Upload Test Report as Artifacts
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
           name: test-reports
           path: '**/build/reports/tests/'
+
+#      - name: Upload Lint Results as Artifacts? en el log de actions viene la ruta a subir

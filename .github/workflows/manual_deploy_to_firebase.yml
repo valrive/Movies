@@ -40,7 +40,13 @@ jobs:
       #- name: build release
         #run: ./gradlew assembleRelease
 
-#     Upload APK
+  distribute:
+
+    needs: [ build ]
+    runs-on: ubuntu-latest
+#
+    steps:
+
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v2
         with:
@@ -48,12 +54,7 @@ jobs:
 #          path: app/build/outputs/apk/dev/debug/app-dev-debug.apk
           path: app/build/outputs/apk/dev/debug/**.apk
 
-  distribute:
 
-    needs: [ build ]
-    runs-on: ubuntu-latest
-#
-    steps:
       - name: Upload apk to Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
@@ -61,8 +62,9 @@ jobs:
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: testers
           releaseNotes: ${{ github.event.inputs.release_notes }}
-          #file: app/build/outputs/apk/release/app-release-unsigned.apk
-          file: app/build/outputs/apk/dev/debug/app-dev-debug.apk
+#          file: app/build/outputs/apk/release/app-release-unsigned.apk
+#          file: app/build/outputs/apk/dev/debug/app-dev-debug.apk
+          file: app/build/outputs/apk/dev/debug/**.apk
 
 
 
