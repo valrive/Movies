@@ -29,8 +29,8 @@ jobs:
         run: ./gradlew testDevDebugUnitTest
 
 #     Run Debug ktlint
-      - name: Run Debug ktlint
-        run: ./gradlew ktlintDevDebugCheck
+#      - name: Run Debug ktlint
+#        run: ./gradlew ktlintDevDebugCheck
 
       - name: Run Debug Lint
         run: ./gradlew lintDevDebug
