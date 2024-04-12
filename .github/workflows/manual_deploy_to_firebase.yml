@@ -40,23 +40,6 @@ jobs:
       #- name: build release
         #run: ./gradlew assembleRelease
 
-  distribute:
-
-    needs: [ build ]
-    runs-on: ubuntu-latest
-#
-    steps:
-
-      - name: Restore cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
-
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v2
         with:
@@ -75,8 +58,6 @@ jobs:
 #          file: app/build/outputs/apk/release/app-release-unsigned.apk
 #          file: app/build/outputs/apk/dev/debug/app-dev-debug.apk
           file: app/build/outputs/apk/dev/debug/**.apk
-
-
 
 
 #      - name: Download APK
