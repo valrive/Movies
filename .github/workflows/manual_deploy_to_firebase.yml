@@ -40,11 +40,13 @@ jobs:
       #- name: build release
         #run: ./gradlew assembleRelease
 
+#     Upload APK
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v2
         with:
           name: apk
-          path: app/build/outputs/apk/dev/debug/app-dev-debug.apk
+#          path: app/build/outputs/apk/dev/debug/app-dev-debug.apk
+          path: app/build/outputs/apk/dev/debug/**.apk
 
   distribute:
 
