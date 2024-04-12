@@ -2,7 +2,9 @@
 #https://www.youtube.com/watch?v=JYeYvEUq8Yw
 name: Android Testing
 
-on: [push]
+on:
+#  [push]
+  workflow_dispatch:
 
 jobs:
   test:
