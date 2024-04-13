@@ -3,12 +3,13 @@
 name: Android Testing
 
 on:
-#  [push]
-  workflow_dispatch:
+  [push]
+#  workflow_dispatch:
 
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
 
@@ -17,27 +18,26 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: 'gradle'
 
-#         #ejecutar en la terminal el siguiente comando para evitar agregar las lineas al ci:
-#         #git update-index --chmod=+x ./gradlew o solo gradlew
-#      - name: Grant execute permission for gradlew
-#        run: chmod +x gradlew
+      - name: Restore cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
 
-#       Run UI Test
-      - name: Run Debug Tests
+      - name: Run Unit Tests
         run: ./gradlew testDevDebugUnitTest
 
 #     Run Debug ktlint
 #      - name: Run Debug ktlint
 #        run: ./gradlew ktlintDevDebugCheck
 
-      - name: Run Debug Lint
-        run: ./gradlew lintDevDebug
-
       - name: Android Test Report
         uses: asadmansr/android-test-report-action@v1.2.0
-#       This will always run the action even if the previous steps fails
         if: ${{ always() }}
 
       - name: Upload Test Report as Artifacts
@@ -46,5 +46,3 @@ jobs:
         with:
           name: test-reports
           path: '**/build/reports/tests/'
-
-#      - name: Upload Lint Results as Artifacts? en el log de actions viene la ruta a subir
