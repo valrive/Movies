@@ -15,8 +15,7 @@ on:
   workflow_dispatch:
 
 jobs:
-
-  build:
+  assemble:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,9 +33,6 @@ jobs:
 #      - name: Grant execute permission for gradlew
 #        run: chmod +x gradlew
 
-#      - name: Setup Gradle
-#        uses: gradle/gradle-build-action@v3
-
       - name: Restore cache
         uses: actions/cache@v2
         with:
@@ -47,6 +43,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 #
-      - name: Assamble with Gradle
-        run: ./gradlew assemble
+      - name: Assemble Debug
+        run: ./gradlew assembleDebug
 #        run: ./gradlew build --no-daemon
