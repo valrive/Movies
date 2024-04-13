@@ -1,0 +1,38 @@
+name: Android Lint Testing
+
+on:
+  #  [push]
+  workflow_dispatch:
+
+jobs:
+  lint_test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+#      - name: Setup JDK
+#        uses: actions/setup-java@v3
+#        with:
+#          java-version: '17'
+#          distribution: 'temurin'
+
+      - name: Restore cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Run Debug Lint
+        run: ./gradlew lintDevDebug
+
+      - name: Upload Lint Report as Artifacts
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v2
+        with:
+          name: lint-report
+          path: '**/build/reports/lint-results-*'
