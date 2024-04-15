@@ -3,6 +3,8 @@
 name: Deploy to Firebase App Distribution
 
 on:
+  schedule:
+    - cron: '0 0 * * *' # every day at midnight
   workflow_dispatch:
     inputs:
       release_notes:

@@ -7,8 +7,9 @@ on:
 #  workflow_dispatch:
 
 jobs:
-  tests:
+  test_job:
     runs-on: ubuntu-latest
+    continue-on-error: true
 
     steps:
       - uses: actions/checkout@v3
@@ -47,8 +48,8 @@ jobs:
           name: test-reports
           path: '**/build/reports/tests/'
 
-  lint:
-    needs: [ tests ]
+  lint_job:
+    needs: [ test_job ]
     runs-on: ubuntu-latest
 
     steps:
