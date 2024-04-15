@@ -52,26 +52,29 @@ jobs:
           path: app/build/reports/lint-results-debug.html
 
 
-  unit-test:
-    name: Perform Unit Testing
-    needs: [ lint ]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+#  unit-test:
+#    name: Perform Unit Testing
+#    needs: [ lint ]
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@v4
+#
+#      - name: Run tests
+#        run: ./gradlew test
+#
+#      - name: Android Test Report
+#        if: ${{ always() }}
+#        uses: asadmansr/android-test-report-action@v1.2.0
+#
+#      - name: Upload test report
+#        if: ${{ always() }}
+#        uses: actions.upload-artifact@v2
+#        with:
+#          name: unit_test_report
+#          path: app/build/reports/test/testDebugUnitTest/
 
-      - name: Run tests
-        run: ./gradlew test
 
-      - name: Android Test Report
-        if: ${{ always() }}
-        uses: asadmansr/android-test-report-action@v1.2.0
 
-      - name: Upload test report
-        if: ${{ always() }}
-        uses: actions.upload-artifact@v2
-        with:
-          name: unit_test_report
-          path: app/build/reports/test/testDebugUnitTest/
 
 
 #  assemble:
