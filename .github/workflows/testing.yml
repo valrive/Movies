@@ -42,8 +42,8 @@ jobs:
         if: ${{ always() }}
 
       - name: Upload Test Report as Artifacts
-        if: ${{ always() }}
         uses: actions/upload-artifact@v2
+        if: ${{ always() }}
         with:
           name: test-reports
           path: '**/build/reports/tests/'
