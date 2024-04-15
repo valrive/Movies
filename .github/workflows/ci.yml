@@ -65,13 +65,13 @@ jobs:
 #    runs-on: macos-latest # MacOS runs faster
     steps:
       - uses: actions/checkout@v4
-#
-#      - name: Run tests
-#        run: ./gradlew test
-#
-#      - name: Android Test Report
-#        if: ${{ always() }}
-#        uses: asadmansr/android-test-report-action@v1.2.0
+
+      - name: Run tests
+        run: ./gradlew test
+
+      - name: Android Test Report
+        if: ${{ always() }}
+        uses: asadmansr/android-test-report-action@v1.2.0
 #
 #      - name: Upload test report
 #        if: ${{ always() }}
