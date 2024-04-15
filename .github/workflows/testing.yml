@@ -3,8 +3,8 @@
 name: Android Testing
 
 on:
-  [push]
-#  workflow_dispatch:
+#  [push]
+  workflow_dispatch:
 
 jobs:
   test_job:
