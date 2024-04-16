@@ -114,6 +114,7 @@ jobs:
           script: ./gradlew connectedCheck
 
       - name: Upload Instrumentation Test report
+        if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
           name: instrumentation_test_report

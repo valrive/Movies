@@ -1,0 +1,20 @@
+name: Build Feature Branch CI
+
+on:
+  push:
+    branches: 'feature/**'
+
+jobs:
+  apk:
+    name: Build Release signed APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v4
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
