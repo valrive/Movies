@@ -140,7 +140,7 @@ jobs:
 
   debug-apk:
     name: Generate Debug APK
-    needs: [ unit-test ]
+    needs: [ instrumentation-test ]
     runs-on: ubuntu-latest
 
     steps:

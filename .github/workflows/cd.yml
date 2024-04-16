@@ -35,8 +35,8 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: build release APK
-        run: ./gradlew assembleRelease
+#      - name: build release APK
+#        run: ./gradlew assembleRelease
 
 #      - name: Sign APK
 #        uses: r0adkll/sign-android-release@v1
