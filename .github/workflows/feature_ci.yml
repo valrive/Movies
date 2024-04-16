@@ -1,4 +1,5 @@
-name: Build Feature Branch CI
+#https://www.youtube.com/watch?v=f3_bkhQRrtU
+ame: Build Feature Branch CI
 
 on:
   push:
@@ -18,3 +19,8 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+
+      - name: Assemble
+        env:
+          VERSION_CODE: ${{ github.run_id }}
+        run: ./gradlew assembleDevDebug
