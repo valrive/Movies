@@ -1,13 +1,12 @@
 #https://www.youtube.com/watch?v=f3_bkhQRrtU
-ame: Build Feature Branch CI
+name: Build Feature Branch CI
 
 on:
   push:
-    branches: 'feature/**'
+    branches: ["feature/**"]
 
 jobs:
-  apk:
-    name: Build Release signed APK
+  assemble:
     runs-on: ubuntu-latest
 
     steps:
