@@ -23,3 +23,9 @@ jobs:
         env:
           VERSION_CODE: ${{ github.run_id }}
         run: ./gradlew assembleDevDebug
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: apk
+          path: app/build/outputs/apk/dev/debug/**.apk
