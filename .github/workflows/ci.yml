@@ -1,13 +1,11 @@
-#Pipeline de Aristidev para CI
-#https://www.youtube.com/watch?v=Zfaev5IOBmI
 name: CI
 
 on:
-#  [push]
-  #on: [pull_request]
+#on: [push]
+#on: [pull_request]
 
   push:
-    branches: ["onlyPopularMovies", "feature/new-stuff-to-ci"]
+    branches: ["onlyPopularMovies"]
   pull_request:
     branches: ["onlyPopularMovies"]
 
@@ -16,20 +14,10 @@ on:
 
 jobs:
 
-  start:
-    runs-on: ubuntu-latest
-#    continue-on-error: true
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Run sample script
-        run: echo Hello, world
-
-
   lint:
     name: Perform lint check
-    needs: [ start ]
     runs-on: windows-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -42,7 +30,7 @@ jobs:
       - name: Cache Gradle
         uses: actions/cache@v2
         with:
-          path: |
+          path:
             ~/.gradle/caches
 #            ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
@@ -50,12 +38,13 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle-
 
 #      - name: Make Gradle executable
+##      git update-index --chmod=+x ./gradlew o solo gradlew
 #        run: chmod +x ./gradlew
 
       - name: Run lint
         run: ./gradlew lintDevDebug
 
-      - name: Upload html test report
+      - name: Upload lint report report
         uses: actions/upload-artifact@v2
         with:
           name: lint-report
@@ -64,9 +53,10 @@ jobs:
 
   unit-test:
     name: Perform Unit Testing
+#    continue-on-error: true
     needs: [ lint ]
-    runs-on: ubuntu-latest
-#    runs-on: macos-latest # MacOS runs faster
+    runs-on: macos-latest # MacOS runs faster
+
     steps:
       - uses: actions/checkout@v4
 
@@ -79,11 +69,11 @@ jobs:
       - name: Cache Gradle
         uses: actions/cache@v2
         with:
-          path: |
+          path:
             ~/.gradle/caches
-          #            ~/.gradle/wrapper
+#            ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
-          #          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
           restore-keys: ${{ runner.os }}-gradle-
 
       - name: Run tests
@@ -101,35 +91,30 @@ jobs:
           path: '**/build/reports/tests/'
 
 
+  assemble:
+    name: Assemble Debug
+    runs-on: ubuntu-latest
+    needs: [ unit-test ]
 
-#  assemble:
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - uses: actions/checkout@v4
-#
-#      - name: Setup JDK
-#        uses: actions/setup-java@v4
-#        with:
-#          java-version: '17'
-#          distribution: 'temurin'
-##          cache: 'gradle' Se necesita especificar más cosas
-#
-##         #ejecutar en la terminal el siguiente comando para evitar agregar las lineas al ci:
-##         #git update-index --chmod=+x ./gradlew o solo gradlew
-##      - name: Grant execute permission for gradlew
-##        run: chmod +x gradlew
-#
-#      - name: Restore cache
-#        uses: actions/cache@v2
-#        with:
-#          path: |
-#            ~/.gradle/caches
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Cache Gradle
+        uses: actions/cache@v2
+        with:
+          path:
+            ~/.gradle/caches
 #            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
 #          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
-#          restore-keys: |
-#            ${{ runner.os }}-gradle-
-##
-#      - name: Assemble Debug
-#        run: ./gradlew assembleDebug
-##        run: ./gradlew build --no-daemon
+          restore-keys: ${{ runner.os }}-gradle-
+
+      - name: Assemble Debug
+        run: ./gradlew assembleDebug
+#        run: ./gradlew build --no-daemon
