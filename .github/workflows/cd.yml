@@ -3,24 +3,32 @@
 name: CD
 
 on:
+
+  workflow_run:
+    workflows: [ "ci" ]
+    types:
+      - completed
+
   schedule:
     - cron: '0 0 * * *' # every day at midnight
+
   workflow_dispatch:
     inputs:
       release_notes:
         type: string
         required: true
-        default: 'Manual Debug Build'
+        default: 'Manual Release Build'
         description: 'Release notes for this build'
 
 
 jobs:
-  build:
-    name: Building and distributing app
+  apk:
+    name: Build Release signed APK
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout the code
+        uses: actions/checkout@v4
 
       - name: Setup JDK
         uses: actions/setup-java@v3
