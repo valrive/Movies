@@ -94,7 +94,7 @@ jobs:
 
 
 
-  instrumentation-test:
+  instrumentation-test: #son tardados por lo que se recomienda hacerlos en los pull request
     name: Perform Instrumentation Testing
     needs: [ unit-test ]
     runs-on: macos-latest # MacOS runs faster cause provide hardware acceleration
