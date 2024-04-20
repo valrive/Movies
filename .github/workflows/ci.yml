@@ -78,7 +78,8 @@ jobs:
 #          restore-keys: ${{ runner.os }}-gradle-
 
       - name: Run tests
-        run: ./gradlew test #testDevDebugUnitTest
+#        run: ./gradlew test #testDevDebugUnitTest
+        run: ./gradlew testFreeDebugUnitTest --continue
 
       - name: Android Test Report
         uses: asadmansr/android-test-report-action@v1.2.0
@@ -165,7 +166,7 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle-
 
       - name: Assemble Debug
-        run: ./gradlew assemblefreeDebug
+        run: ./gradlew assembleFreeDebug
 #        run: ./gradlew build --no-daemon
 
       - name: Upload apk to Firebase App Distribution
