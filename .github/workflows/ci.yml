@@ -180,8 +180,8 @@ jobs:
           groups: testers
           releaseNotes: ${{ github.event.inputs.release_notes }}
 #          file: app/build/outputs/apk/release/app-release-unsigned.apk
-#          file: app/build/outputs/apk/free/debug/app-free-debug.apk
-          file: app/build/outputs/apk/dev/debug/**.apk
+          file: app/build/outputs/apk/free/debug/app-free-debug.apk
+#          file: app/build/outputs/apk/dev/debug/**.apk
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v2
