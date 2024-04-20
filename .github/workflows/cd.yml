@@ -7,9 +7,12 @@ on:
     workflows: [ "ci" ]
     types:
       - completed
+#    Para lanzar el workflow cuando detecte que se genera un tag con la versión del apk a desplegar
+    tags:
+      - 'v*' # ejemplo: tag: v1.0.0
 
 #  schedule:
-#    - cron: '0 0 * * *' # every day at midnight
+#    - cron: '0 0 * * *' # every day at midnight # go to https://crontab.guru/ to generate your cron expression
 
   workflow_dispatch:
     inputs:

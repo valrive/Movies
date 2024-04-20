@@ -57,7 +57,7 @@ android {
     }
 
     // Specifies one flavor dimension.
-    flavorDimensions "general", "minSdk"
+    flavorDimensions "general"
     productFlavors {
         paid {
             dimension "general"
@@ -66,14 +66,6 @@ android {
         free {
             dimension "general"
             //applicationIdSuffix ".free"
-        }
-        minSdk21 {
-            dimension "minSdk"
-            minSdkVersion 21
-        }
-        minSdk30 {
-            dimension "minSdk"
-            minSdkVersion 30
         }
     }
     applicationVariants.all { variant ->
