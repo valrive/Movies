@@ -44,7 +44,7 @@ jobs:
 #        run: chmod +x ./gradlew
 
       - name: Run lint
-        run: ./gradlew lintDevDebug
+        run: ./gradlew lintFreeDebug
 
       - name: Upload lint report report
         uses: actions/upload-artifact@v2
