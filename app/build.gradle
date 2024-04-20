@@ -26,9 +26,23 @@ android {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+
+            //resValue "string", "app_name", "Movies"
+            resValue "string", "config_api_url", "https://api.themoviedb.org/3/"
+            resValue "string", "api_key", "6e85a9d3ce3f6a60280166679f8ccc6a"
+            resValue "string", "config_info_version", "Versión " + android.defaultConfig.versionName
+            resValue "bool", "use_clear_traffic", "true"
+            //applicationIdSuffix ".dev"
         }
         debug {
             minifyEnabled false
+
+            //resValue "string", "app_name", "Movies-Dev"
+            resValue "string", "config_api_url", "https://api.themoviedb.org/3/"
+            resValue "string", "api_key", "6e85a9d3ce3f6a60280166679f8ccc6a"
+            resValue "string", "config_info_version", "Versión " + android.defaultConfig.versionName + ", dev"
+            resValue "bool", "use_clear_traffic", "true"
+            //applicationIdSuffix ".dev"
         }
     }
     dataBinding {
@@ -43,34 +57,23 @@ android {
     }
 
     // Specifies one flavor dimension.
-    flavorDimensions "general"
+    flavorDimensions "general", "minSdk"
     productFlavors {
-        prod {
+        paid {
             dimension "general"
-            //resValue "string", "app_name", "Movies"
-            resValue "string", "config_api_url", "https://api.themoviedb.org/3/"
-            resValue "string", "api_key", "6e85a9d3ce3f6a60280166679f8ccc6a"
-            resValue "string", "config_info_version", "Versión " + android.defaultConfig.versionName
-            resValue "bool", "use_clear_traffic", "true"
-            //applicationIdSuffix ".dev"
+            //applicationIdSuffix ".paid"
         }
-        QA {
+        free {
             dimension "general"
-            //resValue "string", "app_name", "Movies-Test"
-            resValue "string", "config_api_url", "https://api.themoviedb.org/3/"
-            resValue "string", "api_key", "6e85a9d3ce3f6a60280166679f8ccc6a"
-            resValue "string", "config_info_version", "Versión " + android.defaultConfig.versionName + ", test"
-            resValue "bool", "use_clear_traffic", "true"
-            //applicationIdSuffix ".test"
+            //applicationIdSuffix ".free"
         }
-        dev {
-            dimension "general"
-            //resValue "string", "app_name", "Movies-Dev"
-            resValue "string", "config_api_url", "https://api.themoviedb.org/3/"
-            resValue "string", "api_key", "6e85a9d3ce3f6a60280166679f8ccc6a"
-            resValue "string", "config_info_version", "Versión " + android.defaultConfig.versionName + ", dev"
-            resValue "bool", "use_clear_traffic", "true"
-            //applicationIdSuffix ".dev"
+        minSdk21 {
+            dimension "minSdk"
+            minSdkVersion 21
+        }
+        minSdk30 {
+            dimension "minSdk"
+            minSdkVersion 30
         }
     }
     applicationVariants.all { variant ->
@@ -131,6 +134,9 @@ dependencies {
     //firebase BoM
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     implementation("com.google.firebase:firebase-analytics-ktx")
+
+    //Implementaciones solo para el flavor free con minsdk 21
+//    freeMinSdk21Implementation 'com.google.android.gms:play-services-ads:20.5.0'
 
 
 

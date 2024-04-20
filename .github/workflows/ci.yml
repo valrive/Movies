@@ -5,7 +5,8 @@ on:
 #on: [pull_request]
 
   push:
-    branches: ["onlyPopularMovies"]
+    branches: #["onlyPopularMovies"]
+      - onlyPopularMovies
   pull_request:
     branches: ["onlyPopularMovies"]
 
