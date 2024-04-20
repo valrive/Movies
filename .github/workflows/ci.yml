@@ -165,7 +165,7 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle-
 
       - name: Assemble Debug
-        run: ./gradlew assembleDebug
+        run: ./gradlew assemblefreeMinSdk21Debug
 #        run: ./gradlew build --no-daemon
 
       - name: Upload apk to Firebase App Distribution
