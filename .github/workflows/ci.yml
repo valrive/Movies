@@ -5,7 +5,8 @@ on:
 #on: [pull_request]
 
   push:
-    branches: ["onlyPopularMovies"]
+    branches: #["onlyPopularMovies"]
+      - "feature/**"
   pull_request:
     branches: ["onlyPopularMovies"]
 
@@ -77,7 +78,8 @@ jobs:
 #          restore-keys: ${{ runner.os }}-gradle-
 
       - name: Run tests
-        run: ./gradlew test #testDevDebugUnitTest
+#        run: ./gradlew test #testDevDebugUnitTest
+        run: ./gradlew testFreeDebugUnitTest --continue
 
       - name: Android Test Report
         uses: asadmansr/android-test-report-action@v1.2.0
@@ -92,10 +94,10 @@ jobs:
 
 
 
-  instrumentation-test:
+  instrumentation-test: #son tardados por lo que se recomienda hacerlos en los pull request
     name: Perform Instrumentation Testing
     needs: [ unit-test ]
-    runs-on: macos-latest # MacOS runs faster
+    runs-on: macos-latest # MacOS runs faster cause provide hardware acceleration
 
     steps:
       - name: Checkout the code
@@ -111,14 +113,16 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2 # 3rd party tool
         with:
           api-level: 29
-          script: ./gradlew connectedCheck
+#          script: ./gradlew connectedCheck
+          script: ./gradlew connectedAndroidTest
 
       - name: Upload Instrumentation Test report
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
           name: instrumentation_test_report
-          path: app/build/reports/androidTests/connected
+#          path: app/build/reports/androidTests/connected
+          path: '**/build/reports/androidTests/'
 
 #  static-code-analysis:
 #    name: Perform static code analysis
@@ -164,7 +168,7 @@ jobs:
           restore-keys: ${{ runner.os }}-gradle-
 
       - name: Assemble Debug
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleFreeDebug
 #        run: ./gradlew build --no-daemon
 
       - name: Upload apk to Firebase App Distribution
@@ -175,11 +179,12 @@ jobs:
           groups: testers
           releaseNotes: ${{ github.event.inputs.release_notes }}
 #          file: app/build/outputs/apk/release/app-release-unsigned.apk
-          file: app/build/outputs/apk/dev/debug/app-dev-debug.apk
+#          file: app/build/outputs/apk/free/debug/app-free-debug.apk
+          file: app/build/outputs/apk/free/debug/**.apk
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v2
         with:
           name: apk
 #          path: app/build/outputs/apk/dev/debug/app-dev-debug.apk
-          path: app/build/outputs/apk/dev/debug/**.apk
+          path: app/build/outputs/apk/free/debug/**.apk

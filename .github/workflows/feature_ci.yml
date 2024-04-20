@@ -1,12 +1,12 @@
+#https://www.youtube.com/watch?v=f3_bkhQRrtU
 name: Build Feature Branch CI
 
 on:
   push:
-    branches: 'feature/**'
+    branches: ["feature/**"]
 
 jobs:
-  apk:
-    name: Build Release signed APK
+  assemble:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,3 +18,14 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+
+      - name: Assemble
+        env:
+          VERSION_CODE: ${{ github.run_id }}
+        run: ./gradlew assembleDevDebug
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: apk
+          path: app/build/outputs/apk/dev/debug/**.apk

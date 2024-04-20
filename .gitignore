@@ -24,7 +24,7 @@ out/
 
 # Gradle files
 # quitamos la carpeta .gradle/ para activar la cache para github actions CI
-#.gradle/
+.gradle/
 build/
 
 # Local configuration file (sdk path, etc)
