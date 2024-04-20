@@ -22,6 +22,7 @@
 > Code should be optimized for readability. Attach some custom style guide or reference some. i.e.:
 
 In order to sanitize coding standards, please follow [this style guide](https://dev.to/basementdevs/be-a-better-developer-with-these-git-good-practices-2dim).
+And [this other style guide](https://nimblehq.co/compass/development/version-control/branch-management/).
 
 ## General steps for completing this pull request
 

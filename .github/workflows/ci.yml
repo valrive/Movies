@@ -6,6 +6,7 @@ on:
 
   push:
     branches: #["onlyPopularMovies"]
+      - "onlyPopularMovies"
       - "feature/**"
   pull_request:
     branches: ["onlyPopularMovies"]
