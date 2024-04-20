@@ -121,7 +121,8 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: instrumentation_test_report
-          path: app/build/reports/androidTests/connected
+#          path: app/build/reports/androidTests/connected
+          path: '**/build/reports/androidTests/'
 
 #  static-code-analysis:
 #    name: Perform static code analysis
