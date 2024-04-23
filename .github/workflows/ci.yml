@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.3
 
       - name: Fake Lint Test
         run: echo "Linting the code"
@@ -63,7 +63,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.3
 
       - name: Fake Unit Test
         run: echo "Unit Testing the code"
@@ -108,7 +108,7 @@ jobs:
 
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.3
 
       - name: Fake Instrumentation Test
         run: echo "Instrumentation Testing the code"
@@ -140,7 +140,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4.1.3
 
       - name: Fake Static Code Analysis
         run: echo "Static Code Analysis the code"
@@ -162,7 +162,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.1.3
 
       - name: Setup JDK
         uses: actions/setup-java@v4
