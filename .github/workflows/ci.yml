@@ -79,8 +79,8 @@ jobs:
 #          restore-keys: ${{ runner.os }}-gradle-
 
       - name: Run tests
-#        run: ./gradlew test #testDevDebugUnitTest
-        run: ./gradlew testFreeDebugUnitTest --continue
+        run: ./gradlew test #testDevDebugUnitTest
+#        run: ./gradlew testFreeDebugUnitTest --continue
 
       - name: Android Test Report
         uses: asadmansr/android-test-report-action@v1.2.0
@@ -114,8 +114,8 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2 # 3rd party tool
         with:
           api-level: 29
-#          script: ./gradlew connectedCheck
-          script: ./gradlew connectedAndroidTest
+          script: ./gradlew connectedCheck
+#          script: ./gradlew connectedAndroidTest
 
       - name: Upload Instrumentation Test report
         if: ${{ always() }}
