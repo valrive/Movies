@@ -5,6 +5,7 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'com.google.devtools.ksp'
     id("com.google.gms.google-services")
+    id("org.sonarqube")
 }
 
 android {
@@ -127,8 +128,8 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
     implementation("com.google.firebase:firebase-analytics-ktx")
 
-    //Implementaciones solo para el flavor free con minsdk 21
-//    freeMinSdk21Implementation 'com.google.android.gms:play-services-ads:20.5.0'
+    //sonar cloud
+
 
 
 
