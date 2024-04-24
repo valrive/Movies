@@ -36,9 +36,9 @@ jobs:
       - name: Cache Gradle packages
         uses: actions/cache@v3
         with:
-          path: |
+          path: #|
             ~/.gradle/caches
-            ~/.gradle/wrapper
+#            ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
 
@@ -78,9 +78,9 @@ jobs:
       - name: Cache Gradle packages
         uses: actions/cache@v3
         with:
-          path: |
+          path: #|
             ~/.gradle/caches
-            ~/.gradle/wrapper
+#            ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
 
@@ -160,9 +160,9 @@ jobs:
       - name: Cache Gradle packages
         uses: actions/cache@v3
         with:
-          path: |
+          path: #|
             ~/.gradle/caches
-            ~/.gradle/wrapper
+#            ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
 
@@ -198,9 +198,9 @@ jobs:
       - name: Cache Gradle packages
         uses: actions/cache@v3
         with:
-          path: |
+          path: #|
             ~/.gradle/caches
-            ~/.gradle/wrapper
+#            ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
 
@@ -223,5 +223,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: apk
-#          path: app/build/outputs/apk/dev/debug/app-dev-debug.apk
-          path: app/build/outputs/apk/dev/debug/**.apk
+          path: app/build/outputs/apk/dev/debug/app-dev-debug.apk
+#          path: app/build/outputs/apk/dev/debug/**.apk
