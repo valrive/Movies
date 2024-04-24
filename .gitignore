@@ -23,7 +23,6 @@ out/
 # release/
 
 # Gradle files
-# quitamos la carpeta .gradle/ para activar la cache para github actions CI
 .gradle/
 build/
 
@@ -107,6 +106,9 @@ output.json
 # Java class files
 
 # Generated files
+
+# Gradle files
+.gradle
 
 # Signing files
 .signing/
@@ -207,5 +209,7 @@ crashlytics-build.properties
 fabric.properties
 
 ### AndroidStudio Patch ###
+
+!/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/androidstudio,android
