@@ -47,8 +47,7 @@ jobs:
 #        run: chmod +x ./gradlew
 
       - name: Run lint
-#        run: ./gradlew lintFreeDebug
-        run: ./gradlew lint
+        run: ./gradlew lintFreeDebug
 
       - name: Upload lint report report
         uses: actions/upload-artifact@v2
@@ -215,13 +214,10 @@ jobs:
           serviceCredentialsFileContent: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
           groups: testers
           releaseNotes: ${{ github.event.inputs.release_notes }}
-#          file: app/build/outputs/apk/release/app-release-unsigned.apk
           file: app/build/outputs/apk/free/debug/app-free-debug.apk
-#          file: app/build/outputs/apk/dev/debug/**.apk
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v2
         with:
           name: apk
-          path: app/build/outputs/apk/dev/debug/app-dev-debug.apk
-#          path: app/build/outputs/apk/dev/debug/**.apk
+          path: app/build/outputs/apk/free/debug/app-free-debug.apk
