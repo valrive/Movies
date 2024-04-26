@@ -84,18 +84,14 @@ dependencies {
     implementation libs.androidx.core.ktx
     implementation libs.material
     implementation libs.androidx.preference.ktx
-    implementation libs.androidx.navigation.fragment.ktx
-    implementation libs.androidx.navigation.ui.ktx
+    implementation libs.bundles.androidx.navigation
 
     implementation libs.kotlin.stdlib
 
-    implementation libs.retrofit
-    implementation libs.converter.gson
-    implementation libs.logging.interceptor
+    implementation libs.bundles.squareup.retrofit
 
-    implementation libs.glide
+    implementation libs.bundles.bumptech.glide
     ksp libs.compiler
-    implementation libs.glide.transformations
 
     implementation libs.androidx.lifecycle.livedata.ktx
 

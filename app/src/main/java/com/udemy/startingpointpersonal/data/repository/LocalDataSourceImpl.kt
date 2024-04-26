@@ -7,6 +7,7 @@ import com.udemy.startingpointpersonal.data.database.entity.toDomainMovie
 import com.udemy.startingpointpersonal.data.database.entity.toDomainMovies
 import com.udemy.startingpointpersonal.data.repository.interfaces.LocalDataSource
 import com.udemy.startingpointpersonal.ui.view.popularMovs.ViewState
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
@@ -18,28 +19,30 @@ class LocalDataSourceImpl @Inject constructor(
     private val movieDao: MovieDao
 ) : LocalDataSource {
 
-    override suspend fun isEmpty() = withContext(Dispatchers.IO) { movieDao.movieCount() == 0 }
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 
-    override suspend fun size(): Int = withContext(Dispatchers.IO) { movieDao.movieCount() }
+    override suspend fun isEmpty() = withContext(dispatcher) { movieDao.movieCount() == 0 }
 
-    override suspend fun saveMovies(movies: List<MovieEntity>) = withContext(Dispatchers.IO) {
+    override suspend fun size(): Int = withContext(dispatcher) { movieDao.movieCount() }
+
+    override suspend fun saveMovies(movies: List<MovieEntity>) = withContext(dispatcher) {
         movieDao.insert(*movies.toTypedArray())//converts List to vararg
     }
 
     override suspend fun findById(movieId: Int): DomainMovie =
-        withContext(Dispatchers.IO) { movieDao.findById(movieId).toDomainMovie() }
+        withContext(dispatcher) { movieDao.findById(movieId).toDomainMovie() }
 
-    /*suspend fun getMovies(): List<DomainMovie> = withContext(Dispatchers.IO) {
+    /*suspend fun getMovies(): List<DomainMovie> = withContext(dispatcher) {
         movieDao.getAll().map { it.toDomainMovie() }
     }*/
 
     override fun getMovies(): Flow<ViewState<List<DomainMovie>>> = movieDao.getMoviesFlow()
-        .flowOn(Dispatchers.IO)
+        .flowOn(dispatcher)
         .map {
             ViewState.Success(it.toDomainMovies())
         }
 
-    override suspend fun clearMovies() = withContext(Dispatchers.IO){
+    override suspend fun clearMovies() = withContext(dispatcher){
         movieDao.deleteAll()
     }
 }

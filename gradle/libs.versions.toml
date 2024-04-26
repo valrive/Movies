@@ -74,3 +74,21 @@ sonarqube-gradle-plugin = { module = "org.sonarsource.scanner.gradle:sonarqube-g
 
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
 firebase-analytics = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+
+[bundles]
+androidx-navigation = [
+    "androidx-navigation-fragment-ktx",
+    "androidx-navigation-ui-ktx"
+]
+squareup-retrofit = [
+    "retrofit",
+    "converter-gson",
+    "logging-interceptor",
+]
+bumptech-glide = [
+    "glide",
+    "glide-transformations",
+]
+
+
+[plugins]
