@@ -22,8 +22,7 @@ class RemoteDataSourceImpl @Inject constructor(
     }
 
     override suspend fun getPopularMoviesCall(countryCode: String, page: Int): List<MovieRemote> = withContext(dispatcher) {
-        val body =
-            ApiWrapper.createForRequiredBody(api.getPopulardMoviesCall(apiKey, countryCode, page))
+        val body = ApiWrapper.createForRequiredBody(api.getPopulardMoviesCall(apiKey, countryCode, page))
         body.results
     }
 
